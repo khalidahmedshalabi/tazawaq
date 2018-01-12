@@ -11,13 +11,13 @@ import SettingsScreen from '../screens/SettingsScreen';
 
 export default TabNavigator(
   {
-    Home: {
+    "مطاعم": {
       screen: HomeScreen,
     },
-    Orders: {
+    "طلبات": {
       screen: OrdersScreen,
     },
-    Settings: {
+    "اعدادات": {
       screen: SettingsScreen,
     },
   },
@@ -27,29 +27,30 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case 'Home':
+          case 'مطاعم':
             iconName =
               Platform.OS === 'ios'
-                ? `ios-home${focused ? '' : '-outline'}`
-                : 'md-home';
+                ? `ios-restaurant${focused ? '' : '-outline'}`
+                : 'ios-restaurant';
             break;
-          case 'Orders':
-            iconName = Platform.OS === 'ios' ? `ios-cart${focused ? '' : '-outline'}` : 'md-cart';
+          case 'طلبات':
+            iconName = Platform.OS === 'ios' ? `ios-paper${focused ? '' : '-outline'}` : 'md-paper';
             break;
-          case 'Settings':
+          case 'اعدادات':
             iconName =
               Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options';
         }
         return (
           <Ionicons
             name={iconName}
-            size={28}
+            size={32}
             style={{ marginBottom: -3 }}
             color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
           />
         );
       },
     }),
+    tabBarOptions: { showLabel:false },
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     animationEnabled: true,
