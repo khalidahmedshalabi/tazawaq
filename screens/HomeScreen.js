@@ -6,7 +6,7 @@ import Restaurant from '../components/Restaurant';
 
 var styles = StyleSheet.create({
 	box: {
-		height: 60,
+		height: 45,
 		backgroundColor: '#FFF',
 		shadowColor: '#000000',
 		shadowOpacity: 2,
@@ -15,24 +15,29 @@ var styles = StyleSheet.create({
 			width: 0
 		},
 		borderColor: 'gray',
-		borderWidth: 0.3
+		borderWidth: 0.3,
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		alignItems: 'center'
 	},
 
 	input: {
 		justifyContent: 'center',
-		height: 40,
+		height: 22,
 		fontFamily: 'myfont',
 		marginTop: 10,
 		backgroundColor: '#fff',
 		fontSize: 13,
 		alignItems: 'center',
 		marginRight: 7,
-		marginLeft: 7
+		marginLeft: 7,
+
+		flex: 1
 	},
 
 	topbox: {
 		alignItems: 'center',
-		height: 60,
+		height: 55,
 		justifyContent: 'center',
 		backgroundColor: '#fff'
 	},
@@ -124,6 +129,12 @@ export default class HomeScreen extends React.Component {
 				</View>
 
 				<View style={styles.box} key="2">
+					<Ionicons
+						name="ios-search-outline"
+						size={32}
+						style={{ padding: 10 }}
+						color="gray"
+					/>
 					<TextInput
 						{...this.props}
 						style={styles.input}
