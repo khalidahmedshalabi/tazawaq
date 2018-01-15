@@ -8,6 +8,7 @@ import Colors from '../constants/Colors';
 import HomeScreen from '../screens/HomeScreen';
 import OrdersScreen from '../screens/OrdersScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import Header from '../components/Header';
 
 export default TabNavigator(
   {
@@ -23,6 +24,7 @@ export default TabNavigator(
   },
   {
     navigationOptions: ({ navigation }) => ({
+        header: <Header nav={navigation} />,
       tabBarIcon: ({ focused }) => {
         const { routeName } = navigation.state;
         let iconName;

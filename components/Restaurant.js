@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View, Text, Image } from 'react-native';
-import FastImage from 'react-native-fast-image';
+//import FastImage from 'react-native-fast-image';
 import { Ionicons } from '@expo/vector-icons';
 export default class Restaurant extends Component {
 	render() {
