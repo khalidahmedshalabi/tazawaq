@@ -4,22 +4,20 @@ import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
+import LocationSetting from '../screens/LocationSetting';
 
 const RootStackNavigator = StackNavigator(
-  {
-    Main: {
-      screen: MainTabNavigator,
+    {
+        LocationSetting: { screen: LocationSetting },
+        Main: { screen: MainTabNavigator },
     },
-    /*Signin: { screen: Signin },
-    Signup: { screen: Signup },*/
-  },
-  {
-    navigationOptions: () => ({
-      headerTitleStyle: {
-        fontWeight: 'normal',
-      },
-    }),
-  }
+    {
+        navigationOptions: () => ({
+            headerTitleStyle: {
+                fontWeight: 'normal',
+            },
+        }),
+    }
 );
 
 export default class RootNavigator extends React.Component {

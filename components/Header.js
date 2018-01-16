@@ -4,7 +4,8 @@ import {
   View,
   TextInput,
   StyleSheet,
-  Text
+  Text,
+  AsyncStorage
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Font } from 'expo';
@@ -12,6 +13,13 @@ import { Font } from 'expo';
 export default class Header extends React.Component {
     componentDidMount() {
 		this.setState({ fontLoaded: '1' });
+
+        AsyncStorage.getItem('location').then(
+            (value) => {
+                this.setState({
+                    location: (value === null) ? 'لم يتم تحديد مكان' : value
+                });
+            });
 	}
 
     constructor(props){
@@ -20,49 +28,49 @@ export default class Header extends React.Component {
         this.state = {
           searchText: '',
           fontLoaded: '0',
-          location: 'الرياض, السعودية'
+          location: ' '
         }
     }
 
     doSearch = () => {
         if(this.state.searchText.length)
-            this.props.nav.navigate("SearchResult", {searchingFor: this.state.searchText});
+            this.props.navigation.navigate("SearchResult", {searchingFor: this.state.searchText});
     };
 
-  render() {
-    return (
-        <View>
+    render() {
+        return (
+            <View>
 
-            <View style={styles.topbox} key="1">
-                <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center'}}>
-                    {this.state.fontLoaded == '1' ? (
-                        <Text style={{ fontFamily: 'myfont' }}> {this.state.location}</Text>
-                    ) : null}
+                <View style={styles.topbox} key="1">
+                    <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center'}}>
+                        {this.state.fontLoaded == '1' ? (
+                            <Text style={{ fontFamily: 'myfont' }}> {this.state.location}</Text>
+                        ) : null}
+                    </View>
+                </View>
+
+                <View style={styles.box} key="2">
+                    <Ionicons
+                        onPress={ () => this.doSearch() }
+                        name="ios-search-outline"
+                        size={32}
+                        style={{ padding: 10 }}
+                        color="gray"
+                    />
+                    <TextInput
+                        {...this.props}
+                        style={styles.input}
+                        placeholderTextColor='#ccc'
+                        placeholder="ابحث عن مطعم..."
+                        returnKeyType={"search"}
+                        underlineColorAndroid="transparent"
+                        onChangeText={(text) => this.setState({searchText:text})}
+                        onSubmitEditing={(event) => this.doSearch() }
+                    />
                 </View>
             </View>
-
-            <View style={styles.box} key="2">
-                <Ionicons
-                    onPress={ () => this.doSearch() }
-                    name="ios-search-outline"
-                    size={32}
-                    style={{ padding: 10 }}
-                    color="gray"
-                />
-                <TextInput
-                    {...this.props}
-                    style={styles.input}
-                    placeholderTextColor='#ccc'
-                    placeholder="ابحث عن مطعم..."
-                    returnKeyType={"search"}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(text) => this.setState({searchText:text})}
-                    onSubmitEditing={(event) => this.doSearch() }
-                />
-            </View>
-        </View>
-    );
-  }
+        );
+    }
 }
 
 var styles = StyleSheet.create({
