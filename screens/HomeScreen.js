@@ -25,13 +25,12 @@ var styles = StyleSheet.create({
 		justifyContent: 'center',
 		height: 22,
 		fontFamily: 'myfont',
-		marginTop: 10,
+		marginTop: 5,
 		backgroundColor: '#fff',
 		fontSize: 13,
 		alignItems: 'center',
 		marginRight: 7,
 		marginLeft: 7,
-
 		flex: 1
 	},
 
@@ -42,7 +41,6 @@ var styles = StyleSheet.create({
 		backgroundColor: '#fff'
 	},
 	restaurant: {
-		backgroundColor: 'red',
 		flex: 1,
 		padding: 100
 	}
@@ -67,8 +65,9 @@ export default class HomeScreen extends React.Component {
 					image:
 						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
 					time: '30',
-					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '4.3'
+					desc: 'تمتع بوجبه خفيفه',
+					stars: '4.3',
+					deliver_price: '40'
 				},
 				{
 					key: 2,
@@ -77,7 +76,8 @@ export default class HomeScreen extends React.Component {
 						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
 					time: '30',
 					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '4.3'
+					stars: '4.3',
+					deliver_price: '40'
 				},
 				{
 					key: 3,
@@ -86,7 +86,8 @@ export default class HomeScreen extends React.Component {
 						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
 					time: '30',
 					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '4.3'
+					stars: '4.3',
+					deliver_price: '40'
 				},
 				{
 					key: 4,
@@ -95,7 +96,8 @@ export default class HomeScreen extends React.Component {
 						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
 					time: '30',
 					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '5'
+					stars: '5',
+					deliver_price: '40'
 				},
 				{
 					key: 5,
@@ -103,8 +105,9 @@ export default class HomeScreen extends React.Component {
 					image:
 						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
 					time: '30',
-					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '3.2'
+					desc: 'طعام لزيز في اى وقت و ايا كان المكان',
+					stars: '3.2',
+					deliver_price: '40'
 				},
 				{
 					key: 6,
@@ -113,7 +116,8 @@ export default class HomeScreen extends React.Component {
 						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
 					time: '30',
 					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '4.3'
+					stars: '4.3',
+					deliver_price: '40'
 				}
 			]
 		};
@@ -145,7 +149,7 @@ export default class HomeScreen extends React.Component {
 				</View>
 
 				<FlatList
-					style={{ backgroundColor: 'red' }}
+					automaticallyAdjustContentInsets={false}
 					removeClippedSubviews={false}
 					data={this.state.Restaurants}
 					renderItem={({ item }) => (
