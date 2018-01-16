@@ -1,10 +1,9 @@
 import React from 'react';
-import { Text, View, StyleSheet, TextInput, FlatList } from 'react-native';
-import { Font } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { Text, View, StyleSheet, FlatList } from 'react-native';
 import Restaurant from '../components/Restaurant';
 
 var styles = StyleSheet.create({
+<<<<<<< HEAD
 	box: {
 		height: 45,
 		backgroundColor: '#FFF',
@@ -41,23 +40,19 @@ var styles = StyleSheet.create({
 		backgroundColor: '#fff'
 	},
 	restaurant: {
+=======
+	restaurant: {
+		backgroundColor: 'white',
+>>>>>>> c18aec63ff6faf23c81bc6252f513dc4e2bee460
 		flex: 1,
 		padding: 100
 	}
 });
 
 export default class HomeScreen extends React.Component {
-	componentDidMount() {
-		this.setState({ fontLoaded: '1' });
-	}
-	static navigationOptions = {
-		header: null
-	};
 	constructor(props) {
 		super(props);
 		this.state = {
-			text: 'الرياض السعوديه',
-			fontLoaded: '0',
 			Restaurants: [
 				{
 					key: 1,
@@ -126,30 +121,12 @@ export default class HomeScreen extends React.Component {
 	render() {
 		return (
 			<View>
-				<View style={styles.topbox} key="1">
-					{this.state.fontLoaded == '1' ? (
-						<Text style={{ fontFamily: 'myfont' }}> {this.state.text}</Text>
-					) : null}
-				</View>
-
-				<View style={styles.box} key="2">
-					<Ionicons
-						name="ios-search-outline"
-						size={32}
-						style={{ padding: 10 }}
-						color="gray"
-					/>
-					<TextInput
-						{...this.props}
-						style={styles.input}
-						placeholderTextColor="gray"
-						placeholder="  ابحث عن المطعم الذى تريد ......"
-						underlineColorAndroid="transparent"
-					/>
-				</View>
-
 				<FlatList
+<<<<<<< HEAD
 					automaticallyAdjustContentInsets={false}
+=======
+					style={{ backgroundColor: 'white' }}
+>>>>>>> c18aec63ff6faf23c81bc6252f513dc4e2bee460
 					removeClippedSubviews={false}
 					data={this.state.Restaurants}
 					renderItem={({ item }) => (
