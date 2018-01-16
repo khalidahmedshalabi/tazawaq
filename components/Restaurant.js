@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View, Text, Image } from 'react-native';
 
-//import FastImage from 'react-native-fast-image';
-
 import { Ionicons } from '@expo/vector-icons';
-import FadeIn from 'react-native-fade-in-image';
+
 export default class Restaurant extends Component {
 	render() {
 		return (
@@ -135,19 +133,17 @@ export default class Restaurant extends Component {
 						justifyContent: 'flex-end',
 						flex: 0.3
 					}}>
-					<FadeIn>
-						<Image
-							source={{ uri: this.props.image }}
-							style={{
-								width: 100,
-								height: 100,
-								marginTop: 10,
-								marginBottom: 10,
-								marginRight: 10,
-								borderRadius: 10
-							}}
-						/>
-					</FadeIn>
+					<Image
+						source={{ uri: this.props.image }}
+						style={{
+							width: 100,
+							height: 100,
+							marginTop: 10,
+							marginBottom: 10,
+							marginRight: 10,
+							borderRadius: 10
+						}}
+					/>
 				</View>
 			</View>
 		);
