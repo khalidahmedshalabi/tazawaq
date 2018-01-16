@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, FlatList } from 'react-native';
 import Restaurant from '../components/Restaurant';
 
 var styles = StyleSheet.create({
-<<<<<<< HEAD
 	box: {
 		height: 45,
 		backgroundColor: '#FFF',
@@ -39,11 +38,9 @@ var styles = StyleSheet.create({
 		justifyContent: 'center',
 		backgroundColor: '#fff'
 	},
-	restaurant: {
-=======
+
 	restaurant: {
 		backgroundColor: 'white',
->>>>>>> c18aec63ff6faf23c81bc6252f513dc4e2bee460
 		flex: 1,
 		padding: 100
 	}
@@ -122,11 +119,8 @@ export default class HomeScreen extends React.Component {
 		return (
 			<View>
 				<FlatList
-<<<<<<< HEAD
 					automaticallyAdjustContentInsets={false}
-=======
 					style={{ backgroundColor: 'white' }}
->>>>>>> c18aec63ff6faf23c81bc6252f513dc4e2bee460
 					removeClippedSubviews={false}
 					data={this.state.Restaurants}
 					renderItem={({ item }) => (

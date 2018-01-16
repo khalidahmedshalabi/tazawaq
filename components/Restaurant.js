@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View, Text, Image } from 'react-native';
-<<<<<<< HEAD
-=======
+
 //import FastImage from 'react-native-fast-image';
->>>>>>> c18aec63ff6faf23c81bc6252f513dc4e2bee460
+
 import { Ionicons } from '@expo/vector-icons';
 import FadeIn from 'react-native-fade-in-image';
 export default class Restaurant extends Component {
