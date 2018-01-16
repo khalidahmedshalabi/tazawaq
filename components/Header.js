@@ -8,6 +8,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
 import { Font } from 'expo';
 
 export default class Header extends React.Component {
@@ -60,7 +61,7 @@ export default class Header extends React.Component {
                     <TextInput
                         {...this.props}
                         style={styles.input}
-                        placeholderTextColor='#ccc'
+                        placeholderTextColor='#999999'
                         placeholder="ابحث عن مطعم..."
                         returnKeyType={"search"}
                         underlineColorAndroid="transparent"
@@ -76,15 +77,15 @@ export default class Header extends React.Component {
 var styles = StyleSheet.create({
 	box: {
 		height: 45,
-		backgroundColor: '#FFF',
+		backgroundColor: Colors.smoothGray,
 		shadowColor: '#000000',
 		shadowOpacity: 2,
 		shadowOffset: {
 			height: 2,
 			width: 0
 		},
-		borderColor: 'gray',
-		borderWidth: 0.3,
+		borderBottomColor: Colors.smoothGray,
+		borderBottomWidth: 0.3,
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		alignItems: 'center'
@@ -95,7 +96,7 @@ var styles = StyleSheet.create({
 		height: 22,
 		fontFamily: 'myfont',
 		marginTop: 10,
-		backgroundColor: '#fff',
+		backgroundColor: 'transparent',
 		fontSize: 15,
 		alignItems: 'center',
 		marginRight: 7,

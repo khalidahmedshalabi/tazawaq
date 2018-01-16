@@ -91,7 +91,7 @@ export default class Header extends React.Component {
                         },
                         textInput: {
                             borderRadius: 13,
-                            backgroundColor: '#F2F3F5',
+                            backgroundColor: Colors.smoothGray,
                             height: 45
                         },
                         container: {
