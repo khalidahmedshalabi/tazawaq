@@ -3,146 +3,51 @@ import { ActivityIndicator, View, Text, Image } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
+const AVERAGE_STARS_COUNT = 2; // between 5 and 0, recommended: 2 or 2.5
+
 export default class Restaurant extends Component {
+
+	determineStarIcon = (stars_count) => {
+		if(stars_count < AVERAGE_STARS_COUNT)
+			return ("md-star-outline");
+		else if(stars_count < 5)
+			return ("md-star-half");
+		else
+			return ("md-star");
+	}
+
 	render() {
 		return (
-			<View
-				style={{
-					borderWidth: 0.5,
-					borderColor: '#d6d7da',
-					flexDirection: 'row',
-					flexWrap: 'wrap',
-
-					backgroundColor: '#fff',
-					flex: 1
-				}}>
-				<View
-					style={{
-						justifyContent: 'flex-start',
-						flex: 0.7
-					}}>
-					<View
-						style={{
-							flex: 1,
-							justifyContent: 'flex-end'
-						}}>
-						<Text
-							style={{
-								color: 'black',
-								marginTop: 5,
-								marginRight: 15,
-								fontFamily: 'myfont',
-								fontSize: 15,
-								flex: 0.8,
-
-								justifyContent: 'flex-end'
-							}}>
-							{this.props.name}
-						</Text>
-						<Text
-							style={{
-								color: 'gray',
-								marginTop: 5,
-								marginRight: 15,
-								fontFamily: 'myfont',
-								fontSize: 12,
-								flex: 1
-							}}>
-							{this.props.desc}
-						</Text>
+			<View style={{ flex:1, flexDirection: 'row', justifyContent:'flex-end', alignItems: 'center' }}>
+				<View style={{ flex: 1, paddingTop: 9, paddingRight:10, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end'}}>
+					<View style={{ flex: 1 }}>
+						<Text style={{ fontFamily: 'myfont', fontSize: 15, }}>{this.props.name}</Text>
+						<Text style={{ fontFamily: 'myfont', color: '#777777', fontSize: 12,}}>{this.props.desc}</Text>
 					</View>
 
-					<View
-						style={{
-							flex: 0.7,
-							flexDirection: 'row',
-							justifyContent: 'center',
-							alignItems: 'center',
-							marginLeft: 10
-						}}>
-						<Ionicons
-							name="ios-star-outline"
-							size={25}
-							style={{
-								marginRight: 2
-							}}
-							color="gold"
-						/>
-						<Text
-							style={{
-								marginTop: 8,
-								color: 'gray',
-								marginTop: 5,
-								justifyContent: 'center',
-								alignItems: 'center',
-								fontFamily: 'myfont',
-								fontSize: 13,
-								flex: 0.3
-							}}>
-							4/5
-						</Text>
+					<View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', alignItems: 'center' }}>
+						<View style={{ flex: 1, flexDirection:'row', justifyContent:'center', alignItems:'center' }}>
+							<Ionicons name={this.determineStarIcon(this.props.stars)} size={22} color="#FFC400" />
+							<Text style={{ marginLeft: 4, fontFamily: 'myfont', fontSize: 12, color: '#999999'}}>{this.props.stars}/5</Text>
+						</View>
 
-						<Ionicons
-							name="ios-bicycle-outline"
-							size={25}
-							style={{
-								marginRight: 2
-							}}
-							color="gray"
-						/>
-						<Text
-							style={{
-								marginTop: 8,
-								color: 'gray',
-								marginTop: 5,
-								alignItems: 'center',
-								fontFamily: 'myfont',
-								fontSize: 13,
-								flex: 0.3,
-								justifyContent: 'center',
-								alignItems: 'center'
-							}}>
-							{this.props.time} Min
-						</Text>
-						<Ionicons
-							name="ios-cart-outline"
-							size={25}
-							style={{
-								marginRight: 2
-							}}
-							color="gray"
-						/>
-						<Text
-							style={{
-								marginTop: 8,
-								color: 'gray',
-								marginTop: 5,
-								marginRight: 5,
-								fontFamily: 'myfont',
-								fontSize: 13,
-								flex: 0.3
-							}}>
-							40 SAR
-						</Text>
+						<View style={{ flex: 1, flexDirection:'row', justifyContent:'center', alignItems:'center' }}>
+							<Ionicons name="ios-bicycle-outline" size={21} color="#999999" />
+							<Text style={{ marginLeft: 5, fontFamily: 'myfont', fontSize: 12, color: '#999999'}}>{this.props.time} د</Text>
+						</View>
+
+						<View style={{ flex: 1, flexDirection:'row', justifyContent:'center', alignItems:'center' }}>
+							<Ionicons name="md-cash" size={21} color="#999999" />
+							<Text style={{ marginLeft: 5, fontFamily: 'myfont', fontSize: 12, color: '#999999'}}>{this.props.price} ر.س</Text>
+						</View>
 					</View>
 				</View>
-				<View
-					style={{
-						flexDirection: 'row',
-						flexWrap: 'wrap',
-						justifyContent: 'flex-end',
-						flex: 0.3
-					}}>
+
+				<View style={{ flex: 0.5 }}>
 					<Image
 						source={{ uri: this.props.image }}
-						style={{
-							width: 100,
-							height: 100,
-							marginTop: 10,
-							marginBottom: 10,
-							marginRight: 10,
-							borderRadius: 10
-						}}
+						style={{ width: 100, height: 100, marginTop: 10, marginBottom: 11,
+							marginRight: 4, borderRadius: 10 }}
 					/>
 				</View>
 			</View>

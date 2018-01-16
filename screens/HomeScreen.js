@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
 import Restaurant from '../components/Restaurant';
+import Colors from '../constants/Colors';
 
 var styles = StyleSheet.create({
 	box: {
@@ -58,7 +59,7 @@ export default class HomeScreen extends React.Component {
 						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
 					time: '30',
 					desc: 'تمتع بوجبه خفيفه',
-					stars: '4.3',
+					stars: '5',
 					deliver_price: '40'
 				},
 				{
@@ -78,7 +79,7 @@ export default class HomeScreen extends React.Component {
 						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
 					time: '30',
 					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '4.3',
+					stars: '1.5',
 					deliver_price: '40'
 				},
 				{
@@ -108,7 +109,7 @@ export default class HomeScreen extends React.Component {
 						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
 					time: '30',
 					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '4.3',
+					stars: '2.5',
 					deliver_price: '40'
 				}
 			]
@@ -122,6 +123,7 @@ export default class HomeScreen extends React.Component {
 					automaticallyAdjustContentInsets={false}
 					style={{ backgroundColor: 'white' }}
 					removeClippedSubviews={false}
+					ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
 					data={this.state.Restaurants}
 					renderItem={({ item }) => (
 						<Restaurant
@@ -131,6 +133,7 @@ export default class HomeScreen extends React.Component {
 							time={item.time}
 							desc={item.desc}
 							image={item.image}
+							price={item.deliver_price}
 						/>
 					)}
 				/>
