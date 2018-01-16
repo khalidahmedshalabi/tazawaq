@@ -38,6 +38,10 @@ export default class Header extends React.Component {
             this.props.navigation.navigate("SearchResult", {searchingFor: this.state.searchText});
     };
 
+    trimName = (str) => {
+        return (str.length > 36) ? (str.substring(0, 33) + "...") : str;
+    }
+
     render() {
         return (
             <View>
@@ -45,7 +49,7 @@ export default class Header extends React.Component {
                 <View style={styles.topbox} key="1">
                     <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center'}}>
                         {this.state.fontLoaded == '1' ? (
-                            <Text style={{ fontFamily: 'myfont' }}> {this.state.location}</Text>
+                            <Text style={{ fontFamily: 'myfont' }}> {this.trimName(this.state.location)}</Text>
                         ) : null}
                     </View>
                 </View>
