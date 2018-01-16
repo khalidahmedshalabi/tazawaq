@@ -5,7 +5,8 @@ import {
   TextInput,
   StyleSheet,
   Text,
-  AsyncStorage
+  AsyncStorage,
+  TouchableOpacity
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
@@ -27,9 +28,10 @@ export default class Header extends React.Component {
         super(props)
 
         this.state = {
-          searchText: '',
-          fontLoaded: '0',
-          location: ' '
+            displaySearch: 0,
+            searchText: '',
+            fontLoaded: '0',
+            location: ' '
         }
     }
 
@@ -39,60 +41,111 @@ export default class Header extends React.Component {
     };
 
     trimName = (str) => {
-        return (str.length > 36) ? (str.substring(0, 33) + "...") : str;
-    }
+        return (str.length > 35) ? (str.substring(0, 32) + "...") : str;
+    };
 
-    render() {
-        return (
-            <View>
-
-                <View style={styles.topbox} key="1">
-                    <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center'}}>
-                        {this.state.fontLoaded == '1' ? (
-                            <Text style={{ fontFamily: 'myfont' }}> {this.trimName(this.state.location)}</Text>
-                        ) : null}
-                    </View>
-                </View>
-
-                <View style={styles.box} key="2">
+    renderHeaderButton = () => {
+        if(this.state.displaySearch)
+        {
+            return (
+                <TouchableOpacity onPress={ () => this.setState({displaySearch: 0}) }>
                     <Ionicons
-                        onPress={ () => this.doSearch() }
-                        name="ios-search-outline"
+                        name={ (Platform.OS === 'ios') ? "ios-arrow-up" : "md-arrow-dropup" }
                         size={32}
                         style={{ padding: 10 }}
                         color="gray"
                     />
+                </TouchableOpacity>
+            );
+        }
+        else
+        {
+            return (
+                <TouchableOpacity onPress={ () => this.setState({displaySearch: 1}) }>
+                    <Ionicons
+                        name={ (Platform.OS === 'ios') ? "ios-search" : "md-search" }
+                        size={32}
+                        style={{ padding: 10 }}
+                        color="gray"
+                    />
+                </TouchableOpacity>
+            );
+        }
+    };
+
+    shouldDisplaySearchBar = () => {
+        if(this.state.displaySearch)
+        {
+            return (
+                <View style={styles.box}>
+                    <TouchableOpacity onPress={ () => this.doSearch() }>
+                        <Ionicons
+                            name={ (Platform.OS === 'ios') ? "ios-search" : "md-search" }
+                            size={32}
+                            style={{ padding: 10 }}
+                            color="gray"
+                        />
+                    </TouchableOpacity>
                     <TextInput
                         {...this.props}
                         style={styles.input}
                         placeholderTextColor='#999999'
-                        placeholder="ابحث عن مطعم..."
+                        placeholder="البحث عن مطعم"
                         returnKeyType={"search"}
                         underlineColorAndroid="transparent"
                         onChangeText={(text) => this.setState({searchText:text})}
                         onSubmitEditing={(event) => this.doSearch() }
                     />
                 </View>
+            );
+        }
+        else return null;
+    };
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={styles.topbox}>
+                    <View style={{ flex:0.2, flexDirection: 'row', justifyContent:'flex-start' }}>
+                        {this.renderHeaderButton()}
+                    </View>
+
+                    <View style={{ flex:1, flexDirection: 'row', justifyContent:'center' }}>
+                        {this.state.fontLoaded == '1' ? (
+                            <Text style={{ fontSize: 16, fontFamily: 'myfont' }}> {this.trimName(this.state.location)}</Text>
+                        ) : null}
+                    </View>
+                </View>
+
+                {this.shouldDisplaySearchBar()}
             </View>
         );
     }
 }
 
 var styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'white'
+    },
+    topbox: {
+		height: 55,
+        flexDirection: 'row',
+		flexWrap: 'wrap',
+		alignItems: 'center',
+        justifyContent: 'center',
+		backgroundColor: '#fff',
+        borderBottomColor: '#EEEEEE',
+        borderBottomWidth: 1
+	},
 	box: {
 		height: 45,
 		backgroundColor: Colors.smoothGray,
-		shadowColor: '#000000',
-		shadowOpacity: 2,
-		shadowOffset: {
-			height: 2,
-			width: 0
-		},
-		borderBottomColor: Colors.smoothGray,
-		borderBottomWidth: 0.3,
+        borderRadius: 9,
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		alignItems: 'center'
+		alignItems: 'center',
+        marginVertical: 12,
+        marginHorizontal: 10
 	},
 
 	input: {
@@ -108,12 +161,4 @@ var styles = StyleSheet.create({
 
 		flex: 1
 	},
-
-	topbox: {
-		height: 55,
-        flexDirection: 'row',
-		flexWrap: 'wrap',
-		alignItems: 'center',
-		backgroundColor: '#fff'
-	}
 });
