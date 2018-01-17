@@ -12,5 +12,6 @@ export default {
   noticeBackground: tintColor,
   noticeText: '#fff',
   mainColor: '#64b533',
+  fadedMainColor: '#99D973',
   smoothGray: '#F2F3F5'
 };

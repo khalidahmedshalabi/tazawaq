@@ -31,7 +31,7 @@ export default class Header extends React.Component {
                     this.props.navigation.dispatch(NavigationActions.reset({
                       index: 0,
                       actions: [
-                        NavigationActions.navigate({ routeName: 'Main' })
+                        NavigationActions.navigate({ routeName: 'Signin' })
                       ]
                   }));
                 }
@@ -63,7 +63,7 @@ export default class Header extends React.Component {
                         //console.log(data.description);
                         //console.log(details);
                         AsyncStorage.setItem('location', data.description).then(() => {
-                            this.props.navigation.navigate("Main", { });
+                            this.props.navigation.navigate("Signin", { });
                         });
                       }}
                       getDefaultValue={() => {

@@ -52,12 +52,5 @@ export default class Restaurant extends Component {
 				</View>
 			</View>
 		);
-		// <ProgressiveImage
-		// 	src="https://unsplash.it/400/400?image=1"
-		// 	placeholder="tiny-image.jpg">
-		// 	{src => (
-		// 		<Image src="https://unsplash.it/400/400?image=1" alt="an image" />
-		// 	)}
-		// </ProgressiveImage>
 	}
 }
