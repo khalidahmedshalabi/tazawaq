@@ -64,9 +64,9 @@ export default class HomeScreen extends React.Component {
 				},
 				{
 					key: 2,
-					name: 'مطعم كنتاكي للدجاج',
+					name: 'مطعم ماكدونالدز',
 					image:
-						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
+						'https://munchies-images.vice.com/wp_upload/mcdonalds-food-writer.jpg',
 					time: '30',
 					desc: 'وجبات سريعه و لذيذه ف الحال',
 					stars: '4.3',
