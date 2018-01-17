@@ -5,7 +5,6 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import Colors from '../constants/Colors';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { NavigationActions } from 'react-navigation';
-import { Dimensions } from 'react-native';
 
 export default class Header extends React.Component {
     static navigationOptions = {
@@ -45,12 +44,10 @@ export default class Header extends React.Component {
 
         return (
             <View style={{ flex:1}}>
-                <View style = {{ flex: 0.5, backgroundColor: 'white', marginTop:-2 }} >
-                    <Image
-                        style={ {width: Dimensions.get('window').width, height: '100%', margin:0}}
-                        resizeMode='contain'
-                        source={require('../assets/images/location-picker-cover.jpeg')}/>
-                </View>
+                <Image
+                    style={ {width: '100%', height: '30%'}}
+                    resizeMode='cover'
+                    source={require('../assets/images/location-picker-cover.jpeg')}/>
 
                 <View style={{ flex: 1 }}>
                     <GooglePlacesAutocomplete
