@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions, KeyboardAvoidingView, AsyncStorage,
         StyleSheet, TextInput, View, Text, Image,
-        Platform, TouchableOpacity } from "react-native";
+        Platform, TouchableOpacity, Linking } from "react-native";
 import { Button } from "react-native-elements";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
@@ -25,58 +25,74 @@ export default class Signin extends React.Component {
         }));
     };
 
+    componentDidMount() {
+        AsyncStorage.getItem('location').then(
+            (value) => {
+                if(value !== null)
+                    this.setState({ location: value });
+            });
+    }
+
     constructor(props) {
         super(props);
         this.state = {
             'login': '1',
-            'SkippedLogin': '1',
             identifier: '',
             password: '',
+            cpassword: '',
+            email: '',
+            location: '',
             errorMsg: '',
         }
 
-        AsyncStorage.getItem('SkippedLogin').then(
+        AsyncStorage.getItem('login').then(
             (value) => {
-                this.setState({ 'SkippedLogin': value })
+                this.setState({ 'login': value })
 
                 if(value == '1')
                 {
-                    this.navigateToHome();
-                }
-                else
-                {
-                    AsyncStorage.getItem('login').then(
-                        (logged) => {
-                            this.setState({ 'login': logged })
-
-                            if(logged == '1')
-                            {
-                                this.navigateToHome();
-                            }
-                        }
-                    );
+                    this.props.navigation.dispatch(NavigationActions.reset({
+                      index: 0,
+                      actions: [
+                        NavigationActions.navigate({ routeName: 'Main' })
+                      ]
+                    }));
                 }
             }
         );
     }
 
-    loginUser = () => {
-        if(this.state.password.length < 6)
+    registerUser = () => {
+        if(this.state.identifier.length < 3 || this.state.password.length < 6 ||
+            this.state.email.length < 4)
         {
-            this.setState({ errorMsg: 'كلمة المرور قصيرة جداً' });
+            this.setState({ errorMsg: 'المدخلات قصيرة جداً' });
+            return;
+        }
+        if(this.state.password != this.state.cpassword)
+        {
+            this.setState({ errorMsg: 'كلمة المرور لا تطابق كلمة المرور التأكيدية' });
             return;
         }
         this.setState({ errorMsg: '' });
 
-        /*=fetch(Server.dest + '/api/signin?identifier='+this.state.identifier+'&password='+this.state.password, {headers: {'Cache-Control': 'no-cache'}}).
+        /*
+        // remember to send location
+        fetch(Server.dest + '/api/signup?identifier='+this.state.identifier+'&password='+this.state.password+'&location='+this.state.location+'&email='+this.state.email,
+        {headers: {'Cache-Control': 'no-cache'}}).
         then((res) => res.json()).then((resJson) => {
             if(resJson.response == 0)
-                this.setState({ errorMsg: 'اسم مستخدم او كلمة مرور غير صحيحتان'});
+                this.setState({ errorMsg: 'اسم المستخدم غير متاح' });
             else if(resJson.response > 0)
             {
                 AsyncStorage.setItem('userid', resJson.response);
                 this.setLoginStatus('1');
-                this.navigateToHome();
+                this.props.navigation.dispatch(NavigationActions.reset({
+                  index: 0,
+                  actions: [
+                    NavigationActions.navigate({ routeName: 'Main' })
+                  ]
+                }));
             }
         })*/
     };
@@ -86,7 +102,7 @@ export default class Signin extends React.Component {
         {
             return (
                 <View style={{ paddingVertical: 3, flexDirection: 'row', justifyContent: 'center' }}>
-                    <Text style={{ fontFamily: 'myfont', color: '#E85151' }}>{this.state.errorMsg}</Text>
+                    <Text style={{ fontFamily: 'myfont', color: 'red' }}>{this.state.errorMsg}</Text>
                 </View>
             );
         }
@@ -97,7 +113,7 @@ export default class Signin extends React.Component {
     };
 
     render() {
-        if(this.state.login == '1' || this.state.SkippedLogin == '1')
+        if(this.state.login == '1')
         {
             return (
                 <LoadingIndicator size="large" />
@@ -134,7 +150,7 @@ export default class Signin extends React.Component {
                                     autoFocus={false}
                                     style={styles.textInput}
                                     onChangeText={(text) => this.setState({identifier:text})}
-                                    onSubmitEditing={(event) => this.loginUser() } />
+                                    onSubmitEditing={(event) => this.registerUser() } />
 
                                 <Ionicons
                                     name={Platform.OS === 'ios' ? 'ios-contact' : 'md-contact'}
@@ -154,7 +170,7 @@ export default class Signin extends React.Component {
                                     secureTextEntry={true}
                                     style={styles.textInput}
                                     onChangeText={(text) => this.setState({password:text})}
-                                    onSubmitEditing={(event) => this.loginUser() }/>
+                                    onSubmitEditing={(event) => this.registerUser() }/>
 
                                   <Ionicons
                                     name={Platform.OS === 'ios' ? 'ios-lock' : 'md-lock'}
@@ -162,62 +178,70 @@ export default class Signin extends React.Component {
                                     color={Colors.fadedMainColor}
                                     style={styles.inputIcon}/>
                             </View>
+
+                            <View style={styles.singleInputContainer}>
+                                <TextInput
+                                    underlineColorAndroid='transparent'
+                                    placeholder='تأكيد كلمة المرور'
+                                    placeholderTextColor='#CCCCCC'
+                                    autoGrow={false}
+                                    multiline={false}
+                                    autoFocus={false}
+                                    secureTextEntry={true}
+                                    style={styles.textInput}
+                                    onChangeText={(text) => this.setState({cpassword:text})}
+                                    onSubmitEditing={(event) => this.registerUser() }/>
+
+                                  <Ionicons
+                                    name={Platform.OS === 'ios' ? 'ios-lock' : 'md-lock'}
+                                    size={26}
+                                    color={Colors.fadedMainColor}
+                                    style={styles.inputIcon}/>
+                            </View>
+
+                            <View style={styles.singleInputContainer}>
+                                <TextInput
+                                    underlineColorAndroid='transparent'
+                                    placeholder='عنوان التوصيل'
+                                    placeholderTextColor='#CCCCCC'
+                                    autoGrow={false}
+                                    multiline={false}
+                                    autoFocus={false}
+                                    style={styles.textInput}
+                                    defaultValue={this.state.location}
+                                    onChangeText={(text) => this.setState({location:text})}
+                                    onSubmitEditing={(event) => this.registerUser() } />
+
+                                <Ionicons
+                                    name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+                                    size={26}
+                                    color={Colors.fadedMainColor}
+                                    style={styles.inputIcon}/>
+                            </View>
                         </View>
                     </KeyboardAvoidingView>
 
-                    <View style={{ flex:0.4, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <View style={{flex: 1}}>
-                                <Button
-                                    onPress={() => this.props.navigation.navigate("Signup")}
-                                    color={Colors.mainColor}
-                                    backgroundColor='rgba(100, 181, 51, 0.15)'
-                                    containerViewStyle={{ borderRadius:15, borderColor: 'rgba(100, 181, 51, 0.2)', borderWidth: 1 }}
-                                    borderRadius={15}
-                                    buttonStyle={{padding: 10}}
-                                    textStyle={{ fontFamily: 'myfont' }}
-                                    title="انشاء حساب جديد" />
-                            </View>
-
-                            <View style={{flex: 1}}>
-                                <Button
-                                    onPress={() => {
-                                        this.loginUser()
-                                    }}
-                                    color='white'
-                                    backgroundColor='rgba(100, 181, 51, 0.7)'
-                                    containerViewStyle={{borderRadius:15}}
-                                    borderRadius={15}
-                                    buttonStyle={{ padding: 10 }}
-                                    textStyle={{ fontFamily: 'myfont' }}
-                                    title="تسجيل دخول" />
-                            </View>
-                        </View>
-
-                        <TouchableOpacity style={{ flex:1, marginTop:7 }}>
-                            <Text style={{ fontFamily: 'myfont', color: Colors.mainColor }}>نسيت كلمة المرور؟</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.signupButtonContainer}>
-                        <View style={{flex: 1, marginBottom: 7, width: '100%'}}>
+                    <View style={{ flex:0.8, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{flex: 1, flexDirection:'column', justifyContent: 'center' }}>
                             <Button
                                 onPress={() => {
-                                    AsyncStorage.setItem('login', '0').then(() => {
-                                        AsyncStorage.setItem('SkippedLogin', '1').then(() => {
-                                            this.navigateToHome();
-                                        });
-                                    });
+                                    this.registerUser()
                                 }}
-                                color={Colors.mainColor}
-                                backgroundColor='rgba(100, 181, 51, 0.15)'
+                                color='white'
+                                backgroundColor='rgba(100, 181, 51, 0.7)'
+                                containerViewStyle={{borderRadius:15}}
                                 borderRadius={15}
-                                buttonStyle={{padding: 10}}
-                                containerViewStyle={{ marginLeft:0,
-                                    width: '100%', borderRadius:15, borderColor: 'rgba(100, 181, 51, 0.2)', borderWidth: 1 }}
+                                buttonStyle={{ padding: 10 }}
                                 textStyle={{ fontFamily: 'myfont' }}
-                                title="استكمل كـزائر" />
+                                title="انشاء الحساب" />
                         </View>
+
+                        <TouchableOpacity style={{ flex:1, marginTop:1, width: '80%' }}
+                            onPress={() => Linking.openURL('')}>
+                            <Text style={{ textAlign:'center', fontFamily: 'myfont', color: Colors.mainColor }}>
+                            عندما اضغط "انشاء حساب" اقر اني قرأت و اوافق على الشروط و الاحكام و سياسة هذا التطبيق
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             );
@@ -251,12 +275,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center'
-    },
-    signupButtonContainer: {
-        flex: 0.3,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '92%'
-    },
+    }
 });

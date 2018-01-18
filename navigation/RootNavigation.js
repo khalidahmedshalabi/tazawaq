@@ -6,11 +6,13 @@ import MainTabNavigator from './MainTabNavigator';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 import LocationSetting from '../screens/LocationSetting';
 import Signin from '../screens/Signin';
+import Signup from '../screens/Signup';
 
 const RootStackNavigator = StackNavigator(
     {
         LocationSetting: { screen: LocationSetting },
         Signin: { screen: Signin },
+        Signup: { screen: Signup },
         Main: { screen: MainTabNavigator },
     },
     {
