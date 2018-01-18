@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList } from 'react-native';
+import { Text, View, StyleSheet, FlatList,TouchableOpacity } from 'react-native';
 import Restaurant from '../components/Restaurant';
 import Colors from '../constants/Colors';
 
@@ -117,8 +117,11 @@ export default class HomeScreen extends React.Component {
 	}
 
 	render() {
+		const { navigate } = this.props.navigation;
 		return (
-			<View>
+
+			<View >
+
 				<FlatList
 					automaticallyAdjustContentInsets={false}
 					style={{ backgroundColor: 'white' }}
@@ -126,6 +129,8 @@ export default class HomeScreen extends React.Component {
 					ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
 					data={this.state.Restaurants}
 					renderItem={({ item }) => (
+						<TouchableOpacity onPress={() =>
+					navigate('Restaurant', { key:item.key })} >
 						<Restaurant
 							style={styles.restaurant}
 							stars={item.stars}
@@ -135,6 +140,7 @@ export default class HomeScreen extends React.Component {
 							image={item.image}
 							price={item.deliver_price}
 						/>
+						</TouchableOpacity>
 					)}
 				/>
 			</View>

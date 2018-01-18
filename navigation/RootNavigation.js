@@ -7,6 +7,7 @@ import registerForPushNotificationsAsync from '../api/registerForPushNotificatio
 import LocationSetting from '../screens/LocationSetting';
 import Signin from '../screens/Signin';
 import Signup from '../screens/Signup';
+import Restaurant from '../screens/Restaurant';
 
 const RootStackNavigator = StackNavigator(
     {
@@ -14,6 +15,7 @@ const RootStackNavigator = StackNavigator(
         Signin: { screen: Signin },
         Signup: { screen: Signup },
         Main: { screen: MainTabNavigator },
+        Restaurant: {screen : Restaurant}
     },
     {
         navigationOptions: () => ({
