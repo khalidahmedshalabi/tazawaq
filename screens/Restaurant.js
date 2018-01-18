@@ -11,10 +11,12 @@ import LoadingIndicator from '../components/LoadingIndicator';
 //import Server from '../constants/server';
 
 export default class Restaurant extends React.Component {
+
     render() {
+      const { params } = this.props.navigation.state;
       return(
-        <Text>HHHHH</Text>
-      )
+        <Text>{params.key}</Text>
+      );
 
     }
 }
