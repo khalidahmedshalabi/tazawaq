@@ -6,11 +6,11 @@ import { Button } from "react-native-elements";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 import Colors from '../constants/Colors';
-
+import PhoneInput from 'react-native-phone-input'
 import LoadingIndicator from '../components/LoadingIndicator';
 //import Server from '../constants/server';
 
-export default class Signin extends React.Component {
+export default class Signup extends React.Component {
     setLoginStatus = (value) => {
         AsyncStorage.setItem('login', value);
         this.setState({ 'login': value });
@@ -37,10 +37,10 @@ export default class Signin extends React.Component {
         super(props);
         this.state = {
             'login': '1',
-            identifier: '',
+            phone: '',
+            email: '',
             password: '',
             cpassword: '',
-            email: '',
             location: '',
             errorMsg: '',
         }
@@ -63,10 +63,9 @@ export default class Signin extends React.Component {
     }
 
     registerUser = () => {
-        if(this.state.identifier.length < 3 || this.state.password.length < 6 ||
-            this.state.email.length < 4)
+        if(this.state.password.length < 6)
         {
-            this.setState({ errorMsg: 'المدخلات قصيرة جداً' });
+            this.setState({ errorMsg: 'كلمة المرور قصيرة. اقل طول مسموح هو ستة' });
             return;
         }
         if(this.state.password != this.state.cpassword)
@@ -74,17 +73,35 @@ export default class Signin extends React.Component {
             this.setState({ errorMsg: 'كلمة المرور لا تطابق كلمة المرور التأكيدية' });
             return;
         }
+
+        if(this.state.email.length == 0 && this.refs.phone.getValue().length < 5)
+        {
+            this.setState({ errorMsg: 'يجب ادخال رقم الهاتف او البريد الالكتروني'});
+            return;
+        }
+
+        var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var isValidEmail = emailRegex.test(this.state.email);
+
+        if(!isValidEmail && !this.refs.phone.isValidNumber())
+        {
+            this.setState({ errorMsg: 'يجب ادخال بريد الكتروني او رقم هاتف صحيح على الاقل'});
+            return;
+        }
+        var confirmationVia = (isValidEmail) ? 0 : 1; // 0 email, 1 sms
+
         this.setState({ errorMsg: '' });
 
-        /*
-        // remember to send location
-        fetch(Server.dest + '/api/signup?identifier='+this.state.identifier+'&password='+this.state.password+'&location='+this.state.location+'&email='+this.state.email,
+        /*fetch(Server.dest + '/api/signup?phone='+this.state.phone +
+            '&password='+this.state.password + '&location='+this.state.location +
+            '&email='+this.state.email + '&conftype='+confirmationVia,
         {headers: {'Cache-Control': 'no-cache'}}).
         then((res) => res.json()).then((resJson) => {
             if(resJson.response == 0)
                 this.setState({ errorMsg: 'اسم المستخدم غير متاح' });
             else if(resJson.response > 0)
             {
+                // nav to confirm screen
                 AsyncStorage.setItem('userid', resJson.response);
                 this.setLoginStatus('1');
                 this.props.navigation.dispatch(NavigationActions.reset({
@@ -127,7 +144,7 @@ export default class Signin extends React.Component {
                         height: Dimensions.get('window').height, width: Dimensions.get('window').width }}>
 
                     <Image
-                        style={{ flex: 1, height: '50%', width: Dimensions.get('window').width }}
+                        style={{ flex: 1, height: '35%', width: Dimensions.get('window').width }}
                         resizeMode='cover'
                         source={require('../assets/images/signupin-cover.jpg')} />
 
@@ -141,19 +158,44 @@ export default class Signin extends React.Component {
                             {this.shouldRenderErrorMessage()}
 
                             <View style={styles.singleInputContainer}>
+                                <PhoneInput
+                                    style={{
+                                        flex: 1,
+                                        padding: 9,
+                                        borderRadius: 4,
+                                        backgroundColor: 'transparent',
+                                        borderBottomColor: Colors.fadedMainColor,
+                                        borderBottomWidth: 0.7
+                                    }}
+                                    ref='phone'
+                                    confirmText='اختيار'
+                                    cancelText='الغاء'
+                                    initialCountry='sa'
+                                    textProps={{placeholder: 'رقم الجوال'}}
+                                    textStyle={{color: Colors.fadedMainColor}}
+                                    pickerButtonColor={Colors.mainColor} />
+
+                                <Ionicons
+                                    name={Platform.OS === 'ios' ? 'ios-phone-portrait' : 'md-phone-portrait'}
+                                    size={26}
+                                    color={Colors.fadedMainColor}
+                                    style={styles.inputIcon}/>
+                            </View>
+
+                            <View style={styles.singleInputContainer}>
                                 <TextInput
                                     underlineColorAndroid='transparent'
-                                    placeholder='رقم الجوال او البريد الالكتروني'
+                                    placeholder='البريد الالكتروني'
                                     placeholderTextColor='#CCCCCC'
                                     autoGrow={false}
                                     multiline={false}
                                     autoFocus={false}
                                     style={styles.textInput}
-                                    onChangeText={(text) => this.setState({identifier:text})}
+                                    onChangeText={(text) => this.setState({email:text}) }
                                     onSubmitEditing={(event) => this.registerUser() } />
 
                                 <Ionicons
-                                    name={Platform.OS === 'ios' ? 'ios-contact' : 'md-contact'}
+                                    name={Platform.OS === 'ios' ? 'ios-mail' : 'md-mail'}
                                     size={26}
                                     color={Colors.fadedMainColor}
                                     style={styles.inputIcon}/>
