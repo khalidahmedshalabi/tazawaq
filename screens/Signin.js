@@ -68,7 +68,7 @@ export default class Signin extends React.Component {
         }
         this.setState({ errorMsg: '' });
 
-        /*=fetch(Server.dest + '/api/signin?identifier='+this.state.identifier+'&password='+this.state.password, {headers: {'Cache-Control': 'no-cache'}}).
+        /*fetch(Server.dest + '/api/signin?identifier='+this.state.identifier+'&password='+this.state.password, {headers: {'Cache-Control': 'no-cache'}}).
         then((res) => res.json()).then((resJson) => {
             if(resJson.response == 0)
                 this.setState({ errorMsg: 'اسم مستخدم او كلمة مرور غير صحيحتان'});
