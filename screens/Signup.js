@@ -1,30 +1,17 @@
 import React from 'react';
 import { Dimensions, KeyboardAvoidingView, AsyncStorage,
         StyleSheet, TextInput, View, Text, Image,
-        Platform, TouchableOpacity, Linking } from "react-native";
+        Platform, TouchableOpacity, Linking,
+        Alert } from "react-native";
 import { Button } from "react-native-elements";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 import Colors from '../constants/Colors';
 import PhoneInput from 'react-native-phone-input'
 import LoadingIndicator from '../components/LoadingIndicator';
-//import Server from '../constants/server';
+import Server from '../constants/server';
 
 export default class Signup extends React.Component {
-    setLoginStatus = (value) => {
-        AsyncStorage.setItem('login', value);
-        this.setState({ 'login': value });
-    }
-
-    navigateToHome = () => {
-        this.props.navigation.dispatch(NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'Main' })
-          ]
-        }));
-    };
-
     componentDidMount() {
         AsyncStorage.getItem('location').then(
             (value) => {
@@ -62,6 +49,36 @@ export default class Signup extends React.Component {
         );
     }
 
+    sendDataToServer = (confirmationVia) => {
+        this.setState({ login: '1' });
+
+        AsyncStorage.multiGet(["location", "latitude", "longitude", "region", "country"], (err, stores) => {
+            var locationData = "";
+            stores.map((result, i, store) => {
+                locationData += "&" + store[i][0] + "=" + store[i][1];
+            });
+            resolve(locationData);
+        }).then((data) => {
+            fetch(Server.dest + '/api/signup?phone='+this.state.phone+
+                '&email='+this.state.email + '&password='+this.state.password+
+                '&conftype='+confirmationVia + data,
+            {headers: {'Cache-Control': 'no-cache'}}).
+            then((res) => res.json()).then((resJson) => {
+                if(resJson.response == 0)
+                {
+                    this.setState({ errorMsg: 'انت بالفعل مُسجل عندنا' });
+                }
+                else
+                {
+                    // Navigate to confirm screen
+                    this.props.navigation.navigate("CodeVerification", { process: 0 /* means SIGN-UP*/,
+                        type: confirmationVia,
+                        device: (confirmationVia == 0) ? (this.state.email) : (this.state.phone) });
+                }
+            })
+        });
+    };
+
     registerUser = () => {
         if(this.state.password.length < 6)
         {
@@ -88,30 +105,26 @@ export default class Signup extends React.Component {
             this.setState({ errorMsg: 'يجب ادخال بريد الكتروني او رقم هاتف صحيح على الاقل'});
             return;
         }
-        var confirmationVia = (isValidEmail) ? 0 : 1; // 0 email, 1 sms
 
         this.setState({ errorMsg: '' });
 
-        /*fetch(Server.dest + '/api/signup?phone='+this.state.phone +
-            '&password='+this.state.password + '&location='+this.state.location +
-            '&email='+this.state.email + '&conftype='+confirmationVia,
-        {headers: {'Cache-Control': 'no-cache'}}).
-        then((res) => res.json()).then((resJson) => {
-            if(resJson.response == 0)
-                this.setState({ errorMsg: 'اسم المستخدم غير متاح' });
-            else if(resJson.response > 0)
-            {
-                // nav to confirm screen
-                AsyncStorage.setItem('userid', resJson.response);
-                this.setLoginStatus('1');
-                this.props.navigation.dispatch(NavigationActions.reset({
-                  index: 0,
-                  actions: [
-                    NavigationActions.navigate({ routeName: 'Main' })
-                  ]
-                }));
-            }
-        })*/
+        if(isValidEmail && this.refs.phone.isValidNumber())
+        {
+            Alert.alert(
+                'تأكيد',
+                'لقد ادخلت بريد الكتروني و رقم جوال صحيحين, اى منهم تريد ان تستخدم لتأكيد هويتك؟',
+                [
+                    {text: 'البريد', onPress: () => this.sendDataToServer(0) /* via email */ },
+                    {text: 'رجوع', onPress: () => {}, style: 'cancel'},
+                    {text: 'الجوال', onPress: () => this.sendDataToServer(1) /* via sms */ },
+                ],
+                { cancelable: true }
+            );
+        }
+        else
+        {
+            this.sendDataToServer((isValidEmail) ? 0 : 1); //  // 0 via email, 1 via sms
+        }
     };
 
     shouldRenderErrorMessage = () => {

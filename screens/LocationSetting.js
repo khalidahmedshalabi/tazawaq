@@ -7,7 +7,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import { NavigationActions } from 'react-navigation';
 import CountryRegionPicker from '../components/CountryRegionPicker';
 
-export default class Header extends React.Component {
+export default class LocationSetting extends React.Component {
     static navigationOptions = {
         header: null
     };

@@ -8,12 +8,14 @@ import LocationSetting from '../screens/LocationSetting';
 import Signin from '../screens/Signin';
 import Signup from '../screens/Signup';
 import Restaurant from '../screens/Restaurant';
+import CodeVerification from '../screens/CodeVerification';
 
 const RootStackNavigator = StackNavigator(
     {
         LocationSetting: { screen: LocationSetting },
         Signin: { screen: Signin },
         Signup: { screen: Signup },
+        CodeVerification: { screen: CodeVerification },
         Main: { screen: MainTabNavigator },
         Restaurant: {screen : Restaurant}
     },
