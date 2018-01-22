@@ -170,9 +170,9 @@ export default class Signin extends React.Component {
                             <View style={{flex: 1}}>
                                 <Button
                                     onPress={() => this.props.navigation.navigate("Signup")}
-                                    color={Colors.mainColor}
-                                    backgroundColor='rgba(100, 181, 51, 0.15)'
-                                    containerViewStyle={{ borderRadius:15, borderColor: 'rgba(100, 181, 51, 0.2)', borderWidth: 1 }}
+                                    color='white'
+                                    backgroundColor={Colors.fadedMainColor}
+                                    containerViewStyle={{ borderRadius:15 }}
                                     borderRadius={15}
                                     buttonStyle={{padding: 10}}
                                     textStyle={{ fontFamily: 'myfont' }}
@@ -185,7 +185,7 @@ export default class Signin extends React.Component {
                                         this.loginUser()
                                     }}
                                     color='white'
-                                    backgroundColor='rgba(100, 181, 51, 0.7)'
+                                    backgroundColor={Colors.mainColor}
                                     containerViewStyle={{borderRadius:15}}
                                     borderRadius={15}
                                     buttonStyle={{ padding: 10 }}
@@ -209,12 +209,12 @@ export default class Signin extends React.Component {
                                         });
                                     });
                                 }}
-                                color={Colors.mainColor}
-                                backgroundColor='rgba(100, 181, 51, 0.15)'
+                                color='white'
+                                backgroundColor={Colors.fadedMainColor}
                                 borderRadius={15}
                                 buttonStyle={{padding: 10}}
                                 containerViewStyle={{ marginLeft:0,
-                                    width: '100%', borderRadius:15, borderColor: 'rgba(100, 181, 51, 0.2)', borderWidth: 1 }}
+                                    width: '100%', borderRadius:15 }}
                                 textStyle={{ fontFamily: 'myfont' }}
                                 title="استكمل كـزائر" />
                         </View>

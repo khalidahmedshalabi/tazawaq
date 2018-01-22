@@ -11,7 +11,8 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
-  mainColor: '#64b533',
-  fadedMainColor: '#99D973',
+  mainColor: '#EBB70A',
+  fadedMainColor: '#F5D97D',
+  secondaryColor: '#2E4C62',
   smoothGray: '#F2F3F5'
 };

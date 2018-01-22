@@ -283,7 +283,7 @@ export default class Signup extends React.Component {
                                     this.registerUser()
                                 }}
                                 color='white'
-                                backgroundColor='rgba(100, 181, 51, 0.7)'
+                                backgroundColor={Colors.mainColor}
                                 containerViewStyle={{borderRadius:15}}
                                 borderRadius={15}
                                 buttonStyle={{ padding: 10 }}
