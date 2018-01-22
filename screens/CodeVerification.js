@@ -38,7 +38,7 @@ export default class CodeVerification extends React.Component {
 
         if(this.state.code.length == 5) {
             fetch(Server.dest + '/api/verifycode?code='+this.state.code+
-                '&identifier='+this.props.device+'&type='+this.props.type+'&process='+this.props.process,
+                '&identifier='+this.props.device+'&process='+this.props.process,
             {headers: {'Cache-Control': 'no-cache'}}).
             then((res) => res.json()).then((resJson) => {
                 if(resJson.response == 2)
@@ -61,10 +61,6 @@ export default class CodeVerification extends React.Component {
         else this.setState({ errorMsg: 'كود غير صالح'});
     }
 
-    returnDeviceText = () => {
-        return (this.props.type == 0) ? ("البريد الالكتروني " + this.props.device) : ("الجوال " + this.props.device);
-    }
-
     shouldRenderErrorMessage = () => {
         if(this.state.errorMsg != '')
         {
@@ -82,7 +78,7 @@ export default class CodeVerification extends React.Component {
                 {this.shouldRenderErrorMessage()}
 
                 <Text style={{ paddingHorizontal:10, marginTop:40, textAlign:'center', fontFamily: 'myfont', color: Colors.mainColor }}>
-                    سيتم ارسال كود التأكيد على {this.returnDeviceText()} اكتب الكود بالاسفل
+                    سيتم ارسال كود التأكيد على الجوال {this.props.device} اكتب الكود بالاسفل
                 </Text>
 
                 <KeyboardAvoidingView

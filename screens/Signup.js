@@ -25,7 +25,6 @@ export default class Signup extends React.Component {
         this.state = {
             'login': '1',
             phone: '',
-            email: '',
             password: '',
             cpassword: '',
             location: '',
@@ -49,7 +48,7 @@ export default class Signup extends React.Component {
         );
     }
 
-    sendDataToServer = (confirmationVia) => {
+    sendDataToServer = () => {
         this.setState({ login: '1' });
 
         AsyncStorage.multiGet(["location", "latitude", "longitude", "region", "country"], (err, stores) => {
@@ -60,8 +59,7 @@ export default class Signup extends React.Component {
             resolve(locationData);
         }).then((data) => {
             fetch(Server.dest + '/api/signup?phone='+this.state.phone+
-                '&email='+this.state.email + '&password='+this.state.password+
-                '&conftype='+confirmationVia + data,
+                '&password='+this.state.password + data,
             {headers: {'Cache-Control': 'no-cache'}}).
             then((res) => res.json()).then((resJson) => {
                 if(resJson.response == 0)
@@ -72,8 +70,7 @@ export default class Signup extends React.Component {
                 {
                     // Navigate to confirm screen
                     this.props.navigation.navigate("CodeVerification", { process: 0 /* means SIGN-UP*/,
-                        type: confirmationVia,
-                        device: (confirmationVia == 0) ? (this.state.email) : (this.state.phone) });
+                        device: this.state.phone });
                 }
             })
         });
@@ -91,40 +88,20 @@ export default class Signup extends React.Component {
             return;
         }
 
-        if(this.state.email.length == 0 && this.refs.phone.getValue().length < 5)
+        if(this.refs.phone.getValue().length < 5)
         {
-            this.setState({ errorMsg: 'يجب ادخال رقم الهاتف او البريد الالكتروني'});
+            this.setState({ errorMsg: 'يجب ادخال رقم الجوال'});
             return;
         }
 
-        var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        var isValidEmail = emailRegex.test(this.state.email);
-
-        if(!isValidEmail && !this.refs.phone.isValidNumber())
+        if(!this.refs.phone.isValidNumber())
         {
-            this.setState({ errorMsg: 'يجب ادخال بريد الكتروني او رقم هاتف صحيح على الاقل'});
+            this.setState({ errorMsg: 'رقم الجوال غير صالح'});
             return;
         }
 
         this.setState({ errorMsg: '' });
-
-        if(isValidEmail && this.refs.phone.isValidNumber())
-        {
-            Alert.alert(
-                'تأكيد',
-                'لقد ادخلت بريد الكتروني و رقم جوال صحيحين, اى منهم تريد ان تستخدم لتأكيد هويتك؟',
-                [
-                    {text: 'البريد', onPress: () => this.sendDataToServer(0) /* via email */ },
-                    {text: 'رجوع', onPress: () => {}, style: 'cancel'},
-                    {text: 'الجوال', onPress: () => this.sendDataToServer(1) /* via sms */ },
-                ],
-                { cancelable: true }
-            );
-        }
-        else
-        {
-            this.sendDataToServer((isValidEmail) ? 0 : 1); //  // 0 via email, 1 via sms
-        }
+        this.sendDataToServer();
     };
 
     shouldRenderErrorMessage = () => {
@@ -190,25 +167,6 @@ export default class Signup extends React.Component {
 
                                 <Ionicons
                                     name={Platform.OS === 'ios' ? 'ios-phone-portrait' : 'md-phone-portrait'}
-                                    size={26}
-                                    color={Colors.fadedMainColor}
-                                    style={styles.inputIcon}/>
-                            </View>
-
-                            <View style={styles.singleInputContainer}>
-                                <TextInput
-                                    underlineColorAndroid='transparent'
-                                    placeholder='البريد الالكتروني'
-                                    placeholderTextColor='#CCCCCC'
-                                    autoGrow={false}
-                                    multiline={false}
-                                    autoFocus={false}
-                                    style={styles.textInput}
-                                    onChangeText={(text) => this.setState({email:text}) }
-                                    onSubmitEditing={(event) => this.registerUser() } />
-
-                                <Ionicons
-                                    name={Platform.OS === 'ios' ? 'ios-mail' : 'md-mail'}
                                     size={26}
                                     color={Colors.fadedMainColor}
                                     style={styles.inputIcon}/>
