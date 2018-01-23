@@ -6,11 +6,18 @@ import MainTabNavigator from './MainTabNavigator';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 import LocationSetting from '../screens/LocationSetting';
 import Signin from '../screens/Signin';
+import Signup from '../screens/Signup';
 import Restaurant from '../screens/Restaurant';
+import CodeVerification from '../screens/CodeVerification';
+import ResetPassword from '../screens/ResetPassword';
+
 const RootStackNavigator = StackNavigator(
     {
+        ResetPassword: { screen: ResetPassword },
         LocationSetting: { screen: LocationSetting },
         Signin: { screen: Signin },
+        Signup: { screen: Signup },
+        CodeVerification: { screen: CodeVerification },
         Main: { screen: MainTabNavigator },
         Restaurant: {screen : Restaurant}
     },

@@ -12,6 +12,10 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { Font } from 'expo';
 
+const fontCol = 'white';
+const iconCol = 'rgba(255,255,255,0.8)';
+const bgCol   = Colors.mainColor;
+
 export default class Header extends React.Component {
     componentDidMount() {
 		this.setState({ fontLoaded: '1' });
@@ -53,7 +57,7 @@ export default class Header extends React.Component {
                         name={ (Platform.OS === 'ios') ? "ios-arrow-up" : "md-arrow-dropup" }
                         size={32}
                         style={{ padding: 10 }}
-                        color="gray"
+                        color={iconCol}
                     />
                 </TouchableOpacity>
             );
@@ -66,7 +70,7 @@ export default class Header extends React.Component {
                         name={ (Platform.OS === 'ios') ? "ios-search" : "md-search" }
                         size={32}
                         style={{ padding: 10 }}
-                        color="gray"
+                        color={iconCol}
                     />
                 </TouchableOpacity>
             );
@@ -83,7 +87,7 @@ export default class Header extends React.Component {
                             name={ (Platform.OS === 'ios') ? "ios-search" : "md-search" }
                             size={32}
                             style={{ padding: 10 }}
-                            color="gray"
+                            color='gray'
                         />
                     </TouchableOpacity>
                     <TextInput
@@ -112,7 +116,7 @@ export default class Header extends React.Component {
 
                     <View style={{ flex:1, flexDirection: 'row', justifyContent:'center' }}>
                         {this.state.fontLoaded == '1' ? (
-                            <Text style={{ fontSize: 16, fontFamily: 'myfont' }}> {this.trimName(this.state.location)}</Text>
+                            <Text style={{ color: fontCol, fontSize: 16, fontFamily: 'myfont' }}> {this.trimName(this.state.location)}</Text>
                         ) : null}
                     </View>
                 </View>
@@ -133,7 +137,7 @@ var styles = StyleSheet.create({
 		flexWrap: 'wrap',
 		alignItems: 'center',
         justifyContent: 'center',
-		backgroundColor: '#fff',
+		backgroundColor: bgCol,
         borderBottomColor: '#EEEEEE',
         borderBottomWidth: 1
 	},

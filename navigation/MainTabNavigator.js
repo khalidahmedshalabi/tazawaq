@@ -40,7 +40,7 @@ export default TabNavigator(
             break;
           case 'اعدادات':
             iconName =
-              Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options';
+              Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact';
         }
         return (
           <Ionicons
