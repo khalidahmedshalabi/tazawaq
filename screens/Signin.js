@@ -30,7 +30,6 @@ export default class Signin extends React.Component {
         this.state = {
             'login': '1',
             'SkippedLogin': '1',
-            identifier: '',
             password: '',
             errorMsg: '',
         }
@@ -66,12 +65,19 @@ export default class Signin extends React.Component {
             this.setState({ errorMsg: 'كلمة المرور قصيرة جداً' });
             return;
         }
+
+        if(!this.refs.phone.isValidNumber())
+        {
+            this.setState({ errorMsg: 'رقم الجوال غير صالح' });
+            return;
+        }
+
         this.setState({ errorMsg: '' });
 
-        fetch(Server.dest + '/api/signin?identifier='+this.state.identifier+'&password='+this.state.password, {headers: {'Cache-Control': 'no-cache'}}).
+        fetch(Server.dest + '/api/signin?identifier='+this.refs.phone.getValue()+'&password='+this.state.password, {headers: {'Cache-Control': 'no-cache'}}).
         then((res) => res.json()).then((resJson) => {
             if(resJson.response == 0)
-                this.setState({ errorMsg: 'اسم مستخدم او كلمة مرور غير صحيحتان'});
+                this.setState({ errorMsg: 'رقم جوال او كلمة مرور غير صحيحتان'});
             else
             {
                 AsyncStorage.setItem('userid', resJson.response);
@@ -125,19 +131,25 @@ export default class Signin extends React.Component {
                             {this.shouldRenderErrorMessage()}
 
                             <View style={styles.singleInputContainer}>
-                                <TextInput
-                                    underlineColorAndroid='transparent'
-                                    placeholder='رقم الجوال'
-                                    placeholderTextColor='#CCCCCC'
-                                    autoGrow={false}
-                                    multiline={false}
-                                    autoFocus={false}
-                                    style={styles.textInput}
-                                    onChangeText={(text) => this.setState({identifier:text})}
-                                    onSubmitEditing={(event) => this.loginUser() } />
+                                <PhoneInput
+                                    style={{
+                                        flex: 1,
+                                        padding: 9,
+                                        borderRadius: 4,
+                                        backgroundColor: 'transparent',
+                                        borderBottomColor: Colors.fadedMainColor,
+                                        borderBottomWidth: 0.7
+                                    }}
+                                    ref='phone'
+                                    confirmText='اختيار'
+                                    cancelText='الغاء'
+                                    initialCountry='sa'
+                                    textProps={{placeholder: 'رقم الجوال'}}
+                                    textStyle={{color: Colors.fadedMainColor}}
+                                    pickerButtonColor={Colors.mainColor} />
 
                                 <Ionicons
-                                    name={Platform.OS === 'ios' ? 'ios-contact' : 'md-contact'}
+                                    name={Platform.OS === 'ios' ? 'ios-phone-portrait' : 'md-phone-portrait'}
                                     size={26}
                                     color={Colors.fadedMainColor}
                                     style={styles.inputIcon}/>
@@ -194,7 +206,37 @@ export default class Signin extends React.Component {
                             </View>
                         </View>
 
-                        <TouchableOpacity style={{ flex:1, marginTop:7 }}>
+                        <TouchableOpacity style={{ flex:1, marginTop:7 }}
+                            onPress={ () => {
+                                if(!this.refs.phone.isValidNumber())
+                                {
+                                    this.setState({ errorMsg: 'رقم الجوال غير صالح' });
+                                    return;
+                                }
+                                Alert.alert(
+                                'كلمة مرور جديدة',
+                                'سيتم ارسال رسالة على جوالك ' + this.refs.phone.getValue() + 'توجهك الى وضع كلمة مرور جديدة',
+                                [
+                                    {text: 'موافق', onPress: () => {
+                                        fetch(Server.dest + '/api/requestnewpass?phone='+this.refs.phone.getValue(),
+                                        {headers: {'Cache-Control': 'no-cache'}}).
+                                        then((res) => res.json()).then((resJson) => {
+                                            if(resJson.response == 0)
+                                            {
+                                                this.setState({ errorMsg: 'هذا الحساب غير مسجل عندنا' });
+                                            }
+                                            else
+                                            {
+                                                this.props.navigation.navigate("CodeVerification", { process: 1 /* means RESET PASS*/,
+                                                    device: this.refs.phone.getValue() });
+                                            }
+                                        })
+                                    }},
+                                    {text: 'لا اوافق', onPress: () => {}, style: 'cancel'},
+                                ],
+                                    { cancelable: true }
+                                );
+                            } }>
                             <Text style={{ fontFamily: 'myfont', color: Colors.mainColor }}>نسيت كلمة المرور؟</Text>
                         </TouchableOpacity>
                     </View>

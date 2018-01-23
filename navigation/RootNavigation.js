@@ -9,9 +9,11 @@ import Signin from '../screens/Signin';
 import Signup from '../screens/Signup';
 import Restaurant from '../screens/Restaurant';
 import CodeVerification from '../screens/CodeVerification';
+import ResetPassword from '../screens/ResetPassword';
 
 const RootStackNavigator = StackNavigator(
     {
+        ResetPassword: { screen: ResetPassword },
         LocationSetting: { screen: LocationSetting },
         Signin: { screen: Signin },
         Signup: { screen: Signup },

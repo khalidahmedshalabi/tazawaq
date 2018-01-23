@@ -23,7 +23,6 @@ export default class Signup extends React.Component {
         super(props);
         this.state = {
             'login': '1',
-            phone: '',
             password: '',
             cpassword: '',
             location: '',
@@ -57,7 +56,7 @@ export default class Signup extends React.Component {
             });
             resolve(locationData);
         }).then((data) => {
-            fetch(Server.dest + '/api/signup?phone='+this.state.phone+
+            fetch(Server.dest + '/api/signup?phone='+this.refs.phone.getValue()+
                 '&password='+this.state.password + data,
             {headers: {'Cache-Control': 'no-cache'}}).
             then((res) => res.json()).then((resJson) => {
@@ -69,7 +68,7 @@ export default class Signup extends React.Component {
                 {
                     // Navigate to confirm screen
                     this.props.navigation.navigate("CodeVerification", { process: 0 /* means SIGN-UP*/,
-                        device: this.state.phone });
+                        device: this.refs.phone.getValue() });
                 }
             })
         });

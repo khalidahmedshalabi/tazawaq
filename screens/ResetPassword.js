@@ -5,7 +5,7 @@ import Colors from '../constants/Colors';
 import { NavigationActions } from 'react-navigation';
 import Server from '../constants/server';
 
-export default class CodeVerification extends React.Component {
+export default class ResetPassword extends React.Component {
     static navigationOptions = {
         header: null
     };
@@ -14,7 +14,7 @@ export default class CodeVerification extends React.Component {
         super(props)
 
         this.state = {
-            code: '',
+            password: '',
             errorMsg: ''
         }
     }
@@ -33,35 +33,23 @@ export default class CodeVerification extends React.Component {
         this.setState({ 'login': value });
     }
 
-    verifyCode = () => {
+    setNewPass = () => {
         this.setState({ errorMsg: '' });
 
-        if(this.state.code.length == 5) {
-            fetch(Server.dest + '/api/verifycode?code='+this.state.code+
-                '&identifier='+this.props.device+'&process='+this.props.process,
+        if(this.state.password.length >= 6) {
+            fetch(Server.dest + '/api/setnewpass?code='+this.props.code+
+                '&phone='+this.props.phone+'&password='+this.state.password,
             {headers: {'Cache-Control': 'no-cache'}}).
             then((res) => res.json()).then((resJson) => {
-                if(resJson.response == 2)
-                {
-                    if(this.props.process == 0) { // signup
-                        AsyncStorage.setItem('userid', resJson.id);
-                        this.setLoginStatus('1');
-                        this.navigateToHome();
-                    }
-                    else { // reset password
-                        // Navigate to a screen where user can set a new password
-                        this.props.navigation.navigate("ResetPassword", {phone: this.props.device, code: this.state.code});
-                    }
+                if(resJson.response == 1) {
+                    AsyncStorage.setItem('userid', resJson.id);
+                    this.setLoginStatus('1');
+                    this.navigateToHome();
                 }
-                else if(resJson.response == 3)
-                    this.setState({ errorMsg: 'رقم جوال غير مُسجل عندنا'});
-                else if(resJson.response == 0)
-                    this.setState({ errorMsg: 'انت بالفعل مُسجل عندنا'});
-                else if(resJson.response == 1)
-                    this.setState({ errorMsg: 'كود غير صالح'});
+                else this.setState({ errorMsg: 'فشلت العملية!'});
             })
         }
-        else this.setState({ errorMsg: 'كود غير صالح'});
+        else this.setState({ errorMsg: 'كلمة المرور قصيرة'});
     }
 
     shouldRenderErrorMessage = () => {
@@ -81,7 +69,7 @@ export default class CodeVerification extends React.Component {
                 {this.shouldRenderErrorMessage()}
 
                 <Text style={{ paddingHorizontal:10, marginTop:40, textAlign:'center', fontFamily: 'myfont', color: Colors.mainColor }}>
-                    سيتم ارسال كود التأكيد على الجوال {this.props.device} اكتب الكود بالاسفل
+                    اكتب كلمة مرور جديدة
                 </Text>
 
                 <KeyboardAvoidingView
@@ -92,12 +80,12 @@ export default class CodeVerification extends React.Component {
 
                     <TextInput
                         underlineColorAndroid='transparent'
-                        placeholder='كود التحقق'
+                        placeholder='كلمة مرور'
                         placeholderTextColor='#CCCCCC'
                         autoGrow={false}
                         multiline={false}
                         autoFocus={false}
-                        keyboardType='numeric'
+                        secureTextEntry={true}
                         style={{ flex: 0.5,
                             fontSize: 33,
                             color: Colors.mainColor,
@@ -107,15 +95,15 @@ export default class CodeVerification extends React.Component {
                             backgroundColor: 'transparent',
                             borderBottomColor: Colors.fadedMainColor,
                             borderBottomWidth: 1 }}
-                        onChangeText={(text) => this.setState({code:text})}
-                        onSubmitEditing={(event) => this.verifyCode() } />
+                        onChangeText={(text) => this.setState({password:text})}
+                        onSubmitEditing={(event) => this.setNewPass() } />
 
                 </KeyboardAvoidingView>
 
                 <View style={{flex: 1, justifyContent: 'flex-end'}}>
                     <Button
                         onPress={() => {
-                            this.verifyCode()
+                            this.setNewPass()
                         }}
                         color='white'
                         backgroundColor={Colors.mainColor}
@@ -123,7 +111,7 @@ export default class CodeVerification extends React.Component {
                         borderRadius={15}
                         buttonStyle={{ padding: 10 }}
                         textStyle={{ fontFamily: 'myfont' }}
-                        title="تأكيد" />
+                        title="تغيير كلمة المرور" />
                 </View>
             </View>
         );
