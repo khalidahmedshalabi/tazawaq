@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View, Text, Image } from 'react-native';
-
+import Colors from '../constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AVERAGE_STARS_COUNT = 2; // between 5 and 0, recommended: 2 or 2.5
@@ -64,7 +64,7 @@ export default class Restaurant extends Component {
 									marginLeft: 4,
 									fontFamily: 'myfont',
 									fontSize: 12,
-									color: '#888888'
+									color: Colors.secondaryColor
 								}}>
 								{this.props.stars}/5
 							</Text>
@@ -80,14 +80,14 @@ export default class Restaurant extends Component {
 							<MaterialCommunityIcons
 								name="car-pickup"
 								size={22}
-								color="#888888"
+								color={Colors.secondaryColor}
 							/>
 							<Text
 								style={{
 									marginLeft: 4,
 									fontFamily: 'myfont',
 									fontSize: 12,
-									color: '#888888'
+									color: Colors.secondaryColor
 								}}>
 								{this.props.time} د
 							</Text>
@@ -103,14 +103,14 @@ export default class Restaurant extends Component {
 							<MaterialCommunityIcons
 								name="cash-multiple"
 								size={22}
-								color="#888888"
+								color={Colors.secondaryColor}
 							/>
 							<Text
 								style={{
 									marginLeft: 4,
 									fontFamily: 'myfont',
 									fontSize: 12,
-									color: '#888888'
+									color: Colors.secondaryColor
 								}}>
 								{this.props.price} ر.س
 							</Text>
