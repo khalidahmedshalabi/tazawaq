@@ -58,7 +58,7 @@ var styles = StyleSheet.create({
 });
 export default class Restaurant extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title:'الوجبات ب المطعم',
+    title:'الاصناف ب المطعم',
     headerTintColor: Colors.smoothGray,
     fontFamily:'myfont',
   headerStyle: {
@@ -68,13 +68,9 @@ export default class Restaurant extends React.Component {
   },
   headerTitleStyle: {
     fontWeight: '300',
-
     color: '#ffffff',
-
     fontFamily: 'myfont',
-
     fontSize: 16
-
   },
   });
   constructor(props) {
@@ -108,6 +104,38 @@ export default class Restaurant extends React.Component {
       {
         key:4,
         name: 'الوجبات الاضافيه'
+      },
+      {
+        key:5,
+        name: 'عروض خاصه'
+      },
+      {
+        key:6,
+        name:'لحوم'
+      },
+      {
+        key:7,
+        name:'وجبات اخري'
+      },
+      {
+        key:8,
+        name:'مشروبات'
+      },
+      {
+        key:9,
+        name:'مشروبات'
+      },
+      {
+        key:10,
+        name:'حلويات'
+      },
+      {
+        key:11,
+        name:'مقبلات'
+      },
+      {
+        key:12,
+        name:'وجبات زائده'
       }
     ]
   }
@@ -115,40 +143,48 @@ export default class Restaurant extends React.Component {
 
     render() {
       const { params } = this.props.navigation.state;
+      const { navigate } = this.props.navigation;
 
       return(
         <View>
+        <View>
         <FlatList
           automaticallyAdjustContentInsets={false}
-          style={{ backgroundColor: 'white',borderWidth:.5,borderColor:'black',marginTop:10}}
+          style={{ backgroundColor: 'white',borderBottomWidth:.3,borderBottomColor:'black' }}
           removeClippedSubviews={false}
+          ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
           data={this.state.Restaurant}
           renderItem={({ item }) => (
-            <RestaurantBox
-							style={styles.restaurant}
-							stars={item.stars}
-							name={item.name}
-							time={item.time}
-							desc={item.desc}
-							image={item.image}
-							price={item.deliver_price}
 
+            <RestaurantBox
+              style={styles.restaurant}
+              stars={item.stars}
+              name={item.name}
+              time={item.time}
+              desc={item.desc}
+              image={item.image}
+              price={item.deliver_price}
             />
           )}
         />
-
+        </View>
+        <View>
         <FlatList
           automaticallyAdjustContentInsets={false}
           ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
-          style={{ backgroundColor: 'white',marginTop:5}}
+          style={{ backgroundColor: 'white'}}
           removeClippedSubviews={false}
           data={this.state.Categories}
           renderItem={({ item }) => (
+            <TouchableOpacity onPress={() =>
+          navigate('Meal', { key:item.key,restaurant_id:params.id })} >
             <SingleCategory
             name={item.name}
             />
+            </TouchableOpacity>
           )}
         />
+        </View>
         </View>
 
       );

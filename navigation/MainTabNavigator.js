@@ -21,6 +21,7 @@ export default TabNavigator(
     "اعدادات": {
       screen: SettingsScreen,
     },
+
   },
   {
     navigationOptions: ({ navigation }) => ({

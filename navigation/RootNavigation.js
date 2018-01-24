@@ -10,6 +10,7 @@ import Signup from '../screens/Signup';
 import Restaurant from '../screens/Restaurant';
 import CodeVerification from '../screens/CodeVerification';
 import ResetPassword from '../screens/ResetPassword';
+import Meals from '../screens/Meals';
 
 const RootStackNavigator = StackNavigator(
     {
@@ -19,7 +20,8 @@ const RootStackNavigator = StackNavigator(
         CodeVerification: { screen: CodeVerification },
         ResetPassword: { screen: ResetPassword },
         Main: { screen: MainTabNavigator },
-        Restaurant: {screen : Restaurant}
+        Restaurant: {screen : Restaurant},
+        Meals: {screen : Meals}
     },
     {
         navigationOptions: () => ({

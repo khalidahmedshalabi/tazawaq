@@ -6,7 +6,7 @@ import { Button } from "react-native-elements";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 import Colors from '../constants/Colors';
-
+import PhoneInput from 'react-native-phone-input'
 import LoadingIndicator from '../components/LoadingIndicator';
 //import Server from '../constants/server';
 
