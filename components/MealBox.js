@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { ActivityIndicator, View, Text, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
+
 export default class MealBox extends Component {
 	render() {
 		return (
 			<View
 				style={{
 					backgroundColor: '#FFF',
-					height: 300,
+
 					padding: 13,
 					paddingHorizontal: 20,
 					shadowColor: '#000',
@@ -19,7 +22,7 @@ export default class MealBox extends Component {
 					}
 				}}>
 				<Image
-					style={{ flex: 1, height: 200, borderRadius: 10 }}
+					style={{ flex: 1, height: 130, borderRadius: 10 }}
 					source={{ uri: this.props.image }}
 				/>
 				<Text
@@ -36,26 +39,34 @@ export default class MealBox extends Component {
 					style={{
 						fontFamily: 'myfont',
 						marginRight: 15,
-						fontSize: 10,
+						fontSize: 12,
 						padding: 0,
 						color: 'gray'
 					}}>
 					{this.props.desc}
 				</Text>
-				<Text
+				<View
 					style={{
-						fontFamily: 'myfont',
-						marginRight: 15,
-						fontSize: 10,
-						padding: 0,
-						color: 'gray'
+						flex: 1,
+						flexDirection: 'row',
+
 					}}>
-					 {this.props.price} ريال سعودي
-				</Text>
-				<View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-					<Ionicons name="ios-star-outline" size={32} style={{}} color="gold" />
-					<Text style={{ marginTop: 8 }}>4.3/5</Text>
+					<MaterialCommunityIcons
+						name="cash-multiple"
+						size={22}
+						color={Colors.secondaryColor}
+					/>
+					<Text
+						style={{
+							marginLeft: 4,
+							fontFamily: 'myfont',
+							fontSize: 12,
+							color: Colors.secondaryColor
+						}}>
+						{this.props.price} ر.س
+					</Text>
 				</View>
+
 			</View>
 		);
 	}
