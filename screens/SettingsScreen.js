@@ -4,6 +4,7 @@ import { View, TextInput, StyleSheet,
     TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import { NavigationActions } from 'react-navigation';
 
 export default class SettingsScreen extends React.Component {
 
@@ -125,7 +126,12 @@ export default class SettingsScreen extends React.Component {
                             <TouchableOpacity style={styles.singleInputContainer}
                                 onPress={() => {
                                     AsyncStorage.removeItem('location');
-                                    this.props.navigation.navigate("LocationSetting", { })
+                                    this.props.navigation.dispatch(NavigationActions.reset({
+                                      index: 0,
+                                      actions: [
+                                        NavigationActions.navigate({ routeName: 'LocationSetting' })
+                                      ]
+                                    }));
                                 }}>
                                 <Ionicons
                                     name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'}

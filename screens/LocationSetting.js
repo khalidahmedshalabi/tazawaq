@@ -12,7 +12,7 @@ export default class LocationSetting extends React.Component {
         header: null
     };
 
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.state = {
@@ -24,6 +24,21 @@ export default class LocationSetting extends React.Component {
             initialCountry: 'Saudi Arabia',
             initialRegion: '',
         }
+    }
+
+    componentDidMount () {
+        AsyncStorage.getItem('location').then(
+            (value) => {
+                if(value === null)
+                {
+                    this.loadScreen();
+                }
+                else
+                {
+                    this.navigateToHome();
+                }
+            }
+        );
     }
 
     navigateToHome = () => {
@@ -179,25 +194,6 @@ export default class LocationSetting extends React.Component {
                 </View>
             );
         }
-    }
-
-    componentDidMount() {
-        AsyncStorage.getItem('location').then(
-            (value) => {
-                if(value === null)
-                {
-                    this.loadScreen();
-                }
-                else
-                {
-                    this.props.navigation.dispatch(NavigationActions.reset({
-                        index: 0,
-                        actions: [
-                            NavigationActions.navigate({ routeName: 'Signin' })
-                        ]
-                    }));
-                }
-            });
     }
 
     render() {
