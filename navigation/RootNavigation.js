@@ -13,13 +13,12 @@ import ResetPassword from '../screens/ResetPassword';
 
 const RootStackNavigator = StackNavigator(
     {
-      Main: { screen: MainTabNavigator },
-        ResetPassword: { screen: ResetPassword },
         LocationSetting: { screen: LocationSetting },
         Signin: { screen: Signin },
         Signup: { screen: Signup },
         CodeVerification: { screen: CodeVerification },
-
+        ResetPassword: { screen: ResetPassword },
+        Main: { screen: MainTabNavigator },
         Restaurant: {screen : Restaurant}
     },
     {
