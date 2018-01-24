@@ -60,14 +60,21 @@ export default class Restaurant extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title:'الوجبات ب المطعم',
     headerTintColor: Colors.smoothGray,
+    fontFamily:'myfont',
   headerStyle: {
     backgroundColor: Colors.mainColor,
     borderBottomColor: Colors.mainColor,
     borderBottomWidth: 3,
   },
   headerTitleStyle: {
-    fontSize: 18,
-    fontColor:Colors.smoothGray,
+    fontWeight: '300',
+
+    color: '#ffffff',
+
+    fontFamily: 'myfont',
+
+    fontSize: 16
+
   },
   });
   constructor(props) {
