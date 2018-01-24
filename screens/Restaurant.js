@@ -177,7 +177,7 @@ export default class Restaurant extends React.Component {
           data={this.state.Categories}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() =>
-          navigate('Meals', { key:item.key,restaurant_id:params.id })} >
+          navigate('Meals', { category_id:item.key,restaurant_id:params.key })} >
             <SingleCategory
             name={item.name}
             />

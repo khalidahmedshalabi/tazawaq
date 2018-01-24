@@ -11,6 +11,7 @@ import Restaurant from '../screens/Restaurant';
 import CodeVerification from '../screens/CodeVerification';
 import ResetPassword from '../screens/ResetPassword';
 import Meals from '../screens/Meals';
+import SingleMeal from '../screens/SingleMeal';
 
 const RootStackNavigator = StackNavigator(
     {
@@ -21,7 +22,8 @@ const RootStackNavigator = StackNavigator(
         ResetPassword: { screen: ResetPassword },
         Main: { screen: MainTabNavigator },
         Restaurant: {screen : Restaurant},
-        Meals: {screen : Meals}
+        Meals: {screen : Meals},
+        SingleMeal: {screen: SingleMeal},
     },
     {
         navigationOptions: () => ({

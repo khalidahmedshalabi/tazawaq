@@ -71,6 +71,8 @@ export default class Meals extends React.Component {
       }
     }
   render() {
+    const { params } = this.props.navigation.state;
+    const { navigate } = this.props.navigation;
     return (
 
       <FlatList
@@ -81,10 +83,8 @@ export default class Meals extends React.Component {
         data={this.state.Meals}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() =>
-        navigate('Restaurant', { key:item.key })} >
+        navigate('SingleMeal', { meal_id:item.key,restaurant_id:params.restaurant_id })} >
           <MealBox
-
-
             name={item.name}
             time={item.time}
             desc={item.desc}
