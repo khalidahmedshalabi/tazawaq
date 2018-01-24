@@ -46,33 +46,33 @@ export default class Signup extends React.Component {
         );
     }
 
-    sendDataToServer = () => {
-        this.setState({ login: '1' });
-
-        AsyncStorage.multiGet(["location", "latitude", "longitude", "region", "country"], (err, stores) => {
-            var locationData = "";
-            stores.map((result, i, store) => {
-                locationData += "&" + store[i][0] + "=" + store[i][1];
-            });
-            resolve(locationData);
-        }).then((data) => {
-            fetch(Server.dest + '/api/signup?phone='+this.refs.phone.getValue()+
-                '&password='+this.state.password + data,
-            {headers: {'Cache-Control': 'no-cache'}}).
-            then((res) => res.json()).then((resJson) => {
-                if(resJson.response == 0)
-                {
-                    this.setState({ errorMsg: 'انت بالفعل مُسجل عندنا' });
-                }
-                else
-                {
-                    // Navigate to confirm screen
-                    this.props.navigation.navigate("CodeVerification", { process: 0 /* means SIGN-UP*/,
-                        device: this.refs.phone.getValue() });
-                }
-            })
-        });
-    };
+    // sendDataToServer = () => {
+    //     this.setState({ login: '1' });
+    //
+    //     AsyncStorage.multiGet(["location", "latitude", "longitude", "region", "country"], (err, stores) => {
+    //         var locationData = "";
+    //         stores.map((result, i, store) => {
+    //             locationData += "&" + store[i][0] + "=" + store[i][1];
+    //         });
+    //         resolve(locationData);
+    //     }).then((data) => {
+    //         fetch(Server.dest + '/api/signup?phone='+this.refs.phone.getValue()+
+    //             '&password='+this.state.password + data,
+    //         {headers: {'Cache-Control': 'no-cache'}}).
+    //         then((res) => res.json()).then((resJson) => {
+    //             if(resJson.response == 0)
+    //             {
+    //                 this.setState({ errorMsg: 'انت بالفعل مُسجل عندنا' });
+    //             }
+    //             else
+    //             {
+    //                 // Navigate to confirm screen
+    //                 this.props.navigation.navigate("CodeVerification", { process: 0 /* means SIGN-UP*/,
+    //                     device: this.refs.phone.getValue() });
+    //             }
+    //         })
+    //     });
+    // };
 
     registerUser = () => {
         if(this.state.password.length < 6)

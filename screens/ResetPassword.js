@@ -64,6 +64,7 @@ export default class ResetPassword extends React.Component {
     };
 
     render() {
+      const { navigate } = this.props.navigation;
         return (
             <View style={{ flex:1, backgroundColor: 'white'}}>
                 {this.shouldRenderErrorMessage()}
@@ -103,7 +104,8 @@ export default class ResetPassword extends React.Component {
                 <View style={{flex: 1, justifyContent: 'flex-end'}}>
                     <Button
                         onPress={() => {
-                            this.setNewPass()
+
+                        navigate('Main', { key:1 })
                         }}
                         color='white'
                         backgroundColor={Colors.mainColor}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, FlatList,TouchableOpacity } from 'react-native';
-import Restaurant from '../components/Restaurant';
+import RestaurantBox from '../components/RestaurantBox';
 import Colors from '../constants/Colors';
 
 var styles = StyleSheet.create({
@@ -131,7 +131,7 @@ export default class HomeScreen extends React.Component {
 					renderItem={({ item }) => (
 						<TouchableOpacity onPress={() =>
 					navigate('Restaurant', { key:item.key })} >
-						<Restaurant
+						<RestaurantBox
 							style={styles.restaurant}
 							stars={item.stars}
 							name={item.name}

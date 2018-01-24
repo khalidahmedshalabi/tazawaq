@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AVERAGE_STARS_COUNT = 2; // between 5 and 0, recommended: 2 or 2.5
 
-export default class Restaurant extends Component {
+export default class RestaurantBox extends Component {
 
 	determineStarIcon = (stars_count) => {
 		if(stars_count < AVERAGE_STARS_COUNT)
