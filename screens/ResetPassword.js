@@ -104,8 +104,7 @@ export default class ResetPassword extends React.Component {
                 <View style={{flex: 1, justifyContent: 'flex-end'}}>
                     <Button
                         onPress={() => {
-
-                        this.setNewPass();
+                            this.setNewPass();
                         }}
                         color='white'
                         backgroundColor={Colors.mainColor}
