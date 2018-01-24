@@ -22,7 +22,6 @@ export default class SingleCategory extends Component {
         flex:1,
         flexDirection:'row',
         height:60,
-
         alignItems:'center'
       },
       icon:{

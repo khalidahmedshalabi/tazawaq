@@ -1,16 +1,8 @@
 import React from 'react';
-import { Dimensions, KeyboardAvoidingView, AsyncStorage,
-        StyleSheet, TextInput, View, Text, Image,
-        Platform, TouchableOpacity,FlatList } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
-import { NavigationActions } from 'react-navigation';
+import { KeyboardAvoidingView, View, Text, TextInput } from 'react-native';
+import { Button } from "react-native-elements";
 import Colors from '../constants/Colors';
-import RestaurantBox from '../components/RestaurantBox';
-
-//import Server from '../constants/server';
-var styles = StyleSheet.create({
-
-});
+import { NavigationActions } from 'react-navigation';
 export default class Meals extends React.Component {
 render(){
   return(
