@@ -4,6 +4,8 @@ import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
 import MealBox from '../components/MealBox';
 import { Button } from "react-native-elements";
+import RestaurantBox from '../components/RestaurantBox';
+
 export default class SingleMeal extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
@@ -27,6 +29,18 @@ export default class SingleMeal extends React.Component {
 
 
 		this.state = {
+      Restaurant: [
+        {
+          key: 1,
+          name: 'مطعم كنتاكي للدجاج',
+          image:
+            'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
+          time: '30',
+          desc: 'تمتع بوجبه خفيفه',
+          stars: '5',
+          deliver_price: '40'
+        }
+      ],
 			Meal: [
           {
             key:1,
@@ -42,7 +56,25 @@ export default class SingleMeal extends React.Component {
 const { params } = this.props.navigation.state;
     return (
       <View>
-      
+      <FlatList
+        automaticallyAdjustContentInsets={false}
+        style={{ backgroundColor: 'white',borderBottomWidth:.3,borderBottomColor:'black' }}
+        removeClippedSubviews={false}
+        ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
+        data={this.state.Restaurant}
+        renderItem={({ item }) => (
+
+          <RestaurantBox
+            style={styles.restaurant}
+            stars={item.stars}
+            name={item.name}
+            time={item.time}
+            desc={item.desc}
+            image={item.image}
+            price={item.deliver_price}
+          />
+        )}
+      />
       <FlatList
         automaticallyAdjustContentInsets={false}
         style={{ backgroundColor: 'white' }}
@@ -60,6 +92,17 @@ const { params } = this.props.navigation.state;
           />
         )}
       />
+      <Button
+          onPress={() => {
+              this.registerUser()
+          }}
+          color='white'
+          backgroundColor={Colors.mainColor}
+          containerViewStyle={{borderRadius:15}}
+          borderRadius={15}
+          buttonStyle={{ padding: 10 }}
+          textStyle={{ fontFamily: 'myfont' }}
+          title="شراء الان" />
       </View>
     );
   }
