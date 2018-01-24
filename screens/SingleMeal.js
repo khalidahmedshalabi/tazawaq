@@ -65,7 +65,7 @@ const { params } = this.props.navigation.state;
         renderItem={({ item }) => (
 
           <RestaurantBox
-          
+
             stars={item.stars}
             name={item.name}
             time={item.time}

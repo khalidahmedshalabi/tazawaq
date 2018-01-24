@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet,Text,FlatList,TouchableOpacity,View } from 'reac
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
 import MealBox from '../components/MealBox';
+import RestaurantBox from '../components/RestaurantBox';
+
 export default class Meals extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
@@ -24,6 +26,18 @@ export default class Meals extends React.Component {
   constructor(props) {
 		super(props);
 		this.state = {
+      Restaurant: [
+        {
+          key: 1,
+          name: 'مطعم كنتاكي للدجاج',
+          image:
+            'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
+          time: '30',
+          desc: 'تمتع بوجبه خفيفه',
+          stars: '5',
+          deliver_price: '40'
+        }
+      ],
 			Meals: [
         {
           key:1,
@@ -74,26 +88,50 @@ export default class Meals extends React.Component {
     const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
     return (
+      <View>
+        <View>
+          <FlatList
+            automaticallyAdjustContentInsets={false}
+            style={{ backgroundColor: 'white',borderBottomWidth:.3,borderBottomColor:'black' }}
+            removeClippedSubviews={false}
+            ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
+            data={this.state.Restaurant}
+            renderItem={({ item }) => (
 
-      <FlatList
-        automaticallyAdjustContentInsets={false}
-        style={{ backgroundColor: 'white' }}
-        removeClippedSubviews={false}
-        ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
-        data={this.state.Meals}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() =>
-        navigate('SingleMeal', { meal_id:item.key,restaurant_id:params.restaurant_id })} >
-          <MealBox
-            name={item.name}
-            time={item.time}
-            desc={item.desc}
-            image={item.image}
-            price={item.price}
+              <RestaurantBox
+
+                stars={item.stars}
+                name={item.name}
+                time={item.time}
+                desc={item.desc}
+                image={item.image}
+                price={item.deliver_price}
+              />
+            )}
           />
-          </TouchableOpacity>
-        )}
-      />
+        </View>
+        <View>
+          <FlatList
+            automaticallyAdjustContentInsets={false}
+            style={{ backgroundColor: 'white' }}
+            removeClippedSubviews={false}
+            ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
+            data={this.state.Meals}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() =>
+            navigate('SingleMeal', { meal_id:item.key,restaurant_id:params.restaurant_id })} >
+              <MealBox
+                name={item.name}
+                time={item.time}
+                desc={item.desc}
+                image={item.image}
+                price={item.price}
+              />
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </View>
     );
   }
 }
