@@ -105,7 +105,7 @@ export default class ResetPassword extends React.Component {
                     <Button
                         onPress={() => {
 
-                        navigate('Main', { key:1 })
+                        this.setNewPass();
                         }}
                         color='white'
                         backgroundColor={Colors.mainColor}
