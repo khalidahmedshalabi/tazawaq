@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ActivityIndicator, View, Text, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Ionicons } from '@expo/vector-icons';
-export default class Restaurant extends Component {
+export default class MealBox extends Component {
 	render() {
 		return (
 			<View
@@ -50,7 +50,7 @@ export default class Restaurant extends Component {
 						padding: 0,
 						color: 'gray'
 					}}>
-					{this.props.time} دقيقه
+					 {this.props.price} ريال سعودي
 				</Text>
 				<View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
 					<Ionicons name="ios-star-outline" size={32} style={{}} color="gold" />
