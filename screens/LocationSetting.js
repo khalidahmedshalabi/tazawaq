@@ -35,7 +35,7 @@ export default class LocationSetting extends React.Component {
                 }
                 else
                 {
-                    this.navigateToHome();
+                    this.props.navigation.navigate("Signin", { });
                 }
             }
         );
@@ -86,7 +86,7 @@ export default class LocationSetting extends React.Component {
             {
                 Alert.alert(
                     'خدمة الموقع',
-                    'من فضلك قم بتفعيل خدمة الموقع على جوالك لاستخدام افضل. بعد التفعيل  اعد المحاولة',
+                    'من فضلك قم بتفعيل خدمة الموقع على جوالك لاستخدام افضل. بعد التفعيل اعد المحاولة',
                     [
                     {text: 'اعد المحاولة', onPress: () => this.loadScreen()},
                     {text: 'الغاء', onPress: () => this.setState({ display: 1, fetchedLocationData: true }), style: 'cancel'},
@@ -94,7 +94,8 @@ export default class LocationSetting extends React.Component {
                     { cancelable: false }
                 );
             }
-            else alert(JSON.stringify(error))
+            else alert(error.code);
+            //else alert(JSON.stringify(error))
         }, {
             enableHighAccuracy: true,
             timeout: 20000,

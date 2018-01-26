@@ -6,7 +6,6 @@ import { Button } from "react-native-elements";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 import Colors from '../constants/Colors';
-import PhoneInput from 'react-native-phone-input'
 import LoadingIndicator from '../components/LoadingIndicator';
 import Server from '../constants/server';
 
@@ -26,6 +25,9 @@ export default class Signup extends React.Component {
             password: '',
             cpassword: '',
             location: '',
+            phone: '',
+            username: '',
+            email: '',
             errorMsg: '',
         }
 
@@ -49,15 +51,18 @@ export default class Signup extends React.Component {
     sendDataToServer = () => {
         this.setState({ login: '1' });
 
+        var locationData = "";
+
         AsyncStorage.multiGet(["location", "latitude", "longitude", "region", "country"], (err, stores) => {
-            var locationData = "";
             stores.map((result, i, store) => {
                 locationData += "&" + store[i][0] + "=" + store[i][1];
             });
-            resolve(locationData);
-        }).then((data) => {
-            fetch(Server.dest + '/api/signup?phone='+this.refs.phone.getValue()+
-                '&password='+this.state.password + data,
+        }).then(() => {
+            fetch(Server.dest + '/api/signup?phone='+this.state.phone+
+                '&password='+this.state.password +
+                '&email='+this.state.email +
+                '&username='+this.state.username +
+                locationData,
             {headers: {'Cache-Control': 'no-cache'}}).
             then((res) => res.json()).then((resJson) => {
                 if(resJson.response == 0)
@@ -68,14 +73,14 @@ export default class Signup extends React.Component {
                 {
                     // Navigate to confirm screen
                     this.props.navigation.navigate("CodeVerification", { process: 0 /* means SIGN-UP*/,
-                        device: this.refs.phone.getValue() });
+                        device: this.state.phone });
                 }
             })
         });
     };
 
     registerUser = () => {
-        if(this.state.password.length < 6)
+        if(this.state.password.length < 8)
         {
             this.setState({ errorMsg: 'كلمة المرور قصيرة. اقل طول مسموح هو ستة' });
             return;
@@ -86,15 +91,36 @@ export default class Signup extends React.Component {
             return;
         }
 
-        if(this.refs.phone.getValue().length < 5)
+        if(this.state.username.length < 3)
         {
-            this.setState({ errorMsg: 'يجب ادخال رقم الجوال'});
+            this.setState({ errorMsg: 'اسم المستخدم قصير جدا'});
             return;
         }
 
-        if(!this.refs.phone.isValidNumber())
+        if(/\s/g.test(this.state.username) || /\s/g.test(this.state.phone) || /\s/g.test(this.state.email))
+        {
+            this.setState({ errorMsg: 'غير مسوح بالمسافات' });
+            return;
+        }
+
+        if(this.state.phone.length != 9)
         {
             this.setState({ errorMsg: 'رقم الجوال غير صالح'});
+            return;
+        }
+
+        if(this.state.email.length == 0)
+        {
+            this.setState({ errorMsg: 'يجب ادخال البريد الالكتروني' });
+            return;
+        }
+
+        var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var isValidEmail = emailRegex.test(this.state.email);
+
+        if(!isValidEmail)
+        {
+            this.setState({ errorMsg: 'بريد الكتروني غير صالح'});
             return;
         }
 
@@ -132,36 +158,73 @@ export default class Signup extends React.Component {
                         height: Dimensions.get('window').height, width: Dimensions.get('window').width }}>
 
                     <Image
-                        style={{ flex: 1, height: '35%', width: Dimensions.get('window').width }}
+                        style={{ flex: 0.7, height: '35%', width: Dimensions.get('window').width }}
                         resizeMode='cover'
                         source={require('../assets/images/signupin-cover.jpg')} />
 
                     <KeyboardAvoidingView
                         behavior='padding'
                         keyboardVerticalOffset={60}
-                        style={{ flex:1 }}
+                        style={{ flex:2 }}
                         contentContainerStyle= {{ flex: 1, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', width: Dimensions.get('window').width }}>
 
                         <View style={styles.inputsContainer}>
                             {this.shouldRenderErrorMessage()}
 
                             <View style={styles.singleInputContainer}>
-                                <PhoneInput
-                                    style={{
-                                        flex: 1,
-                                        padding: 9,
-                                        borderRadius: 4,
-                                        backgroundColor: 'transparent',
-                                        borderBottomColor: Colors.fadedMainColor,
-                                        borderBottomWidth: 0.7
-                                    }}
-                                    ref='phone'
-                                    confirmText='اختيار'
-                                    cancelText='الغاء'
-                                    initialCountry='sa'
-                                    textProps={{placeholder: 'رقم الجوال'}}
-                                    textStyle={{color: Colors.fadedMainColor}}
-                                    pickerButtonColor={Colors.mainColor} />
+                                <TextInput
+                                    underlineColorAndroid='transparent'
+                                    placeholder='اسم المستخدم'
+                                    placeholderTextColor='#CCCCCC'
+                                    autoGrow={false}
+                                    multiline={false}
+                                    autoFocus={false}
+                                    style={styles.textInput}
+                                    defaultValue={this.state.username}
+                                    onChangeText={(text) => this.setState({username:text})}
+                                    onSubmitEditing={(event) => this.registerUser() } />
+
+                                <Ionicons
+                                    name={Platform.OS === 'ios' ? 'ios-contact' : 'md-contact'}
+                                    size={26}
+                                    color={Colors.fadedMainColor}
+                                    style={styles.inputIcon}/>
+                            </View>
+
+                            <View style={styles.singleInputContainer}>
+                                <TextInput
+                                    underlineColorAndroid='transparent'
+                                    placeholder='البريد الالكتروني'
+                                    placeholderTextColor='#CCCCCC'
+                                    autoGrow={false}
+                                    multiline={false}
+                                    autoFocus={false}
+                                    keyboardType='email-address'
+                                    style={styles.textInput}
+                                    defaultValue={this.state.email}
+                                    onChangeText={(text) => this.setState({email:text})}
+                                    onSubmitEditing={(event) => this.registerUser() } />
+
+                                <Ionicons
+                                    name={Platform.OS === 'ios' ? 'ios-mail' : 'md-mail'}
+                                    size={26}
+                                    color={Colors.fadedMainColor}
+                                    style={styles.inputIcon}/>
+                            </View>
+
+                            <View style={styles.singleInputContainer}>
+                                <TextInput
+                                    underlineColorAndroid='transparent'
+                                    placeholder='رقم الجوال'
+                                    placeholderTextColor='#CCCCCC'
+                                    autoGrow={false}
+                                    multiline={false}
+                                    autoFocus={false}
+                                    style={styles.textInput}
+                                    keyboardType='phone-pad'
+                                    defaultValue={this.state.phone}
+                                    onChangeText={(text) => this.setState({phone:text})}
+                                    onSubmitEditing={(event) => this.registerUser() } />
 
                                 <Ionicons
                                     name={Platform.OS === 'ios' ? 'ios-phone-portrait' : 'md-phone-portrait'}
@@ -247,10 +310,10 @@ export default class Signup extends React.Component {
                                 title="انشاء الحساب" />
                         </View>
 
-                        <TouchableOpacity style={{ flex:1, marginTop:1, width: '80%' }}
+                        <TouchableOpacity style={{ flex:0.8, marginTop:1, width: '80%' }}
                             onPress={() => Linking.openURL('')}>
-                            <Text style={{ textAlign:'center', fontFamily: 'myfont', color: Colors.mainColor }}>
-                            عندما اضغط "انشاء حساب" اقر اني قرأت و اوافق على الشروط و الاحكام و سياسة هذا التطبيق
+                            <Text style={{ fontSize: 13, textAlign:'center', fontFamily: 'myfont', color: Colors.mainColor }}>
+                            اوافق على الشروط و الاحكام و سياسة التطبيق
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -278,7 +341,7 @@ const styles = StyleSheet.create({
     },
     inputsContainer: {
         paddingTop: 15,
-        flex: 2, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center',
+        flex: 1, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center',
         width: '90%'
     },
     singleInputContainer: {

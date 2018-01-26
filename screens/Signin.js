@@ -1,14 +1,14 @@
 import React from 'react';
 import { Dimensions, KeyboardAvoidingView, AsyncStorage,
         StyleSheet, TextInput, View, Text, Image,
-        Platform, TouchableOpacity } from "react-native";
+        Platform, TouchableOpacity,
+        Alert } from "react-native";
 import { Button } from "react-native-elements";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 import Colors from '../constants/Colors';
-import PhoneInput from 'react-native-phone-input'
 import LoadingIndicator from '../components/LoadingIndicator';
-//import Server from '../constants/server';
+import Server from '../constants/server';
 
 export default class Signin extends React.Component {
     setLoginStatus = (value) => {
@@ -30,6 +30,7 @@ export default class Signin extends React.Component {
         this.state = {
             'login': '1',
             'SkippedLogin': '1',
+            identifier: '',
             password: '',
             errorMsg: '',
         }
@@ -60,24 +61,31 @@ export default class Signin extends React.Component {
     }
 
     loginUser = () => {
-        if(this.state.password.length < 6)
+        if(this.state.password.length < 8)
         {
             this.setState({ errorMsg: 'كلمة المرور قصيرة جداً' });
             return;
         }
 
-        if(!this.refs.phone.isValidNumber())
+        if(this.state.identifier.length < 3)
         {
-            this.setState({ errorMsg: 'رقم الجوال غير صالح' });
+            this.setState({ errorMsg: 'بيانات دخول غير صالحة' });
+            return;
+        }
+
+        if(/\s/g.test(this.state.identifier))
+        {
+            this.setState({ errorMsg: 'غير مسوح بالمسافات' });
             return;
         }
 
         this.setState({ errorMsg: '' });
 
-        fetch(Server.dest + '/api/signin?identifier='+this.refs.phone.getValue()+'&password='+this.state.password, {headers: {'Cache-Control': 'no-cache'}}).
+        fetch(Server.dest + '/api/signin?identifier='+this.state.identifier+
+            '&password='+this.state.password, {headers: {'Cache-Control': 'no-cache'}}).
         then((res) => res.json()).then((resJson) => {
             if(resJson.response == 0)
-                this.setState({ errorMsg: 'رقم جوال او كلمة مرور غير صحيحتان'});
+                this.setState({ errorMsg: 'انت لست مُسجل عندنا او كلمة مرور غير صحيحة'});
             else
             {
                 AsyncStorage.setItem('userid', resJson.response);
@@ -131,25 +139,20 @@ export default class Signin extends React.Component {
                             {this.shouldRenderErrorMessage()}
 
                             <View style={styles.singleInputContainer}>
-                                <PhoneInput
-                                    style={{
-                                        flex: 1,
-                                        padding: 9,
-                                        borderRadius: 4,
-                                        backgroundColor: 'transparent',
-                                        borderBottomColor: Colors.fadedMainColor,
-                                        borderBottomWidth: 0.7
-                                    }}
-                                    ref='phone'
-                                    confirmText='اختيار'
-                                    cancelText='الغاء'
-                                    initialCountry='sa'
-                                    textProps={{placeholder: 'رقم الجوال'}}
-                                    textStyle={{color: Colors.fadedMainColor}}
-                                    pickerButtonColor={Colors.mainColor} />
+                                <TextInput
+                                    underlineColorAndroid='transparent'
+                                    placeholder='جوال او بريد الكتروني او اسم مستخدم'
+                                    placeholderTextColor='#CCCCCC'
+                                    autoGrow={false}
+                                    multiline={false}
+                                    autoFocus={false}
+                                    style={styles.textInput}
+                                    defaultValue={this.state.identifier}
+                                    onChangeText={(text) => this.setState({identifier:text})}
+                                    onSubmitEditing={(event) => this.loginUser() } />
 
                                 <Ionicons
-                                    name={Platform.OS === 'ios' ? 'ios-phone-portrait' : 'md-phone-portrait'}
+                                    name={Platform.OS === 'ios' ? 'ios-contact' : 'md-contact'}
                                     size={26}
                                     color={Colors.fadedMainColor}
                                     style={styles.inputIcon}/>
@@ -208,17 +211,23 @@ export default class Signin extends React.Component {
 
                         <TouchableOpacity style={{ flex:1, marginTop:7 }}
                             onPress={ () => {
-                                if(!this.refs.phone.isValidNumber())
+                                if(this.state.identifier.length != 9)
                                 {
-                                    this.setState({ errorMsg: 'رقم الجوال غير صالح' });
+                                    this.setState({ errorMsg: 'يجب ادخال رقم الجوال فى اول خانة لاسترجاع كلمة المرور عن طريقه' });
                                     return;
                                 }
+                                if(/\s/g.test(this.state.identifier))
+                                {
+                                    this.setState({ errorMsg: 'غير مسوح بالمسافات' });
+                                    return;
+                                }
+
                                 Alert.alert(
                                 'كلمة مرور جديدة',
-                                'سيتم ارسال رسالة على جوالك ' + this.refs.phone.getValue() + 'توجهك الى وضع كلمة مرور جديدة',
+                                'سيتم ارسال رسالة على جوالك ' + this.state.identifier + ' توجهك الى وضع كلمة مرور جديدة',
                                 [
                                     {text: 'موافق', onPress: () => {
-                                        fetch(Server.dest + '/api/requestnewpass?phone='+this.refs.phone.getValue(),
+                                        fetch(Server.dest + '/api/requestnewpass?phone='+this.state.identifier,
                                         {headers: {'Cache-Control': 'no-cache'}}).
                                         then((res) => res.json()).then((resJson) => {
                                             if(resJson.response == 0)
@@ -228,7 +237,7 @@ export default class Signin extends React.Component {
                                             else
                                             {
                                                 this.props.navigation.navigate("CodeVerification", { process: 1 /* means RESET PASS*/,
-                                                    device: this.refs.phone.getValue() });
+                                                    device: this.state.identifier });
                                             }
                                         })
                                     }},

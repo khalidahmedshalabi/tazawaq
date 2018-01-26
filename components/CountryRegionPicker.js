@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-    View,
-    Picker
+    View
 } from 'react-native';
+import Colors from '../constants/Colors';
 import CountryRegionData from '../constants/CountryRegionData.json'
+import SelectInput from 'react-native-select-input-ios';
 
 export default class CountryRegionPicker extends React.Component {
 
@@ -18,7 +19,8 @@ export default class CountryRegionPicker extends React.Component {
         }
 
         CountryRegionData.map((i, index) => {
-            this.state.CountryPickerItems.push(<Picker.Item key={index} label={i.countryName} value={i.countryName} />);
+            //this.state.CountryPickerItems.push(<Picker.Item key={index} label={i.countryName} value={i.countryName} />);
+            this.state.CountryPickerItems.push({value: i.countryName, label: i.countryName});
         });
 
         this.reRenderRegionPickerItems(this.state.country);
@@ -31,7 +33,8 @@ export default class CountryRegionPicker extends React.Component {
             if(CountryRegionData[i].countryName == country)
             {
                 CountryRegionData[i].regions.map((data, index) => {
-                    this.state.RegionPickerItems.push(<Picker.Item key={index} label={data.name} value={data.name} />);
+                    //this.state.RegionPickerItems.push(<Picker.Item key={index} label={data.name} value={data.name} />);
+                    this.state.RegionPickerItems.push({value: data.name, label: data.name});
                 });
                 this.state.region = CountryRegionData[i].regions[0];
                 break;
@@ -42,20 +45,28 @@ export default class CountryRegionPicker extends React.Component {
     render() {
         return (
             <View style={ this.props.containerViewStyle }>
-                <Picker
-                    selectedValue={this.state.country}
-                    onValueChange={(itemValue, itemIndex) => {
+                <SelectInput
+                    buttonsBackgroundColor={Colors.smoothGray}
+                    buttonsTextColor={Colors.mainColor}
+                    cancelKeyText='الغاء'
+                    submitKeyText='اختيار'
+                    value={this.state.country}
+                    options={this.state.CountryPickerItems}
+                    onSubmitEditing={(itemValue) => {
                         this.setState({country: itemValue});
                         this.reRenderRegionPickerItems(itemValue);
                     }}>
-                    {this.state.CountryPickerItems}
-                </Picker>
+                </SelectInput>
 
-                <Picker
-                    selectedValue={this.state.region}
-                    onValueChange={(itemValue, itemIndex) => this.setState({region: itemValue})}>
-                    {this.state.RegionPickerItems}
-                </Picker>
+                <SelectInput
+                    buttonsBackgroundColor={Colors.smoothGray}
+                    buttonsTextColor={Colors.mainColor}
+                    cancelKeyText='الغاء'
+                    submitKeyText='اختيار'
+                    value={this.state.region}
+                    options={this.state.RegionPickerItems}
+                    onSubmitEditing={(itemValue) => this.setState({region: itemValue})}>
+                </SelectInput>
             </View>
         );
     }

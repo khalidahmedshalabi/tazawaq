@@ -11,7 +11,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
 import RestaurantBox from '../components/RestaurantBox';
 
-//import Server from '../constants/server';
+import Server from '../constants/server';
 var styles = StyleSheet.create({
 	box: {
 		height: 45,

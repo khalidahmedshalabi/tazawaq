@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, View, Text, TextInput } from 'react-native';
+import { KeyboardAvoidingView, View, Text, TextInput, AsyncStorage } from 'react-native';
 import { Button } from "react-native-elements";
 import Colors from '../constants/Colors';
 import { NavigationActions } from 'react-navigation';
@@ -37,8 +37,10 @@ export default class ResetPassword extends React.Component {
         this.setState({ errorMsg: '' });
 
         if(this.state.password.length >= 6) {
-            fetch(Server.dest + '/api/setnewpass?code='+this.props.code+
-                '&phone='+this.props.phone+'&password='+this.state.password,
+            const { params } = this.props.navigation.state;
+
+            fetch(Server.dest + '/api/setnewpass?code='+params.code+
+                '&phone='+params.phone+'&password='+this.state.password,
             {headers: {'Cache-Control': 'no-cache'}}).
             then((res) => res.json()).then((resJson) => {
                 if(resJson.response == 1) {

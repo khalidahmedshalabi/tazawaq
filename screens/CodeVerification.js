@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, View, Text, TextInput } from 'react-native';
+import { KeyboardAvoidingView, View, Text, TextInput, AsyncStorage } from 'react-native';
 import { Button } from "react-native-elements";
 import Colors from '../constants/Colors';
 import { NavigationActions } from 'react-navigation';
@@ -37,20 +37,21 @@ export default class CodeVerification extends React.Component {
         this.setState({ errorMsg: '' });
 
         if(this.state.code.length == 5) {
+            const { params } = this.props.navigation.state;
             fetch(Server.dest + '/api/verifycode?code='+this.state.code+
-                '&identifier='+this.props.device+'&process='+this.props.process,
+                '&identifier='+params.device+'&process='+params.process,
             {headers: {'Cache-Control': 'no-cache'}}).
             then((res) => res.json()).then((resJson) => {
                 if(resJson.response == 2)
                 {
-                    if(this.props.process == 0) { // signup
+                    if(params.process == 0) { // signup
                         AsyncStorage.setItem('userid', resJson.id);
                         this.setLoginStatus('1');
                         this.navigateToHome();
                     }
                     else { // reset password
                         // Navigate to a screen where user can set a new password
-                        this.props.navigation.navigate("ResetPassword", {phone: this.props.device, code: this.state.code});
+                        this.props.navigation.navigate("ResetPassword", {phone: params.device, code: this.state.code});
                     }
                 }
                 else if(resJson.response == 3)
@@ -81,7 +82,7 @@ export default class CodeVerification extends React.Component {
                 {this.shouldRenderErrorMessage()}
 
                 <Text style={{ paddingHorizontal:10, marginTop:40, textAlign:'center', fontFamily: 'myfont', color: Colors.mainColor }}>
-                    سيتم ارسال كود التأكيد على الجوال {this.props.device} اكتب الكود بالاسفل
+                    سيتم ارسال كود التأكيد على الجوال {this.props.navigation.state.params.device} اكتب الكود بالاسفل
                 </Text>
 
                 <KeyboardAvoidingView
