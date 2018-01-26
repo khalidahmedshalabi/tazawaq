@@ -12,7 +12,6 @@ export default class SettingsScreen extends React.Component {
         super(props);
         this.state = {
             'login': 1,
-            name: '',
             hint: '',
             location: '',
         }
@@ -24,12 +23,11 @@ export default class SettingsScreen extends React.Component {
     }
 
     componentDidMount() {
-        AsyncStorage.multiGet(["location", "hint", "name"], (err, stores) => {
+        AsyncStorage.multiGet(["location", "hint"], (err, stores) => {
             stores.map((result, i, store) => {
                 // store[i][0]
                 if(i == 0) this.setState({ location: store[i][1] });
                 else if(i == 1) this.setState({ hint: store[i][1] });
-                else if(i == 2) this.setState({ name: store[i][1] });
             });
         });
     }
@@ -43,7 +41,6 @@ export default class SettingsScreen extends React.Component {
                         AsyncStorage.setItem('SkippedLogin', '0');
                         AsyncStorage.setItem('login', '0');
                         AsyncStorage.removeItem('hint');
-                        AsyncStorage.removeItem('name');
                         this.props.navigation.navigate("Signin", {})
                     }}>
                     <Ionicons
@@ -92,21 +89,6 @@ export default class SettingsScreen extends React.Component {
                             style={styles.inputIcon}/>
                     </View>
                     <View style={{ flex:1, padding:12 }}>
-                        <TextInput
-                            underlineColorAndroid='transparent'
-                            placeholder='الاسم'
-                            placeholderTextColor='#CCCCCC'
-                            autoGrow={false}
-                            multiline={false}
-                            autoFocus={false}
-                            secureTextEntry={false}
-                            style={styles.textInput}
-                            defaultValue={this.state.name}
-                            onEndEditing={(e) => {
-                                AsyncStorage.setItem('name', e.nativeEvent.text);
-                            }}
-                            onChangeText={(text) => this.setState({name:text})} />
-
                         <TextInput
                             underlineColorAndroid='transparent'
                             placeholder='تلميح, مثال: خلف المسجد'
