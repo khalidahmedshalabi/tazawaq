@@ -82,7 +82,7 @@ export default class LocationSetting extends React.Component {
                 AsyncStorage.setItem('country', this.state.initialCountry);
             })
         }, (error) => {
-            if(error.code === "E_LOCATION_SERVICES_DISABLED")
+            if(error.code === "E_LOCATION_SERVICES_DISABLED" || error.code === undefined)
             {
                 Alert.alert(
                     'خدمة الموقع',
@@ -94,8 +94,7 @@ export default class LocationSetting extends React.Component {
                     { cancelable: false }
                 );
             }
-            else alert(error.code);
-            //else alert(JSON.stringify(error))
+            else alert(JSON.stringify(error))
         }, {
             enableHighAccuracy: true,
             timeout: 20000,
