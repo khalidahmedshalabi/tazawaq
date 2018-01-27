@@ -5,7 +5,8 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import Colors from '../constants/Colors';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { NavigationActions } from 'react-navigation';
-import CountryRegionPicker from '../components/CountryRegionPicker';
+import Saudi_Governorates from '../constants/Saudi_Governorates.js'
+import SelectInput from 'react-native-select-input-ios';
 
 export default class LocationSetting extends React.Component {
     static navigationOptions = {
@@ -21,9 +22,13 @@ export default class LocationSetting extends React.Component {
                 long: 360, lat: 360
             },
             fetchedLocationData: false,
-            initialCountry: 'Saudi Arabia',
-            initialRegion: '',
+            region: Saudi_Governorates.regions[0],
+            pickerData: []
         }
+
+        Saudi_Governorates.regions.map((data, index) => {
+            this.state.pickerData.push({value: data, label: data});
+        });
     }
 
     componentDidMount () {
@@ -60,26 +65,26 @@ export default class LocationSetting extends React.Component {
                 {headers: {'Cache-Control': 'no-cache'}}).then((res) => res.json()).then((resJson) => {
 
                 var target = resJson.results[0].address_components;
-                this.setState({
-                    // Region
-                    initialRegion: target.find(function(element) {
-                        return (element.types.includes('locality') || element.types.includes('administrative_area_level_1'));
-                    }).long_name,
 
-                    // Country
-                    initialCountry: target.find(function(element) {
-                        return (element.types.includes('country'));
-                    }).long_name,
+                var foundRegion = target.find(function(element) {
+                    return (element.types.includes('locality') || element.types.includes('administrative_area_level_1'));
+                }).long_name;
 
-                    // Successfully loaded data
-                    fetchedLocationData: true
-                });
+                for(var i = 0; i != Saudi_Governorates.regions.length; ++ i)
+                {
+                    if(Saudi_Governorates.regions[i].includes(foundRegion))
+                    {
+                        this.state.region = Saudi_Governorates.regions[i];
+                        break;
+                    }
+                }
+
+                this.setState({ fetchedLocationData: true });
 
                 // Store data
                 AsyncStorage.setItem('longitude', String(position.coords.longitude));
                 AsyncStorage.setItem('latitude', String(position.coords.latitude));
-                AsyncStorage.setItem('region', this.state.initialRegion);
-                AsyncStorage.setItem('country', this.state.initialCountry);
+                AsyncStorage.setItem('region', this.state.region);
             })
         }, (error) => {
             if(error.code === "E_LOCATION_SERVICES_DISABLED" || error.code === undefined)
@@ -108,10 +113,17 @@ export default class LocationSetting extends React.Component {
         {
             return (
                 <View style={{ flex:1 }}>
-                    <CountryRegionPicker
-                        containerViewStyle={{ flex:0.4, backgroundColor: 'white', borderBottomColor: Colors.mainColor, borderBottomWidth:1 }}
-                        initialCountry={this.state.initialCountry}
-                        initialRegion={this.state.initialRegion} />
+                    <View style={{ flex:0.3, backgroundColor: 'white', borderBottomColor: Colors.smoothGray, borderBottomWidth:1 }}>
+                        <SelectInput
+                            buttonsBackgroundColor={Colors.smoothGray}
+                            buttonsTextColor={Colors.mainColor}
+                            cancelKeyText='الغاء'
+                            submitKeyText='اختيار'
+                            value={this.state.region}
+                            options={this.state.pickerData}
+                            onSubmitEditing={(itemValue) => this.setState({region: itemValue})}>
+                        </SelectInput>
+                    </View>
 
                     <GooglePlacesAutocomplete
                       placeholder="اكتب عنوانك"
@@ -132,8 +144,8 @@ export default class LocationSetting extends React.Component {
                                         AsyncStorage.getItem('userid').then(
                                             (userid) => {
                                                 fetch(Server.dest + '/api/user_location?id='+userid+
-                                                    '&location='+data.description+'&country='+this.state.initialCountry+
-                                                    '&region='+this.state.initialRegion+'&longitude='+this.state.pos.long+
+                                                    '&location='+data.description+
+                                                    '&region='+this.state.region+'&longitude='+this.state.pos.long+
                                                     '&latitude='+this.state.pos.lat,
                                                     {headers: {'Cache-Control': 'no-cache'}}).then((res) => res.json()).then((resJson) => {
                                                         this.navigateToHome();

@@ -53,7 +53,7 @@ export default class Signup extends React.Component {
 
         var locationData = "";
 
-        AsyncStorage.multiGet(["location", "latitude", "longitude", "region", "country"], (err, stores) => {
+        AsyncStorage.multiGet(["location", "latitude", "longitude", "region"], (err, stores) => {
             stores.map((result, i, store) => {
                 locationData += "&" + store[i][0] + "=" + store[i][1];
             });
