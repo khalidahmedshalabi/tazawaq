@@ -72,7 +72,7 @@ export default class LocationSetting extends React.Component {
 
                 for(var i = 0; i != Saudi_Governorates.regions.length; ++ i)
                 {
-                    if(Saudi_Governorates.regions[i].includes(foundRegion))
+                    if(Saudi_Governorates.regions[i].includes(foundRegion) || foundRegion.includes(Saudi_Governorates.regions[i]))
                     {
                         this.state.region = Saudi_Governorates.regions[i];
                         break;
