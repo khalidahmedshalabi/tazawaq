@@ -160,7 +160,7 @@ export default class Signup extends React.Component {
                     <Image
                         style={{ flex: 0.7, height: '35%', width: Dimensions.get('window').width }}
                         resizeMode='cover'
-                        source={require('../assets/images/signupin-cover.jpg')} />
+                        source={require('../assets/images/splash.png')} />
 
                     <KeyboardAvoidingView
                         behavior='padding'

@@ -15,6 +15,12 @@ export default class App extends Component {
       { screenName: 'الدجاج' },
       { screenName: 'المندي' },
       { screenName: 'الاضافات' },
+      { screenName: 'الاضافات' },
+      { screenName: 'العروض' },
+      { screenName: 'اللحوم' },
+      { screenName: 'المشروبات' },
+      { screenName: 'المقبلات' },
+
       ]
     };
 
@@ -46,10 +52,10 @@ export default class App extends Component {
         screens[page.screenName] = { screen: props => <MealsWrapper navigation={this.props.navigation} restaurant_id={this.props.navigation.state.params.key} screenName={page.screenName}  /> };
       });
       this.setState({ tabs: TabNavigator(screens,{
-
+        tabBarPosition: 'bottom',
   tabBarOptions: {
+    scrollEnabled: true,
     labelStyle: {
-
     fontWeight: '300',
     color: '#ffffff',
     fontFamily: 'myfont',
@@ -57,7 +63,6 @@ export default class App extends Component {
     },
     style: {
       backgroundColor: '#EBB70A',
-
     },
     activeTintColor: '#000',
   }}
