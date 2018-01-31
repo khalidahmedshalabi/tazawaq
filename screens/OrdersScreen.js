@@ -7,38 +7,42 @@ const Center = ({ children }) => (
   <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1,backgroundColor:'#ffffff' }}>{children}</View>
 );
 export default class OrdersScreen extends React.Component {
-  componentWillMount(){
-    /*orders status
-     0 ----> waiting
-     1 ----> accepted on way
-     2 ----> Delivered
-    */
-    this.state= {
-      orders:[
-        {
-          key: 1,
-          title: 'وجبه دجاج مشويه',
-          status : '0',
-          price : '50',
-          image: 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key: 2,
-          title: 'وجبه حمام محشى',
-          status : '1',
-          price : '60',
-          image: 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key: 3,
-          title: 'وجبه دجاج كنتاكي',
-          status : '2',
-          price : '100',
-          image: 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+
+    constructor(props) {
+        super(props)
+
+        /*orders status
+         0 ----> waiting
+         1 ----> accepted on way
+         2 ----> Delivered
+        */
+        this.state= {
+          orders:[
+            {
+              key: 1,
+              title: 'وجبه دجاج مشويه',
+              status : '0',
+              price : '50',
+              image: 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+            },
+            {
+              key: 2,
+              title: 'وجبه حمام محشى',
+              status : '1',
+              price : '60',
+              image: 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+            },
+            {
+              key: 3,
+              title: 'وجبه دجاج كنتاكي',
+              status : '2',
+              price : '100',
+              image: 'https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+            }
+          ]
         }
-      ]
     }
-  }
+
   determineStatus = (status) => {
 		if(status == 0)
 			return ("ب انتظار موافقه المطعم");
@@ -77,11 +81,13 @@ export default class OrdersScreen extends React.Component {
             />
           </View>
 
-      )
+      );
     }
-    return  <Center><Text style={{
-      fontFamily: 'myfont',
-      fontSize:16
-    }}>ليس لديك طلبات حاليا</Text></Center>
+
+    return (
+        <Center><Text style={{
+          fontFamily: 'myfont',
+          fontSize:16 }}>ليس لديك طلبات حاليا</Text></Center>
+      );
   }
 }
