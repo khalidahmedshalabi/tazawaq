@@ -78,6 +78,6 @@ export default class App extends Component {
     return  <Image
         style={{ flex: 1, height: '100%', width: Dimensions.get('window').width }}
         resizeMode='cover'
-        source={require('../assets/images/splash.png')} />
+        source={require('../assets/images/splash.jpg')} />
   }
 }

@@ -160,7 +160,7 @@ export default class Signup extends React.Component {
                     <Image
                         style={{ flex: 0.7, height: '35%', width: Dimensions.get('window').width }}
                         resizeMode='cover'
-                        source={require('../assets/images/splash.png')} />
+                        source={require('../assets/images/splash.jpg')} />
 
                     <KeyboardAvoidingView
                         behavior='padding'
@@ -215,11 +215,12 @@ export default class Signup extends React.Component {
                             <View style={styles.singleInputContainer}>
                                 <TextInput
                                     underlineColorAndroid='transparent'
-                                    placeholder='رقم الجوال'
+                                    placeholder='رقم الجوال بدون كود الدولة'
                                     placeholderTextColor='#CCCCCC'
                                     autoGrow={false}
                                     multiline={false}
                                     autoFocus={false}
+                                    maxLength={9}
                                     style={styles.textInput}
                                     keyboardType='phone-pad'
                                     defaultValue={this.state.phone}
