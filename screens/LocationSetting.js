@@ -1,6 +1,7 @@
 import React from 'react';
 import { Constants } from 'expo';
-import { KeyboardAvoidingView, View, AsyncStorage, Image, Alert } from 'react-native';
+import { KeyboardAvoidingView, View,
+    AsyncStorage, Image, Alert, Text } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Colors from '../constants/Colors';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -113,7 +114,11 @@ export default class LocationSetting extends React.Component {
         {
             return (
                 <View style={{ flex:1 }}>
-                    <View style={{ flex:0.3, backgroundColor: 'white', borderBottomColor: Colors.smoothGray, borderBottomWidth:1 }}>
+                    <View style={{ flex:0.3, backgroundColor: Colors.mainColor, borderWidth:0 }}>
+                        <Text style={{ textAlign:'right', flex:1, margin:10, color: 'white', fontSize: 16, fontFamily: 'myfont' }}>
+                            اختر المنطقة
+                        </Text>
+
                         <SelectInput
                             buttonsBackgroundColor={Colors.smoothGray}
                             buttonsTextColor={Colors.mainColor}
@@ -121,6 +126,7 @@ export default class LocationSetting extends React.Component {
                             submitKeyText='اختيار'
                             value={this.state.region}
                             options={this.state.pickerData}
+                            labelStyle={{ color: Colors.secondaryColor }}
                             onSubmitEditing={(itemValue) => this.setState({region: itemValue})}>
                         </SelectInput>
                     </View>
