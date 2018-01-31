@@ -180,13 +180,13 @@ export default class Signin extends React.Component {
                         </View>
                     </KeyboardAvoidingView>
 
-                    <View style={{ flex:0.4, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ flex:0.7, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ flex:1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <View style={{flex: 1}}>
                                 <Button
                                     onPress={() => this.props.navigation.navigate("Signup")}
                                     color='white'
-                                    backgroundColor={Colors.fadedMainColor}
+                                    backgroundColor={Colors.secondaryColor}
                                     containerViewStyle={{ borderRadius:15 }}
                                     borderRadius={15}
                                     buttonStyle={{padding: 10}}
@@ -251,7 +251,7 @@ export default class Signin extends React.Component {
                     </View>
 
                     <View style={styles.signupButtonContainer}>
-                        <View style={{flex: 1, marginBottom: 7, width: '100%'}}>
+                        <View style={{flex: 1, marginBottom: 13, width: '100%'}}>
                             <Button
                                 onPress={() => {
                                     AsyncStorage.setItem('login', '0').then(() => {
@@ -261,7 +261,7 @@ export default class Signin extends React.Component {
                                     });
                                 }}
                                 color='white'
-                                backgroundColor={Colors.fadedMainColor}
+                                backgroundColor={Colors.secondaryColor}
                                 borderRadius={15}
                                 buttonStyle={{padding: 10}}
                                 containerViewStyle={{ marginLeft:0,
@@ -293,15 +293,17 @@ const styles = StyleSheet.create({
         marginLeft: 9
     },
     inputsContainer: {
-        paddingTop: 15,
-        flex: 2, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center',
-        width: '90%'
+        flex: 0.8,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '90%',
     },
     singleInputContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     signupButtonContainer: {
         flex: 0.3,
