@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View,Image,Dimensions,FlatList,TouchableOpacity } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
-import MealBox from '../components/MealBox';
-import Colors from '../constants/Colors';
+import MealBox from '../../components/MealBox';
+import Colors from '../../constants/Colors';
 const Center = ({ children }) => (
   <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1,backgroundColor:'#ffffff' }}>{children}</View>
 );

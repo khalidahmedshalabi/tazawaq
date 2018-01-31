@@ -6,9 +6,10 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import HomeScreen from '../screens/HomeScreen';
-import OrdersScreen from '../screens/OrdersScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import Header from '../components/Header';
+
+import OrderTabs from '../navigation/OrderTabsNavigator';
 
 export default TabNavigator(
   {
@@ -16,7 +17,7 @@ export default TabNavigator(
       screen: HomeScreen,
     },
     "طلبات": {
-      screen: OrdersScreen,
+      screen: OrderTabs,
     },
     "اعدادات": {
       screen: SettingsScreen,
