@@ -132,6 +132,8 @@ var styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     topbox: {
+        paddingTop:8,
+        paddingBottom:6,
 		height: 55,
         flexDirection: 'row',
 		flexWrap: 'wrap',
