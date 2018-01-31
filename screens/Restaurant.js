@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View,Image } from 'react-native';
+import { Text, View,Image,Dimensions } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 import MealsWrapper from '../components/MealsWrapper';
 import Colors from '../constants/Colors';
@@ -70,6 +70,9 @@ export default class App extends Component {
     if (this.state.tabs) {
       return <this.state.tabs />;
     }
-    return <Image resizeMode='contain'  source={require('./assets/images/splash.png')} / >;
+    return  <Image
+        style={{ flex: 1, height: '100%', width: Dimensions.get('window').width }}
+        resizeMode='cover'
+        source={require('../assets/images/splash.png')} />
   }
 }
