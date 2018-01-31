@@ -46,7 +46,7 @@ export default class SettingsScreen extends React.Component {
                     <Ionicons
                         name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'}
                         size={26}
-                        color={Colors.fadedMainColor}
+                        color={Colors.secondaryColor}
                         style={styles.inputIcon}/>
 
                     <Text style={styles.inputOpenOutside}>تسجيل خروج</Text>
@@ -65,11 +65,12 @@ export default class SettingsScreen extends React.Component {
                     <Ionicons
                         name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'}
                         size={26}
-                        color={Colors.fadedMainColor}
+                        color={Colors.secondaryColor}
                         style={styles.inputIcon}/>
 
                     <Text style={styles.inputOpenOutside}>تسجيل دخول</Text>
                 </TouchableOpacity>
+
             );
         }
     }
@@ -118,7 +119,7 @@ export default class SettingsScreen extends React.Component {
                                 <Ionicons
                                     name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'}
                                     size={26}
-                                    color={Colors.fadedMainColor}
+                                    color={Colors.secondaryColor}
                                     style={styles.inputIcon}/>
 
                                 <Text style={styles.inputOpenOutside}>{this.state.location}</Text>
@@ -136,7 +137,7 @@ export default class SettingsScreen extends React.Component {
 const styles = StyleSheet.create({
     textInput: {
         flex: 0.5,
-        color: Colors.mainColor,
+        color: Colors.secondaryColor,
         textAlign: 'right',
         fontFamily: 'myfont',
         padding: 10,
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     },
     inputOpenOutside: {
         flex: 1,
-        color: Colors.mainColor,
+        color: Colors.secondaryColor,
         textAlign: 'right',
         fontFamily: 'myfont',
         padding: 10,
