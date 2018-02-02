@@ -16,6 +16,7 @@
     "react-native-fast-image": "^2.0.1",
     "react-native-google-places-autocomplete": "^1.3.6",
     "react-native-select-input-ios": "^1.1.4",
+    "react-native-table-component": "^1.1.3",
     "react-navigation": "^1.0.0-beta.21"
   },
   "devDependencies": {

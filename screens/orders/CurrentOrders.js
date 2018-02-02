@@ -43,14 +43,17 @@ export default class OrdersScreen extends React.Component {
         }
     }
 
-  determineStatus = (status) => {
-		if(status == 0)
-			return ("ب انتظار موافقه المطعم");
-		else if(status == 1)
-			return ("الوجبه ب الطريق");
-		else
-			return ("تم تسليم الوجبه");
-	}
+    getStatusAsStr = (status) => {
+        switch(status)
+        {
+            case 0:
+                return ("قيد القبول");
+            case 1:
+                return ("جاري التوصيل");
+            case 2:
+                return ("تم التوصيل");
+        }
+    };
 
   render() {
     const { navigate } = this.props.navigation;
@@ -72,7 +75,7 @@ export default class OrdersScreen extends React.Component {
                 <MealBox
                   name={item.title}
 
-                  desc={this.determineStatus(item.status)}
+                  desc={this.getStatusAsStr(item.status)}
                   image={item.image}
                   price={item.price}
                 />
