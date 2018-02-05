@@ -1,3 +1,3 @@
 export default {
-    dest: 'https://tathouq.herokuapp.com/'
+    dest: 'https://tathouq.herokuapp.com'
 };
