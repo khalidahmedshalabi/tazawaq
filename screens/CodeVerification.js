@@ -109,8 +109,7 @@ export default class CodeVerification extends React.Component {
                             borderBottomColor: Colors.fadedMainColor,
                             borderBottomWidth: 1 }}
                         onChangeText={(text) =>
-                          this.setState({code:text}),
-                        this.verifyCode(text)}
+                          this.setState({code:text})}
                         onSubmitEditing={(event) => this.verifyCode() } />
 
                 </KeyboardAvoidingView>

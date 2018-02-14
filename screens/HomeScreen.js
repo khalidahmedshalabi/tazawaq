@@ -1,7 +1,9 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList,TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, FlatList,TouchableOpacity,AsyncStorage } from 'react-native';
 import RestaurantBox from '../components/RestaurantBox';
 import Colors from '../constants/Colors';
+import Server from '../constants/server';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 var styles = StyleSheet.create({
 	box: {
@@ -48,76 +50,55 @@ var styles = StyleSheet.create({
 });
 
 export default class HomeScreen extends React.Component {
+	componentDidMount(){
+
+
+	AsyncStorage.getItem('userid').then((id)=>{
+		if(id == null){
+			var id = 1;
+		}
+		AsyncStorage.getItem('maxcost').then((maxcost)=>{
+			if(maxcost == null){
+				maxcost = 0;
+			}
+			AsyncStorage.getItem('maxtime').then((maxtime)=>{
+				if(maxtime == null){
+					maxtime = 0;
+				}
+				AsyncStorage.getItem('sortby').then((sortby)=>{
+					if(sortby == null){
+						sortby = 3;
+					}
+
+			fetch(Server.dest + '/api/stores?user_id='+id+'&maxcost='+maxcost+'&maxtime='+maxtime+'&sortby='+sortby).then((res)=>res.json()).then((restaurants)=>{
+				console.log(AsyncStorage.getItem('userid'));
+				this.setState({
+					doneFetches:1,
+					Restaurants: restaurants.stores
+					})
+				})
+
+					})
+				})
+			})
+		})
+	}
+
 	constructor(props) {
+		AsyncStorage.setItem('userid','1');
 		super(props);
 		this.state = {
+			doneFetches:0,
 			Restaurants: [
-				{
-					key: 1,
-					name: 'مطعم كنتاكي للدجاج',
-					image:
-						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
-					time: '30',
-					desc: 'تمتع بوجبه خفيفه',
-					stars: '5',
-					deliver_price: '40'
-				},
-				{
-					key: 2,
-					name: 'مطعم ماكدونالدز',
-					image:
-						'https://munchies-images.vice.com/wp_upload/mcdonalds-food-writer.jpg',
-					time: '30',
-					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '4.3',
-					deliver_price: '40'
-				},
-				{
-					key: 3,
-					name: 'مطعم كنتاكي للدجاج',
-					image:
-						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
-					time: '30',
-					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '1.5',
-					deliver_price: '40'
-				},
-				{
-					key: 4,
-					name: 'مطعم كنتاكي للدجاج',
-					image:
-						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
-					time: '30',
-					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '5',
-					deliver_price: '40'
-				},
-				{
-					key: 5,
-					name: 'مطعم كنتاكي للدجاج',
-					image:
-						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
-					time: '30',
-					desc: 'طعام لزيز في اى وقت و ايا كان المكان',
-					stars: '3.2',
-					deliver_price: '40'
-				},
-				{
-					key: 6,
-					name: 'مطعم كنتاكي للدجاج',
-					image:
-						'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
-					time: '30',
-					desc: 'وجبات سريعه و لذيذه ف الحال',
-					stars: '2.5',
-					deliver_price: '40'
-				}
 			]
 		};
 	}
 
 	render() {
 		const { navigate } = this.props.navigation;
+		if(this.state.doneFetches == 0)
+				return (<LoadingIndicator size="large" color="#B6E3C6" />);
+
 		return (
 
 			<View >
