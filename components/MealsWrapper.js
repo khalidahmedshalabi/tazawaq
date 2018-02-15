@@ -38,7 +38,7 @@ export default class Meals extends React.Component {
       }
     }
     componentDidMount(){
-      fetch(Server.dest + 'api/store-products?category_id='+this.props.screenName+'&store_id='+this.props.restaurant_id).then((res)=>res.json()).then((meals)=>{
+      fetch(Server.dest + '/api/store-products?category_id='+this.props.screenName+'&store_id='+this.props.restaurant_id).then((res)=>res.json()).then((meals)=>{
         this.setState({
           doneFetches:1,
           Meals: meals.response
