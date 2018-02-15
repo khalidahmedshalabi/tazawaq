@@ -5,6 +5,8 @@ import Colors from '../constants/Colors';
 import MealBox from '../components/MealBox';
 import RestaurantBox from '../components/RestaurantBox';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
+import Server from '../constants/server';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 export default class Meals extends React.Component {
 
@@ -26,57 +28,28 @@ export default class Meals extends React.Component {
   });
   constructor(props) {
 		super(props);
-    //this.props.screenName  the key here for the category ---->
+    //this.props.screenName  the key here for the category  restaurant_id---->
+
 		this.state = {
+      doneFetches:0,
 			Meals: [
-        {
-          key:1,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:2,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:3,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:4,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:5,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:6,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
+
       ]
       }
+    }
+    componentDidMount(){
+      fetch(Server.dest + 'api/store-products?category_id='+this.props.screenName+'&store_id='+this.props.restaurant_id).then((res)=>res.json()).then((meals)=>{
+        this.setState({
+          doneFetches:1,
+          Meals: meals.response
+          })
+        })
     }
   render() {
     // const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
+    if(this.state.doneFetches == 0)
+				return (<LoadingIndicator size="large" color="#B6E3C6" />);
     return (
       <View>
 
