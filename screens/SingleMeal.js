@@ -1,12 +1,24 @@
 import React from 'react';
-import { ScrollView, StyleSheet,Text,FlatList,TouchableOpacity,View } from 'react-native';
+import { ScrollView, StyleSheet,Text,FlatList,TouchableOpacity,View,AsyncStorage } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
 import MealBox from '../components/MealBox';
 import { Button } from "react-native-elements";
 import RestaurantBox from '../components/RestaurantBox';
+import Server from '../constants/server';
+import LoadingIndicator from '../components/LoadingIndicator';
+// import { NavigationActions } from 'react-navigation';
 
 export default class SingleMeal extends React.Component {
+
+  addcart = ()=>{
+    var meal = this.state.Meal[0];
+
+    AsyncStorage.getItem('cart').then((cart)=>{
+      AsyncStorage.setItem('cart',cart+','+meal.key);
+      alert('تم اضافه الوجبه الى السله');
+    })
+  }
 
   static navigationOptions = ({ navigation }) => ({
     title:'الوجبه',
@@ -29,31 +41,34 @@ export default class SingleMeal extends React.Component {
 
 
 		this.state = {
+      doneFetches:0,
       Restaurant: [
-        {
-          key: 1,
-          name: 'مطعم كنتاكي للدجاج',
-          image:
-            'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
-          time: '30',
-          desc: 'تمتع بوجبه خفيفه',
-          stars: '5',
-          deliver_price: '40'
-        }
+
+
       ],
 			Meal: [
-          {
-            key:1,
-            name: 'دجاج مشويه على الفحم',
-            desc: '3 قطع من الدجاج + رز',
-            price: 50,
-            image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-          },
+
       ]
       }
     }
+    componentDidMount(){
+        fetch(Server.dest + '/api/store-info?store_id='+this.props.navigation.state.params.restaurant_id).then((res)=>res.json()).then((restaurants)=>{
+          fetch(Server.dest + '/api/product-info?product_id='+this.props.navigation.state.params.meal_id).then((res)=>res.json()).then((meals)=>{
+
+            this.setState({
+              doneFetches:1,
+              Restaurant: [restaurants.response],
+        			Meal: [meals.response]
+            })
+            console.log(this.state.Restaurant)
+        })
+      })
+    }
   render() {
 const { params } = this.props.navigation.state;
+if(this.state.doneFetches == 0)
+    return (<LoadingIndicator size="large" color="#B6E3C6" />);
+
     return (
       <View>
       <FlatList
@@ -94,7 +109,7 @@ const { params } = this.props.navigation.state;
       />
       <Button
           onPress={() => {
-              this.registerUser()
+              this.addcart();
           }}
           color='white'
           backgroundColor={Colors.mainColor}
@@ -102,7 +117,7 @@ const { params } = this.props.navigation.state;
           borderRadius={15}
           buttonStyle={{ padding: 10 }}
           textStyle={{ fontFamily: 'myfont' }}
-          title="شراء الان" />
+          title="اضف الى السله" />
       </View>
     );
   }

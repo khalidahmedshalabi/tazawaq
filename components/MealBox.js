@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View, Text, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
@@ -14,12 +13,7 @@ export default class MealBox extends Component {
 
 					padding: 13,
 					paddingHorizontal: 20,
-					shadowColor: '#000',
-					shadowOpacity: 2,
-					shadowOffset: {
-						height: 2,
-						width: 1
-					}
+					
 				}}>
 				<Image
 					style={{ flex: 1, height: 130, borderRadius: 10 }}
@@ -52,7 +46,7 @@ export default class MealBox extends Component {
 
 					}}>
 					<MaterialCommunityIcons
-						name="ios-alert-outline"
+						name="cash-multiple"
 						size={22}
 						color={Colors.secondaryColor}
 					/>

@@ -8,7 +8,7 @@ import Colors from '../constants/Colors';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import Header from '../components/Header';
-
+import CartScreen from '../screens/CartScreen';
 import OrderTabs from '../navigation/OrderTabsNavigator';
 
 export default TabNavigator(
@@ -21,6 +21,9 @@ export default TabNavigator(
     },
     "اعدادات": {
       screen: SettingsScreen,
+    },
+    "السله": {
+      screen: CartScreen,
     },
 
   },
@@ -41,6 +44,9 @@ export default TabNavigator(
             iconName = Platform.OS === 'ios' ? `ios-paper${focused ? '' : '-outline'}` : 'md-paper';
             break;
           case 'اعدادات':
+            iconName =
+              Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact';
+          case 'السله':
             iconName =
               Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact';
         }

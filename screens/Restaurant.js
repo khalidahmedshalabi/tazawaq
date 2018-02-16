@@ -14,12 +14,33 @@ export default class App extends Component {
     const {state} = props.navigation;
 
     fetch(Server.dest + '/api/store-categories?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((categories)=>{
-      this.setState({
-        doneFetches:1,
-        pages: categories.response
-        })
+
+        setTimeout(() => {
+          const screens = {};
+            categories.response.forEach(page => {
+              screens[page.screenName] = { screen: props => <MealsWrapper navigation={this.props.navigation} restaurant_id={this.props.navigation.state.params.key} screenName={page.key}  /> };
+            });
+
+          this.setState({ tabs: TabNavigator(screens,{
+              tabBarPosition: 'bottom',
+              tabBarOptions: {
+              scrollEnabled: true,
+              labelStyle: {
+              fontWeight: '300',
+              color: '#ffffff',
+              fontFamily: 'myfont',
+              fontSize: 12
+              },
+              style: {
+                backgroundColor: '#EBB70A',
+              },
+              activeTintColor: '#000',
+          }})
+          });
+          }, 500);
       })
     this.state = {
+      doneFetches:0,
       pages:[
 
       ]
@@ -45,30 +66,7 @@ export default class App extends Component {
   componentWillMount() {
 
 
-    setTimeout(() => {
-      const screens = {};
 
-
-      this.state.pages.forEach(page => {
-        screens[page.screenName] = { screen: props => <MealsWrapper navigation={this.props.navigation} restaurant_id={this.props.navigation.state.params.key} screenName={page.key}  /> };
-      });
-      this.setState({ tabs: TabNavigator(screens,{
-        tabBarPosition: 'bottom',
-  tabBarOptions: {
-    scrollEnabled: true,
-    labelStyle: {
-    fontWeight: '300',
-    color: '#ffffff',
-    fontFamily: 'myfont',
-    fontSize: 12
-    },
-    style: {
-      backgroundColor: '#EBB70A',
-    },
-    activeTintColor: '#000',
-  }}
-  ) });
-  }, 500);
   }
 
   render() {
