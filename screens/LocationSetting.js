@@ -62,20 +62,27 @@ export default class LocationSetting extends React.Component {
 
             fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ position.coords.latitude +
                 "," + position.coords.longitude +
-                "&sensor=false&language=en&result_type=locality&key=AIzaSyCxXoRqTcOTvsOLQPOiVtPnSxLUyGJBFqw",
+                "&sensor=false&language=ar&result_type=locality&key=AIzaSyCxXoRqTcOTvsOLQPOiVtPnSxLUyGJBFqw",
                 {headers: {'Cache-Control': 'no-cache'}}).then((res) => res.json()).then((resJson) => {
 
                 var target = resJson.results[0].address_components;
 
-                var foundRegion = target.find(function(element) {
-                    return (element.types.includes('locality') || element.types.includes('administrative_area_level_1'));
-                }).long_name;
+                var foundRegion1 = target.find(function(element) {
+					return element.types.includes('locality');
+				}).long_name;
+
+				var foundRegion2 = target.find(function(element) {
+					return element.types.includes('administrative_area_level_1');
+				}).long_name;
 
                 for(var i = 0; i != Saudi_Governorates.regions.length; ++ i)
                 {
-                    if(Saudi_Governorates.regions[i].includes(foundRegion) || foundRegion.includes(Saudi_Governorates.regions[i]))
+                    if(Saudi_Governorates.regions[i].includes(foundRegion1) 
+					   || foundRegion1.includes(Saudi_Governorates.regions[i])
+					   || Saudi_Governorates.regions[i].includes(foundRegion2) 
+					   || foundRegion2.includes(Saudi_Governorates.regions[i]))
                     {
-                        this.state.region = Saudi_Governorates.regions[i];
+                        this.setState({ region: Saudi_Governorates.regions[i] });
                         break;
                     }
                 }

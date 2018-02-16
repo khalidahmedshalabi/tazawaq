@@ -6,7 +6,7 @@ import Colors from '../constants/Colors';
 const Center = ({ children }) => (
   <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1,backgroundColor:'#ffffff' }}>{children}</View>
 );
-export default class OrdersScreen extends React.Component {
+export default class SingleOrderScreen extends React.Component {
   componentWillMount(){
     /*orders status
      0 ----> waiting

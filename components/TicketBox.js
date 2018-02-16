@@ -5,7 +5,23 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
-export default class MealBox extends Component {
+export default class TicketBox extends Component {
+	statusIcon = (value) => {
+		if(value == 0){
+			return "alert-outline"
+		}
+		else{
+			return "check-circle"
+		}
+	}
+	statusText = (value) =>{
+		if(value == 0){
+			return "لم يتم الرد بعد"
+		}
+		else{
+			return "تم الرد"
+		}
+	}
 	render() {
 		return (
 			<View
@@ -21,10 +37,7 @@ export default class MealBox extends Component {
 						width: 1
 					}
 				}}>
-				<Image
-					style={{ flex: 1, height: 130, borderRadius: 10 }}
-					source={{ uri: this.props.image }}
-				/>
+
 				<Text
 					style={{
 						fontFamily: 'myfont',
@@ -52,7 +65,7 @@ export default class MealBox extends Component {
 
 					}}>
 					<MaterialCommunityIcons
-						name="ios-alert-outline"
+						name={this.statusIcon(this.props.status)}
 						size={22}
 						color={Colors.secondaryColor}
 					/>
@@ -63,7 +76,7 @@ export default class MealBox extends Component {
 							fontSize: 12,
 							color: Colors.secondaryColor
 						}}>
-						{this.props.price} ر.س
+						{this.statusText(this.props.status)}
 					</Text>
 				</View>
 

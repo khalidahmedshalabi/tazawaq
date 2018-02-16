@@ -3,23 +3,24 @@ import { Text, View,Image,Dimensions } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 import MealsWrapper from '../components/MealsWrapper';
 import Colors from '../constants/Colors';
+import Server from '../constants/server';
+
 const Center = ({ children }) => (
   <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>{children}</View>
 );
 export default class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const {state} = props.navigation;
+
+    fetch(Server.dest + '/api/store-categories?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((categories)=>{
+      this.setState({
+        doneFetches:1,
+        pages: categories.response
+        })
+      })
     this.state = {
       pages:[
-      { screenName: 'المشويات' },
-      { screenName: 'الدجاج' },
-      { screenName: 'المندي' },
-      { screenName: 'الاضافات' },
-      { screenName: 'الاضافات' },
-      { screenName: 'العروض' },
-      { screenName: 'اللحوم' },
-      { screenName: 'المشروبات' },
-      { screenName: 'المقبلات' },
 
       ]
     };
@@ -49,7 +50,7 @@ export default class App extends Component {
 
 
       this.state.pages.forEach(page => {
-        screens[page.screenName] = { screen: props => <MealsWrapper navigation={this.props.navigation} restaurant_id={this.props.navigation.state.params.key} screenName={page.screenName}  /> };
+        screens[page.screenName] = { screen: props => <MealsWrapper navigation={this.props.navigation} restaurant_id={this.props.navigation.state.params.key} screenName={page.key}  /> };
       });
       this.setState({ tabs: TabNavigator(screens,{
         tabBarPosition: 'bottom',
