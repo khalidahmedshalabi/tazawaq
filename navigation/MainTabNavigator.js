@@ -48,7 +48,7 @@ export default TabNavigator(
               Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact';
           case 'السله':
             iconName =
-              Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact';
+              Platform.OS === 'ios' ? `ios-cart${focused ? '' : '-outline'}` : 'md-cart';
         }
         return (
           <Ionicons

@@ -37,27 +37,12 @@ export default class Meals extends React.Component {
           listener.remove()
       })
   }
-  static navigationOptions = ({ navigation }) => ({
-    title:'التذاكر',
-    headerTintColor: Colors.smoothGray,
-    fontFamily:'myfont',
-  headerStyle: {
-    backgroundColor: Colors.mainColor,
-    borderBottomColor: Colors.mainColor,
-    borderBottomWidth: 3,
-  },
-  headerTitleStyle: {
-    fontWeight: '300',
-    color: '#ffffff',
-    fontFamily: 'myfont',
-    fontSize: 16
-  },
-  });
+  
 
 
 
   componentDidMount(){
-
+    this.doTheFetching();
   }
 doTheFetching = ()=>{
   AsyncStorage.getItem('cart').then((ids)=>{

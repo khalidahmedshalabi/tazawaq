@@ -18,6 +18,8 @@ import SingleOrderScreen from '../screens/SingleOrderScreen';
 import FilterScreen from '../screens/FilterScreen';
 const RootStackNavigator = StackNavigator(
     {
+      MyTicketsScreen: {screen: MyTicketsScreen},
+      LocationSetting: { screen: LocationSetting },
         Signin: { screen: Signin },
         Signup: { screen: Signup },
         CodeVerification: { screen: CodeVerification },
@@ -30,7 +32,6 @@ const RootStackNavigator = StackNavigator(
         SingleOrderScreen: {screen: SingleOrderScreen},
         MyTicketsScreen: {screen: MyTicketsScreen},
         FilterScreen: {screen: FilterScreen},
-        LocationSetting: { screen: LocationSetting },
 
 
     },
