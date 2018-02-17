@@ -18,6 +18,9 @@ export default class TicketBox extends Component {
 		if(value == 0){
 			return "لم يتم الرد بعد"
 		}
+		else if(value == -1){
+			return "مضافه"
+		}
 		else{
 			return "تم الرد"
 		}

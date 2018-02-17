@@ -44,6 +44,7 @@ export default class Meals extends React.Component {
     this.state = {
       doneFetches:0,
 			Tickets: [
+        
       ]
     }
   }
