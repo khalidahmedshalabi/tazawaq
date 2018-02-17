@@ -152,6 +152,7 @@ var styles = StyleSheet.create({
 		backgroundColor: 'white'
 	},
 	topbox: {
+		marginTop: Platform.OS === 'ios' ? 20 : 0,
 		paddingTop: 8,
 		paddingBottom: 6,
 		height: 55,
