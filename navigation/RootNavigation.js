@@ -19,19 +19,21 @@ import FilterScreen from '../screens/FilterScreen';
 const RootStackNavigator = StackNavigator(
     {
         // Add new screens at the end of this list, not here
+
         LocationSetting: { screen: LocationSetting },
+        Main: { screen: MainTabNavigator },
         Signin: { screen: Signin },
         Signup: { screen: Signup },
         CodeVerification: { screen: CodeVerification },
         ResetPassword: { screen: ResetPassword },
-        Main: { screen: MainTabNavigator },
         Restaurant: {screen : Restaurant},
         MealsScreen: {screen : MealsScreen},
         SingleMeal: {screen: SingleMeal},
         SingleTicketScreen: {screen: SingleTicketScreen},
         SingleOrderScreen: {screen: SingleOrderScreen},
-        MyTicketsScreen: {screen: MyTicketsScreen},
         FilterScreen: {screen: FilterScreen},
+        MyTicketsScreen: {screen: MyTicketsScreen},
+
     },
     {
         navigationOptions: () => ({

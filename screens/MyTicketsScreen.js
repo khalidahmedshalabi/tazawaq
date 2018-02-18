@@ -29,8 +29,8 @@ export default class Meals extends React.Component {
   });
   componentWillMount(){
     AsyncStorage.getItem('userid').then((id)=>{
+
     fetch(Server.dest + '/api/get-my-tickets?user_id='+id).then((res)=>res.json()).then((tickets)=>{
-      console.log(AsyncStorage.getItem('userid'));
       this.setState({
         doneFetches:1,
         Tickets: tickets.tickets
@@ -40,11 +40,10 @@ export default class Meals extends React.Component {
 }
   constructor(props) {
 		super(props);
-    AsyncStorage.setItem('userid','1');
     this.state = {
       doneFetches:0,
 			Tickets: [
-        
+
       ]
     }
   }
