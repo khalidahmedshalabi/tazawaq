@@ -89,13 +89,29 @@ export default class SettingsScreen extends React.Component {
 						style={styles.inputIcon}
 					/>
 
-					<Text style={styles.inputOpenOutside}>تسجيل دخول</Text>
-				</TouchableOpacity>
-			);
-		}
-	};
+                    <Text style={styles.inputOpenOutside}>تسجيل خروج</Text>
+                </TouchableOpacity>
+            );
+        }
+        else
+        {
+            return (
 
-	// dont send to server if not logged in
+                <TouchableOpacity style={styles.singleInputContainer}
+                    onPress={() => {
+                        AsyncStorage.setItem('SkippedLogin', '0');
+                        AsyncStorage.setItem('login', '0');
+                        this.props.navigation.navigate("Signin", {})
+                    }}>
+                    <Ionicons
+                        name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'}
+                        size={26}
+                        color={Colors.secondaryColor}
+                        style={styles.inputIcon}/>
+
+                    <Text style={styles.inputOpenOutside}>تسجيل دخول</Text>
+                </TouchableOpacity>
+
 
 	render() {
 		return (
