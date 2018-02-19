@@ -13,14 +13,14 @@ import OrderTabs from '../navigation/OrderTabsNavigator';
 
 export default TabNavigator(
 	{
-		اعدادات: {
-			screen: SettingsScreen
-		},
 		مطاعم: {
 			screen: HomeScreen
 		},
 		طلبات: {
 			screen: OrderTabs
+		},
+		اعدادات: {
+			screen: SettingsScreen
 		},
 		السله: {
 			screen: CartScreen
