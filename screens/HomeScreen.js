@@ -1,5 +1,12 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList,TouchableOpacity,AsyncStorage } from 'react-native';
+import {
+	Text,
+	View,
+	StyleSheet,
+	FlatList,
+	TouchableOpacity,
+	AsyncStorage
+} from 'react-native';
 import RestaurantBox from '../components/RestaurantBox';
 import Colors from '../constants/Colors';
 import Server from '../constants/server';
@@ -50,77 +57,85 @@ var styles = StyleSheet.create({
 });
 
 export default class HomeScreen extends React.Component {
-	componentDidMount(){
-
-
-	AsyncStorage.getItem('userid').then((id)=>{
-		if(id == null){
-			var id = 1;
-		}
-		AsyncStorage.getItem('maxcost').then((maxcost)=>{
-			if(maxcost == null){
-				maxcost = 0;
+	componentDidMount() {
+		AsyncStorage.getItem('userid').then(id => {
+			if (id == null) {
+				var id = 1;
 			}
-			AsyncStorage.getItem('maxtime').then((maxtime)=>{
-				if(maxtime == null){
-					maxtime = 0;
+			AsyncStorage.getItem('maxcost').then(maxcost => {
+				if (maxcost == null) {
+					maxcost = 0;
 				}
-				AsyncStorage.getItem('sortby').then((sortby)=>{
-					if(sortby == null){
-						sortby = 3;
+				AsyncStorage.getItem('maxtime').then(maxtime => {
+					if (maxtime == null) {
+						maxtime = 0;
 					}
+					AsyncStorage.getItem('sortby').then(sortby => {
+						if (sortby == null) {
+							sortby = 3;
+						}
 
-			fetch(Server.dest + '/api/stores?user_id='+id+'&maxcost='+maxcost+'&maxtime='+maxtime+'&sortby='+sortby).then((res)=>res.json()).then((restaurants)=>{
-				console.log(AsyncStorage.getItem('userid'));
-				this.setState({
-					doneFetches:1,
-					Restaurants: restaurants.stores
-					})
-				})
-
-					})
-				})
-			})
-		})
+						fetch(
+							Server.dest +
+								'/api/stores?user_id=' +
+								id +
+								'&maxcost=' +
+								maxcost +
+								'&maxtime=' +
+								maxtime +
+								'&sortby=' +
+								sortby
+						)
+							.then(res => res.json())
+							.then(restaurants => {
+								console.log(AsyncStorage.getItem('userid'));
+								this.setState({
+									doneFetches: 1,
+									Restaurants: restaurants.stores
+								});
+							});
+					});
+				});
+			});
+		});
 	}
 
 	constructor(props) {
-		
 		super(props);
 		this.state = {
-			doneFetches:0,
-			Restaurants: [
-			]
+			doneFetches: 0,
+			Restaurants: []
 		};
 	}
 
 	render() {
 		const { navigate } = this.props.navigation;
-		if(this.state.doneFetches == 0)
-				return (<LoadingIndicator size="large" color="#B6E3C6" />);
+		if (this.state.doneFetches == 0)
+			return <LoadingIndicator size="large" color="#B6E3C6" />;
 
 		return (
-
-			<View >
-
+			<View>
 				<FlatList
 					automaticallyAdjustContentInsets={false}
 					style={{ backgroundColor: 'white' }}
 					removeClippedSubviews={false}
-					ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
+					ItemSeparatorComponent={() => (
+						<View style={{ height: 5, backgroundColor: Colors.smoothGray }} />
+					)}
 					data={this.state.Restaurants}
 					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() =>
-					navigate('Restaurant', { key:item.key })} >
-						<RestaurantBox
-							style={styles.restaurant}
-							stars={item.stars}
-							name={item.name}
-							time={item.time}
-							desc={item.desc}
-							image={item.image}
-							price={item.deliver_price}
-						/>
+						<TouchableOpacity
+							onPress={() => navigate('Restaurant', { key: item.key })}
+						>
+							<RestaurantBox
+								style={styles.restaurant}
+								stars={item.stars}
+								name={item.name}
+								time={item.time}
+								desc={item.desc}
+								image={item.image}
+								price={item.deliver_price}
+							/>
 						</TouchableOpacity>
 					)}
 				/>
