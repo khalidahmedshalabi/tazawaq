@@ -85,7 +85,10 @@ export default class Meals extends React.Component {
       				/> }
               keyExtractor={this._keyExtractor}
               ListFooterComponent={()=>
+                <TouchableOpacity onPress={() =>
+              navigate('AddTicketScreen')}>
                 <View style={{flex:1,justifyContent:'center',alignSelf:'center',padding:10,flexDirection:'row',borderWidth:5,borderColor:'#e9e9ef'}}>
+
                 <Text style={{
                   fontFamily:'myfont',
                 }}>افتح تذكره جديده</Text>
@@ -96,7 +99,8 @@ export default class Meals extends React.Component {
                 style={{paddingLeft:5}}
     					/>
 
-            </View>}
+            </View>
+          </TouchableOpacity>}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() =>
               navigate('SingleTicketScreen', { Ticket_id:item.ticket_id })} >
@@ -115,7 +119,8 @@ export default class Meals extends React.Component {
 
     return (
       <View style={{flex:1,justifyContent:'center',alignSelf:'center',padding:10,flexDirection:'row',borderWidth:5,borderColor:'#e9e9ef'}}>
-        <Center >
+        <TouchableOpacity onPress={() =>
+      navigate('MyTicketsScreen')}>
             <Text style={{
               fontFamily:'myfont',
             }}>افتح تذكره جديده</Text>
@@ -125,7 +130,7 @@ export default class Meals extends React.Component {
             color={Colors.secondaryColor}
             style={{paddingLeft:5}}
           />
-          </Center>
+          </TouchableOpacity>
         </View>
       );
   }
