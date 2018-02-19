@@ -17,58 +17,59 @@ import SingleTicketScreen from '../screens/SingleTicketScreen';
 import SingleOrderScreen from '../screens/SingleOrderScreen';
 import FilterScreen from '../screens/FilterScreen';
 const RootStackNavigator = StackNavigator(
-    {
-        // Add new screens at the end of this list, not here
-
-        LocationSetting: { screen: LocationSetting },
-        Main: { screen: MainTabNavigator },
-        Signin: { screen: Signin },
-        Signup: { screen: Signup },
-        CodeVerification: { screen: CodeVerification },
-        ResetPassword: { screen: ResetPassword },
-        Restaurant: {screen : Restaurant},
-        MealsScreen: {screen : MealsScreen},
-        SingleMeal: {screen: SingleMeal},
-        SingleTicketScreen: {screen: SingleTicketScreen},
-        SingleOrderScreen: {screen: SingleOrderScreen},
-        FilterScreen: {screen: FilterScreen},
-        MyTicketsScreen: {screen: MyTicketsScreen},
-
-    },
-    {
-        navigationOptions: () => ({
-            headerTitleStyle: {
-                fontWeight: 'normal',
-            },
-        }),
-    }
+	{
+		Signin: { screen: Signin },
+		Signup: { screen: Signup },
+		CodeVerification: { screen: CodeVerification },
+		ResetPassword: { screen: ResetPassword },
+		Main: { screen: MainTabNavigator },
+		Restaurant: { screen: Restaurant },
+		MealsScreen: { screen: MealsScreen },
+		SingleMeal: { screen: SingleMeal },
+		SingleTicketScreen: { screen: SingleTicketScreen },
+		SingleOrderScreen: { screen: SingleOrderScreen },
+		MyTicketsScreen: { screen: MyTicketsScreen },
+		FilterScreen: { screen: FilterScreen },
+		LocationSetting: { screen: LocationSetting }
+	},
+	{
+		navigationOptions: () => ({
+			headerTitleStyle: {
+				fontWeight: 'normal'
+			}
+		})
+	}
 );
 
 export default class RootNavigator extends React.Component {
-  componentDidMount() {
-    this._notificationSubscription = this._registerForPushNotifications();
-  }
+	componentDidMount() {
+		this._notificationSubscription = this._registerForPushNotifications();
+	}
 
-  componentWillUnmount() {
-    this._notificationSubscription && this._notificationSubscription.remove();
-  }
+	componentWillUnmount() {
+		this._notificationSubscription && this._notificationSubscription.remove();
+	}
 
-  render() {
-    return <RootStackNavigator />;
-  }
+	render() {
+		return <RootStackNavigator />;
+	}
 
-  _registerForPushNotifications() {
-    // Send our push token over to our backend so we can receive notifications
-    // You can comment the following line out if you want to stop receiving
-    // a notification every time you open the app. Check out the source
-    // for this function in api/registerForPushNotificationsAsync.js
-    registerForPushNotificationsAsync();
+	_registerForPushNotifications() {
+		// Send our push token over to our backend so we can receive notifications
+		// You can comment the following line out if you want to stop receiving
+		// a notification every time you open the app. Check out the source
+		// for this function in api/registerForPushNotificationsAsync.js
+		registerForPushNotificationsAsync();
 
-    // Watch for incoming notifications
-    this._notificationSubscription = Notifications.addListener(this._handleNotification);
-  }
+		// Watch for incoming notifications
+		this._notificationSubscription = Notifications.addListener(
+			this._handleNotification
+		);
+	}
 
-  _handleNotification = ({ origin, data }) => {
-    console.log(`Push notification ${origin} with data: ${JSON.stringify(data)}`);
-  };
+	_handleNotification = ({ origin, data }) => {
+		console.log(
+			`Push notification ${origin} with data: ${JSON.stringify(data)}`
+		);
+	};
 }
