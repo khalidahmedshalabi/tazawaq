@@ -89,29 +89,13 @@ export default class SettingsScreen extends React.Component {
 						style={styles.inputIcon}
 					/>
 
-                    <Text style={styles.inputOpenOutside}>تسجيل خروج</Text>
-                </TouchableOpacity>
-            );
-        }
-        else
-        {
-            return (
+					<Text style={styles.inputOpenOutside}>تسجيل دخول</Text>
+				</TouchableOpacity>
+			);
+		}
+	};
 
-                <TouchableOpacity style={styles.singleInputContainer}
-                    onPress={() => {
-                        AsyncStorage.setItem('SkippedLogin', '0');
-                        AsyncStorage.setItem('login', '0');
-                        this.props.navigation.navigate("Signin", {})
-                    }}>
-                    <Ionicons
-                        name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'}
-                        size={26}
-                        color={Colors.secondaryColor}
-                        style={styles.inputIcon}/>
-
-                    <Text style={styles.inputOpenOutside}>تسجيل دخول</Text>
-                </TouchableOpacity>
-
+	// dont send to server if not logged in
 
 	render() {
 		return (
@@ -152,7 +136,7 @@ export default class SettingsScreen extends React.Component {
 						/>
 						<View style={{ flex: 1 }}>
 							<Text
-								style={{ color: 'white', textAlign: 'center', fontSize: 20 }}
+								style={{ color: 'white', fontSize: 20, textAlign: 'center' }}
 							>
 								{this.state.username}
 							</Text>
@@ -243,7 +227,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent'
 	},
 	inputsContainer: {
-		flex: 0.5,
+		flex: 2,
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
 		alignItems: 'center',
