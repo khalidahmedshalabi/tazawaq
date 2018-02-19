@@ -111,6 +111,8 @@ export default class Signin extends React.Component {
     };
 
     render() {
+      const { navigate } = this.props.navigation;
+
         if(this.state.login == '1' || this.state.SkippedLogin == '1')
         {
             return (
@@ -246,7 +248,7 @@ export default class Signin extends React.Component {
                                     { cancelable: true }
                                 );
                             } }>
-                            <Text style={{ fontFamily: 'myfont', color: Colors.mainColor }}>نسيت كلمة المرور؟</Text>
+                            <Text style={{ fontFamily: 'myfont', color: Colors.mainColor,marginTop:10 }}>نسيت كلمة المرور؟</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -256,7 +258,7 @@ export default class Signin extends React.Component {
                                 onPress={() => {
                                     AsyncStorage.setItem('login', '0').then(() => {
                                         AsyncStorage.setItem('SkippedLogin', '1').then(() => {
-                                            this.navigateToHome();
+                                            navigate('Main');
                                         });
                                     });
                                 }}

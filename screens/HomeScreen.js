@@ -85,7 +85,7 @@ export default class HomeScreen extends React.Component {
 	}
 
 	constructor(props) {
-		AsyncStorage.setItem('userid','1');
+		
 		super(props);
 		this.state = {
 			doneFetches:0,

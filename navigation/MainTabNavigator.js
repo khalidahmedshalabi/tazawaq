@@ -16,15 +16,16 @@ export default TabNavigator(
     "مطاعم": {
       screen: HomeScreen,
     },
+    "السله": {
+      screen: CartScreen,
+    },
     "طلبات": {
       screen: OrderTabs,
     },
     "اعدادات": {
       screen: SettingsScreen,
     },
-    "السله": {
-      screen: CartScreen,
-    },
+
 
   },
   {
@@ -46,9 +47,11 @@ export default TabNavigator(
           case 'اعدادات':
             iconName =
               Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact';
+              break;
           case 'السله':
             iconName =
               Platform.OS === 'ios' ? `ios-cart${focused ? '' : '-outline'}` : 'md-cart';
+              break;
         }
         return (
           <Ionicons

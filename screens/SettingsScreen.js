@@ -56,7 +56,7 @@ export default class SettingsScreen extends React.Component {
         else
         {
             return (
-              
+
                 <TouchableOpacity style={styles.singleInputContainer}
                     onPress={() => {
                         AsyncStorage.setItem('SkippedLogin', '0');
@@ -71,6 +71,7 @@ export default class SettingsScreen extends React.Component {
 
                     <Text style={styles.inputOpenOutside}>تسجيل دخول</Text>
                 </TouchableOpacity>
+                
 
             );
         }

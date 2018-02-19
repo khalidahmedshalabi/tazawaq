@@ -37,7 +37,7 @@ export default class Meals extends React.Component {
           listener.remove()
       })
   }
-  
+
 
 
 
@@ -141,7 +141,7 @@ doTheFetching = ()=>{
     return (
         <Center><Text style={{
           fontFamily: 'myfont',
-          fontSize:16 }}>ليس لديك اى تذاكر حاليا</Text></Center>
+          fontSize:16 }}>ليس لديك شئ ب السله الان</Text></Center>
       );
   }
 

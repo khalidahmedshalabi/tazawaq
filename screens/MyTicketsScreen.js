@@ -43,7 +43,9 @@ export default class Meals extends React.Component {
     this.state = {
       doneFetches:0,
 			Tickets: [
+        {
 
+        }
       ]
     }
   }
@@ -101,7 +103,7 @@ export default class Meals extends React.Component {
                 <TicketBox
                   name={item.title}
                   status={item.status}
-                  desc={item.desc}
+                  desc={item.recent_msg}
                   price={item.price}
                 />
                 </TouchableOpacity>
@@ -112,9 +114,19 @@ export default class Meals extends React.Component {
     }
 
     return (
-        <Center><Text style={{
-          fontFamily: 'myfont',
-          fontSize:16 }}>ليس لديك اى تذاكر حاليا</Text></Center>
+      <View style={{flex:1,justifyContent:'center',alignSelf:'center',padding:10,flexDirection:'row',borderWidth:5,borderColor:'#e9e9ef'}}>
+        <Center >
+            <Text style={{
+              fontFamily:'myfont',
+            }}>افتح تذكره جديده</Text>
+            <MaterialCommunityIcons
+            name="plus-circle"
+            size={30}
+            color={Colors.secondaryColor}
+            style={{paddingLeft:5}}
+          />
+          </Center>
+        </View>
       );
   }
 
