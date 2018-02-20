@@ -18,8 +18,8 @@ import { NavigationActions } from 'react-navigation';
 import Colors from '../../constants/Colors';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Server from '../../constants/server';
-import { Permissions, Notifications } from 'expo';
-const PUSH_ENDPOINT = `${Server.dest}/api/store-push-tokens`;
+import { Notifications } from 'expo';
+import registerForPushNotificationsAsync from '../../api/registerForPushNotificationsAsync';
 
 export default class Signin extends React.Component {
 	constructor(props) {
@@ -65,14 +65,27 @@ export default class Signin extends React.Component {
 			});
 		})
 	};
-
 	componentWillUnmount() {
+		registerForPushNotificationsAsync();
+		// Handle notifications that are received or selected while the app
+		// is open. If the app was closed and then opened by tapping the
+		// notification (rather than just tapping the app icon to open it),
+		// this function will fire on the next tick after the app starts
+		// with the notification data.
+		this._notificationSubscription = Notifications.addListener(
+			this._handleNotification
+		);
+
 		// cleaning up listeners
 		// I am using lodash
 		_.each(this.listeners, listener => {
 			listener.remove();
 		});
 	}
+
+	_handleNotification = notification => {
+		this.setState({ notification: notification });
+	};
 
 	setOwnerLoginStatus = value => {
 		AsyncStorage.setItem('owner_login', value);
@@ -130,54 +143,7 @@ export default class Signin extends React.Component {
 					AsyncStorage.setItem('storeid', resJson.response);
 					this.setOwnerLoginStatus('1');
 					this.fetchStoreOrders(parseInt(resJson.response));
-					// START
-					async function registerForPushNotificationsAsync() {
-						const { status: existingStatus } = await Permissions.getAsync(
-							Permissions.NOTIFICATIONS
-						);
-						let finalStatus = existingStatus;
-
-						// only ask if permissions have not already been determined, because
-						// iOS won't necessarily prompt the user a second time.
-						if (existingStatus !== 'granted') {
-							// Android remote notification permissions are granted during the app
-							// install, so this will only ask on iOS
-							const { status } = await Permissions.askAsync(
-								Permissions.NOTIFICATIONS
-							);
-							finalStatus = status;
-						}
-
-						// Stop here if the user did not grant permissions
-						if (finalStatus !== 'granted') {
-							return;
-						}
-
-						// Get the token that uniquely identifies this device
-						let token = await Notifications.getExpoPushTokenAsync();
-
-						AsyncStorage.getItem('storeid').then(id => {
-							if (id === null) return;
-							// POST the token to your backend server from where you can retrieve it to send push notifications.
-							return fetch(PUSH_ENDPOINT, {
-								method: 'POST',
-								headers: {
-									Accept: 'application/json',
-									'Content-Type': 'application/json'
-								},
-								body: JSON.stringify({
-									token: {
-										value: token
-									},
-									store: {
-										store_id: id
-									}
-								})
-							});
-						});
-					}
-					registerForPushNotificationsAsync();
-					// END
+					// Here
 				}
 			});
 	};
