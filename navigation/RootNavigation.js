@@ -20,7 +20,8 @@ import AddTicketScreen from '../screens/AddTicketScreen';
 const RootStackNavigator = StackNavigator(
 	{
 		// Add new screens at the end of this list, not here
-		// LocationSetting: { screen: LocationSetting },
+    MyTicketsScreen: { screen: MyTicketsScreen },
+		LocationSetting: { screen: LocationSetting },
 		Main: { screen: MainTabNavigator },
 		Signin: { screen: Signin },
 		Signup: { screen: Signup },
@@ -33,7 +34,6 @@ const RootStackNavigator = StackNavigator(
 		SingleOrderScreen: { screen: SingleOrderScreen },
 		FilterScreen: { screen: FilterScreen },
 		AddTicketScreen: { screen: AddTicketScreen },
-		MyTicketsScreen: { screen: MyTicketsScreen }
 	},
 	{
 		navigationOptions: () => ({
