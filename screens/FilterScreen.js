@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
 	},
 	inputsContainer: {
 		paddingTop: 15,
-		flex: 1,
+		flex: 0.8,
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
 		alignItems: 'center',
