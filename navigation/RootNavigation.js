@@ -18,30 +18,30 @@ import SingleOrderScreen from '../screens/SingleOrderScreen';
 import FilterScreen from '../screens/FilterScreen';
 import AddTicketScreen from '../screens/AddTicketScreen';
 const RootStackNavigator = StackNavigator(
-    {
-        // Add new screens at the end of this list, not here
-        LocationSetting: { screen: LocationSetting },
-        Main: { screen: MainTabNavigator },
-        Signin: { screen: Signin },
-        Signup: { screen: Signup },
-        CodeVerification: { screen: CodeVerification },
-        ResetPassword: { screen: ResetPassword },
-        Restaurant: {screen : Restaurant},
-        MealsScreen: {screen : MealsScreen},
-        SingleMeal: {screen: SingleMeal},
-        SingleTicketScreen: {screen: SingleTicketScreen},
-        SingleOrderScreen: {screen: SingleOrderScreen},
-        FilterScreen: {screen: FilterScreen},
-        AddTicketScreen: {screen: AddTicketScreen},
-        MyTicketsScreen: {screen: MyTicketsScreen},
-    },
-    {
-        navigationOptions: () => ({
-            headerTitleStyle: {
-                fontWeight: 'normal',
-            },
-        }),
-    }
+	{
+		// Add new screens at the end of this list, not here
+		LocationSetting: { screen: LocationSetting },
+		Main: { screen: MainTabNavigator },
+		Signin: { screen: Signin },
+		Signup: { screen: Signup },
+		CodeVerification: { screen: CodeVerification },
+		ResetPassword: { screen: ResetPassword },
+		Restaurant: { screen: Restaurant },
+		MealsScreen: { screen: MealsScreen },
+		SingleMeal: { screen: SingleMeal },
+		SingleTicketScreen: { screen: SingleTicketScreen },
+		SingleOrderScreen: { screen: SingleOrderScreen },
+		FilterScreen: { screen: FilterScreen },
+		AddTicketScreen: { screen: AddTicketScreen },
+		MyTicketsScreen: { screen: MyTicketsScreen }
+	},
+	{
+		navigationOptions: () => ({
+			headerTitleStyle: {
+				fontWeight: 'normal'
+			}
+		})
+	}
 );
 
 export default class RootNavigator extends React.Component {

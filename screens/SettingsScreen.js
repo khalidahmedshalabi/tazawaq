@@ -49,26 +49,43 @@ export default class SettingsScreen extends React.Component {
 	renderAccountControlButtons = () => {
 		if (this.state.login == '1') {
 			return (
-				<TouchableOpacity
-					style={styles.singleInputContainer}
-					onPress={() => {
-						AsyncStorage.setItem('SkippedLogin', '0');
-						AsyncStorage.setItem('login', '0');
-						AsyncStorage.removeItem('hint');
-						this.props.navigation.navigate('Signin', {});
-					}}
-				>
-					<Ionicons
-						name={
-							Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'
-						}
-						size={26}
-						color={Colors.secondaryColor}
-						style={styles.inputIcon}
-					/>
-
-					<Text style={styles.inputOpenOutside}>تسجيل خروج</Text>
-				</TouchableOpacity>
+				<View style={{ flex: 1.8, width: '100%' }}>
+					<TouchableOpacity
+						style={styles.singleInputContainer}
+						onPress={() => {
+							AsyncStorage.setItem('SkippedLogin', '0');
+							AsyncStorage.setItem('login', '0');
+							AsyncStorage.removeItem('hint');
+							this.props.navigation.navigate('Signin', {});
+						}}
+					>
+						<Ionicons
+							name={
+								Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'
+							}
+							size={26}
+							color={Colors.secondaryColor}
+							style={styles.inputIcon}
+						/>
+						<Text style={styles.inputOpenOutside}>تسجيل خروج</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={styles.singleInputContainer}
+						onPress={() => {
+							this.props.navigation.navigate('MyTicketsScreen', {});
+						}}
+					>
+						<Ionicons
+							name={
+								Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'
+							}
+							size={26}
+							color={Colors.secondaryColor}
+							style={styles.inputIcon}
+						/>
+						<Text style={styles.inputOpenOutside}>تذاكري</Text>
+					</TouchableOpacity>
+				</View>
 			);
 		} else {
 			return (
