@@ -16,24 +16,21 @@ import MyTicketsScreen from '../screens/MyTicketsScreen';
 import SingleTicketScreen from '../screens/SingleTicketScreen';
 import SingleOrderScreen from '../screens/SingleOrderScreen';
 import FilterScreen from '../screens/FilterScreen';
-import AddTicketScreen from '../screens/AddTicketScreen';
 const RootStackNavigator = StackNavigator(
 	{
-		// Add new screens at the end of this list, not here
-    MyTicketsScreen: { screen: MyTicketsScreen },
-		LocationSetting: { screen: LocationSetting },
-		Main: { screen: MainTabNavigator },
+		// LocationSetting: { screen: LocationSetting },
 		Signin: { screen: Signin },
 		Signup: { screen: Signup },
 		CodeVerification: { screen: CodeVerification },
 		ResetPassword: { screen: ResetPassword },
+		Main: { screen: MainTabNavigator },
 		Restaurant: { screen: Restaurant },
 		MealsScreen: { screen: MealsScreen },
 		SingleMeal: { screen: SingleMeal },
 		SingleTicketScreen: { screen: SingleTicketScreen },
 		SingleOrderScreen: { screen: SingleOrderScreen },
-		FilterScreen: { screen: FilterScreen },
-		AddTicketScreen: { screen: AddTicketScreen },
+		MyTicketsScreen: { screen: MyTicketsScreen },
+		FilterScreen: { screen: FilterScreen }
 	},
 	{
 		navigationOptions: () => ({
