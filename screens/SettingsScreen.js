@@ -35,9 +35,13 @@ export default class SettingsScreen extends React.Component {
 				if (i == 0) this.setState({ location: store[i][1] });
 				else if (i == 1) this.setState({ hint: store[i][1] });
 				else if (i == 2) {
-					fetch(`${Server.dest}/api/user-by-id?user_id=${store[i][1]}`)
-						.then(res => res.json())
-						.then(res => this.setState({ username: res.response[0].username }));
+					if (store[i][1] != 'null') {
+						fetch(`${Server.dest}/api/user-by-id?user_id=${store[i][1]}`)
+							.then(res => res.json())
+							.then(res =>
+								this.setState({ username: res.response[0].username })
+							);
+					}
 				}
 			});
 		});
@@ -51,6 +55,7 @@ export default class SettingsScreen extends React.Component {
 						style={styles.singleInputContainer}
 						onPress={() => {
 							AsyncStorage.setItem('SkippedLogin', '0');
+							AsyncStorage.setItem('userid', 'null');
 							AsyncStorage.setItem('login', '0');
 							AsyncStorage.removeItem('hint');
 							this.props.navigation.navigate('Signin', {});
