@@ -11,6 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { NavigationActions } from 'react-navigation';
+import Server from '../constants/server';
 
 export default class SettingsScreen extends React.Component {
 	constructor(props) {
@@ -34,11 +35,7 @@ export default class SettingsScreen extends React.Component {
 				if (i == 0) this.setState({ location: store[i][1] });
 				else if (i == 1) this.setState({ hint: store[i][1] });
 				else if (i == 2) {
-					fetch(
-						`https://tathouq.herokuapp.com/api/user-by-id?user_id=${
-							store[i][1]
-						}`
-					)
+					fetch(`${Server.dest}/api/user-by-id?user_id=${store[i][1]}`)
 						.then(res => res.json())
 						.then(res => this.setState({ username: res.response[0].username }));
 				}
