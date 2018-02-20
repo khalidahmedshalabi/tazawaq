@@ -22,7 +22,6 @@ export default class SingleTicketScreen extends React.Component {
       size={30}
       color='white'
       style={{ paddingLeft: 5 }}
-
                             onPress={ () => { navigation.navigate('MyTicketsScreen') }} />,
     headerTintColor: Colors.smoothGray,
     fontFamily:'myfont',

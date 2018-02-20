@@ -31,6 +31,12 @@ const Center = ({ children }) => (
 export default class Meals extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
 		title: 'التذاكر',
+    headerLeft: <MaterialCommunityIcons
+      name="arrow-left"
+      size={30}
+      color='white'
+      style={{ paddingLeft: 5 }}
+                            onPress={ () => { navigation.navigate('Main') }} />,
 		headerTintColor: Colors.smoothGray,
 		fontFamily: 'myfont',
 		headerStyle: {
@@ -167,7 +173,7 @@ export default class Meals extends React.Component {
 					borderColor: '#e9e9ef'
 				}}
 			>
-				<TouchableOpacity onPress={() => navigate('MyTicketsScreen')}>
+				<TouchableOpacity onPress={() => navigate('AddTicketScreen')}>
 					<Text
 						style={{
 							fontFamily: 'myfont'
