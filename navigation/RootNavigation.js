@@ -12,6 +12,7 @@ import CodeVerification from '../screens/CodeVerification';
 import ResetPassword from '../screens/ResetPassword';
 import MealsScreen from '../screens/MealsScreen';
 import SingleMeal from '../screens/SingleMeal';
+import SingleOffer from '../screens/SingleOffer';
 import MyTicketsScreen from '../screens/MyTicketsScreen';
 import SingleTicketScreen from '../screens/SingleTicketScreen';
 import SingleOrderScreen from '../screens/SingleOrderScreen';
@@ -20,7 +21,7 @@ import AddTicketScreen from '../screens/AddTicketScreen';
 
 const RootStackNavigator = StackNavigator(
 	{
-		// LocationSetting: { screen: LocationSetting },
+		LocationSetting: { screen: LocationSetting },
 		Signin: { screen: Signin },
 		Signup: { screen: Signup },
 		CodeVerification: { screen: CodeVerification },
@@ -29,6 +30,7 @@ const RootStackNavigator = StackNavigator(
 		Restaurant: { screen: Restaurant },
 		MealsScreen: { screen: MealsScreen },
 		SingleMeal: { screen: SingleMeal },
+		SingleOffer: { screen: SingleOffer },
 		SingleTicketScreen: { screen: SingleTicketScreen },
 		SingleOrderScreen: { screen: SingleOrderScreen },
 		MyTicketsScreen: { screen: MyTicketsScreen },

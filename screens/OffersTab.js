@@ -7,7 +7,7 @@ import {
 	TouchableOpacity,
 	AsyncStorage
 } from 'react-native';
-import RestaurantBox from '../components/RestaurantBox';
+import MealBox from '../components/MealBox';
 import Colors from '../constants/Colors';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -56,57 +56,26 @@ var styles = StyleSheet.create({
 	}
 });
 
-export default class HomeScreen extends React.Component {
+export default class OffersTab extends React.Component {
 	componentDidMount() {
-		AsyncStorage.getItem('userid').then(id => {
-			if (id == null) {
-				var id = 1;
-			}
-			AsyncStorage.getItem('maxcost').then(maxcost => {
-				if (maxcost == null) {
-					maxcost = 0;
-				}
-				AsyncStorage.getItem('maxtime').then(maxtime => {
-					if (maxtime == null) {
-						maxtime = 0;
-					}
-					AsyncStorage.getItem('sortby').then(sortby => {
-						if (sortby == null) {
-							sortby = 3;
-						}
-
-						fetch(
-							Server.dest +
-								'/api/stores?user_id=' +
-								id +
-								'&maxcost=' +
-								maxcost +
-								'&maxtime=' +
-								maxtime +
-								'&sortby=' +
-								sortby
-						)
-							.then(res => res.json())
-							.then(restaurants => {
-								console.log(AsyncStorage.getItem('userid'));
-								this.setState({
-									doneFetches: 1,
-									Restaurants: restaurants.stores
-								});
-							});
-					});
-				});
-			});
-		});
+		fetch(`${Server.dest}/api/all-offers`)
+			.then(res => res.json())
+			.then(res =>
+				this.setState({ offers: res.response }, () =>
+					this.setState({ doneFetches: 1 })
+				)
+			);
 	}
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			doneFetches: 0,
-			Restaurants: []
+			offers: []
 		};
 	}
+
+	_keyExtractor = (item, index) => item.id;
 
 	render() {
 		const { navigate } = this.props.navigation;
@@ -119,22 +88,21 @@ export default class HomeScreen extends React.Component {
 					automaticallyAdjustContentInsets={false}
 					style={{ backgroundColor: 'white' }}
 					removeClippedSubviews={false}
+					keyExtractor={this._keyExtractor}
 					ItemSeparatorComponent={() => (
 						<View style={{ height: 5, backgroundColor: Colors.smoothGray }} />
 					)}
-					data={this.state.Restaurants}
+					data={this.state.offers}
 					renderItem={({ item }) => (
 						<TouchableOpacity
-							onPress={() => navigate('Restaurant', { key: item.key })}
+							onPress={() => navigate('SingleOffer', { offer_id: item.id })}
 						>
-							<RestaurantBox
+							<MealBox
 								style={styles.restaurant}
-								stars={item.stars}
 								name={item.name}
-								time={item.time}
-								desc={item.desc}
-								image={item.image}
-								price={item.deliver_price}
+								desc={item.info}
+								image={item.img}
+								price={item.cost_after}
 							/>
 						</TouchableOpacity>
 					)}
