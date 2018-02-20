@@ -6,6 +6,7 @@ import Colors from '../constants/Colors';
 import { GiftedChat } from 'react-native-gifted-chat'
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Center = ({ children }) => (
   <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1,backgroundColor:'#ffffff' }}>{children}</View>
@@ -16,6 +17,13 @@ export default class SingleTicketScreen extends React.Component {
   }
   static navigationOptions = ({ navigation }) => ({
     title:'الرسائل',
+    headerLeft: <MaterialCommunityIcons
+      name="arrow-left"
+      size={30}
+      color='white'
+      style={{ paddingLeft: 5 }}
+
+                            onPress={ () => { navigation.navigate('MyTicketsScreen') }} />,
     headerTintColor: Colors.smoothGray,
     fontFamily:'myfont',
   headerStyle: {
@@ -29,6 +37,7 @@ export default class SingleTicketScreen extends React.Component {
     fontFamily: 'myfont',
     fontSize: 16
   },
+
   });
   componentWillMount() {
     fetch(Server.dest + '/api/get-ticket-messages?ticket_id=0').then((res)=>res.json()).then((messages)=>{
