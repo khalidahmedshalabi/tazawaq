@@ -71,7 +71,8 @@ export default class Meals extends React.Component {
 		const { navigate } = this.props.navigation;
 		if (this.state.doneFetches == 0)
 			return <LoadingIndicator size="large" color="#B6E3C6" />;
-		if (!this.state.Tickets) {
+		if (this.state.Tickets) {
+
 			return (
 				<View>
 					<View
