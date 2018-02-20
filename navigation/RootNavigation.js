@@ -33,7 +33,7 @@ const RootStackNavigator = StackNavigator(
 		SingleOrderScreen: { screen: SingleOrderScreen },
 		MyTicketsScreen: { screen: MyTicketsScreen },
 		FilterScreen: { screen: FilterScreen },
-    AddTicketScreen: {screen: AddTicketScreen}
+		AddTicketScreen: { screen: AddTicketScreen }
 	},
 	{
 		navigationOptions: () => ({

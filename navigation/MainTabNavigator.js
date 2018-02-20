@@ -6,6 +6,7 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import HomeScreen from '../screens/HomeScreen';
+import OffersTab from '../screens/OffersTab';
 import SettingsScreen from '../screens/SettingsScreen';
 import Header from '../components/Header';
 import CartScreen from '../screens/CartScreen';
@@ -21,6 +22,9 @@ export default TabNavigator(
 		},
 		طلبات: {
 			screen: OrderTabs
+		},
+		العروض: {
+			screen: OffersTab
 		},
 		اعدادات: {
 			screen: SettingsScreen
@@ -56,6 +60,12 @@ export default TabNavigator(
 							Platform.OS === 'ios'
 								? `ios-cart${focused ? '' : '-outline'}`
 								: 'md-cart';
+						break;
+					case 'العروض':
+						iconName =
+							Platform.OS === 'ios'
+								? `ios-beer${focused ? '' : '-outline'}`
+								: 'md-beer';
 						break;
 				}
 				return (
