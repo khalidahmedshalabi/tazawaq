@@ -5,12 +5,15 @@ import {
 	StyleSheet,
 	FlatList,
 	TouchableOpacity,
-	AsyncStorage
+	AsyncStorage,
+	Image,
+	Button
 } from 'react-native';
 import RestaurantBox from '../components/RestaurantBox';
 import Colors from '../constants/Colors';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { Ionicons } from '@expo/vector-icons';
 
 var styles = StyleSheet.create({
 	box: {
@@ -59,6 +62,7 @@ var styles = StyleSheet.create({
 export default class HomeScreen extends React.Component {
 	componentDidMount() {
 		AsyncStorage.getItem('userid').then(id => {
+			this._shouldRenderOffer(id);
 			if (id == null) {
 				var id = 1;
 			}
@@ -100,11 +104,85 @@ export default class HomeScreen extends React.Component {
 		});
 	}
 
+	_shouldRenderOffer = id => {
+		fetch(`${Server.dest}/api/offers-for-me?user_id=${id}`)
+			.then(res => res.json())
+			.then(res => {
+				if (res.response != 0)
+					this.setState({ offerVisible: 1, userid: id, offer: res.response });
+				else this.setState({ offerVisible: 0 });
+			});
+	};
+
+	_RenderOffer = () => {
+		if (this.state.offerVisible == 1) {
+			return (
+				<View
+					style={{
+						position: 'absolute',
+						zIndex: 1,
+						backgroundColor: 'white',
+						borderRadius: 12,
+						overflow: 'hidden',
+						width: '90%',
+						left: '5%',
+						top: '10%',
+						height: '80%',
+						elevation: 1
+					}}
+				>
+					<Ionicons
+						onPress={() => this.setState({ offerVisible: 0 })}
+						name="ios-close"
+						size={50}
+						color="white"
+						style={{
+							position: 'absolute',
+							zIndex: 2,
+							right: 20,
+							marginVertical: 8
+						}}
+					/>
+
+					<TouchableOpacity
+						style={{ flex: 1 }}
+						onPress={() =>
+							this.props.navigation.navigate('SingleOffer', {
+								offer_id: this.state.offer.id
+							})
+						}
+					>
+						<Image style={{ flex: 1 }} source={{ uri: this.state.offer.img }} />
+					</TouchableOpacity>
+
+					<Button
+						onPress={() =>
+							this.props.navigation.navigate('SingleOffer', {
+								offer_id: this.state.offer.id
+							})
+						}
+						color={Colors.mainColor}
+						backgroundColor={Colors.mainColor}
+						containerViewStyle={{ borderRadius: 15 }}
+						borderRadius={15}
+						buttonStyle={{ padding: 10 }}
+						textStyle={{ fontFamily: 'myfont' }}
+						title="مشاهدة العرض"
+					/>
+				</View>
+			);
+		} else {
+			return;
+		}
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = {
 			doneFetches: 0,
-			Restaurants: []
+			Restaurants: [],
+			userid: null,
+			offer: {}
 		};
 	}
 
@@ -115,6 +193,7 @@ export default class HomeScreen extends React.Component {
 
 		return (
 			<View>
+				{this._RenderOffer()}
 				<FlatList
 					automaticallyAdjustContentInsets={false}
 					style={{ backgroundColor: 'white' }}
