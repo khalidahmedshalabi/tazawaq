@@ -183,16 +183,8 @@ export default class SettingsScreen extends React.Component {
 								style={styles.singleInputContainer}
 								onPress={() => {
 									AsyncStorage.removeItem('location');
-									this.props.navigation.dispatch(
-										NavigationActions.reset({
-											index: 0,
-											actions: [
-												NavigationActions.navigate({
-													routeName: 'LocationSetting'
-												})
-											]
-										})
-									);
+									
+									this.props.navigation.navigate('LocationSetting');
 								}}
 							>
 								<Ionicons

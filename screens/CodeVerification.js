@@ -26,12 +26,7 @@ export default class CodeVerification extends React.Component {
 	}
 
 	navigateToHome = () => {
-		this.props.navigation.dispatch(
-			NavigationActions.reset({
-				index: 0,
-				actions: [NavigationActions.navigate({ routeName: 'Main' })]
-			})
-		);
+		 this.props.navigation.navigate('Main')
 	};
 
 	setLoginStatus = value => {
@@ -141,7 +136,9 @@ export default class CodeVerification extends React.Component {
 							borderBottomColor: Colors.fadedMainColor,
 							borderBottomWidth: 1
 						}}
-						onChangeText={text => this.setState({ code: text })}
+						onChangeText={text => this.setState({ code: text }).then(()=>{
+							this.verifyCode()
+						})}
 						onSubmitEditing={event => this.verifyCode()}
 					/>
 				</KeyboardAvoidingView>

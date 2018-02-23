@@ -7,6 +7,7 @@ import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 const Center = ({ children }) => (
   <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1,backgroundColor:'#ffffff' }}>{children}</View>
@@ -37,7 +38,24 @@ export default class Meals extends React.Component {
           listener.remove()
       })
   }
-
+make_order = ()=>{
+  AsyncStorage.getItem('login').then((logged)=>{
+    if(logged == 1){
+      AsyncStorage.getItem('userid').then((userid)=>{
+        AsyncStorage.getItem('location').then((location)=>{
+          AsyncStorage.getItem('hint').then((hint)=>{
+          fetch(Server.dest + '/api/make-order?ids='+this.state.ids+'store_id='+this.state.store_id+'&user_id='+userid+'&cost='+this.state.after_cost+'&address='+location+'&address_hint='+hint+'&info=a').then((res)=>res.json()).then((meals)=>{
+            alert('order done');
+          })
+          })
+        })
+      })
+    }
+    else{
+      alert('يجب عليك تسجيل الدخول اولا');
+    }
+  })
+}
 
 
 
@@ -52,11 +70,21 @@ doTheFetching = ()=>{
   }).then(()=>{
     fetch(Server.dest + '/api/meals-by-ids?ids='+this.state.ids).then((res)=>res.json()).then((meals)=>{
       this.setState({
-        doneFetches:1,
         meals: meals.meals
       })
     })
+    }).then( ()=>{
+
+    fetch(Server.dest + '/api/order-price?ids='+this.state.ids).then((res)=>res.json()).then((data)=>{
+      this.setState({
+        doneFetches:1,
+        before_cost: data.before,
+        after_cost: data.after,
+        store_id: data.store_id
+      })
+    })
   })
+
 }
   constructor(props) {
 
@@ -64,19 +92,21 @@ doTheFetching = ()=>{
 
     this.state = {
       doneFetches:0,
-			meals: [
-        {
-        key: 1,
-  name: "سششسسش",
-  image: "https://scontent-cai1-1.xx.fbcdn.net/v/t35.0-12/26827647_1597359143682361_1904429709_o.jpg?oh=972b9d36bb514c5f25abc1d667a97b48&oe=5A87675B",
-  price: 50,
-  desc: "شسسشسشء"
-}
-      ]
+			meals: [],
+      before_cost: 0,
+      after_cost: 0,
+      store_id: 0
     }
   }
 
+
+
   render() {
+    const tableHead = ['السعر','التصنيف'];
+      const tableData = [
+        [''+this.state.before_cost,'الاجمالى قبل الضريبه'],
+        [''+this.state.after_cost,'الاجمالى بعد الضريبه'],
+      ];
     const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
     if(this.state.doneFetches == 0)
@@ -110,7 +140,17 @@ doTheFetching = ()=>{
       				/> }
 
               ListFooterComponent={()=>
-                <View style={{flex:1,justifyContent:'center',alignSelf:'center',padding:10,flexDirection:'row',borderWidth:5,borderColor:'#e9e9ef'}}>
+                <View style={{paddingRight:10,paddingLeft:10}}>
+                <Table  borderStyle={{borderWidth: 0.5, borderColor: Colors.fadedMainColor}}>
+                  <Row data={tableHead} style={styles.head} textStyle={styles.text}/>
+                  <Rows data={tableData} style={styles.row} textStyle={styles.text2}/>
+                </Table>
+
+                <TouchableOpacity
+                onPress={()=>{
+                  this.make_order()
+                }}
+                 style={{flex:1,justifyContent:'center',alignSelf:'center',padding:10,marginTop:10,flexDirection:'row',borderWidth:5,borderColor:'#e9e9ef'}}>
                 <Text style={{
                   fontFamily:'myfont',
                 }}>شراء الان</Text>
@@ -121,7 +161,8 @@ doTheFetching = ()=>{
                 style={{paddingLeft:5}}
     					/>
 
-            </View>}
+            </TouchableOpacity>
+          </View>}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() =>
               navigate('SingleTicketScreen', { Ticket_id:item.key })} >
@@ -147,3 +188,9 @@ doTheFetching = ()=>{
 
 
 }
+const styles = StyleSheet.create({
+  head: { height: 40, backgroundColor: Colors.mainColor },
+  text: { textAlign:'center' ,fontFamily:'myfont',fontSize:18,color:'white' },
+  text2: {fontFamily:'myfont',fontSize:13,color:Colors.mainColor,textAlign:'center' },
+  row: { height: 30 }
+})

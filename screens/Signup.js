@@ -37,12 +37,7 @@ export default class Signup extends React.Component {
 
                 if(value == '1')
                 {
-                    this.props.navigation.dispatch(NavigationActions.reset({
-                      index: 0,
-                      actions: [
-                        NavigationActions.navigate({ routeName: 'Main' })
-                      ]
-                    }));
+                    this.props.navigation.navigate('Main')
                 }
             }
         );

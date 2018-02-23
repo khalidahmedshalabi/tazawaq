@@ -17,12 +17,7 @@ export default class Signin extends React.Component {
     }
 
     navigateToHome = () => {
-        this.props.navigation.dispatch(NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'Main' })
-          ]
-        }));
+        this.props.navigation.navigate('Main')
     };
 
     constructor(props) {

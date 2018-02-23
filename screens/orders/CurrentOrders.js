@@ -66,7 +66,7 @@ export default class OrdersScreen extends React.Component {
     if (this.state.doneFetches == 0)
 			return <LoadingIndicator size="large" color="#B6E3C6" />;
 
-    if (this.state.orders.response) {
+    if (this.state.orders.length !=0) {
       return (
 
 

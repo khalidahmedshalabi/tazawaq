@@ -111,25 +111,18 @@ export default class FilterScreen extends React.Component {
 				>
 					<View style={styles.inputsContainer}>
 						<View style={styles.singleInputContainer}>
-							<Picker
+							<TextInput
 								style={{ flex: 1 }}
+								placeholder="اقصي سعر توصيل ب الريال السعودي"
 								selectedValue={this.state.maxcost}
-								onValueChange={(itemValue, itemIndex) =>
-									this.setState({ maxcost: itemValue }, () => {
-										AsyncStorage.setItem('maxcost', itemValue);
+								onChangeText={(value) =>
+
+									this.setState({ maxcost: value }, () => {
+										AsyncStorage.setItem('maxcost', value);
 									})
 								}
-							>
-								<Picker.Item label="اقصى سعر" value="00.00" />
-								<Picker.Item label="50" value="50.00" />
-								<Picker.Item label="100" value="100.00" />
-								<Picker.Item label="150" value="150.00" />
-								<Picker.Item label="200" value="200.00" />
-								<Picker.Item label="250" value="250.00" />
-								<Picker.Item label="300" value="300.00" />
-								<Picker.Item label="350" value="350.00" />
-								<Picker.Item label="400" value="400.00" />
-							</Picker>
+							/>
+
 
 							<Ionicons
 								name={Platform.OS === 'ios' ? 'ios-cash' : 'md-cash'}
@@ -140,22 +133,16 @@ export default class FilterScreen extends React.Component {
 						</View>
 
 						<View style={styles.singleInputContainer}>
-							<Picker
+							<TextInput
 								style={{ flex: 1 }}
-								selectedValue={this.state.maxtime}
-								onValueChange={(itemValue, itemIndex) =>
-									this.setState({ maxtime: itemValue }, () => {
-										AsyncStorage.setItem('maxtime', itemValue);
+								placeholder="اقصي مده للتوصيل ب الدقيقه"
+								onChangeText={(value) =>
+									this.setState({ maxtime: value }, () => {
+										AsyncStorage.setItem('maxtime', value);
 									})
 								}
-							>
-								<Picker.Item label="اقصى وقت توصيل" value="0" />
-								<Picker.Item label="15 دقيقه" value="15" />
-								<Picker.Item label="30 دقيقه" value="30" />
-								<Picker.Item label="45 دقيقه" value="45" />
-								<Picker.Item label="60 دقيقه" value="60" />
-								<Picker.Item label="90 دقيقه" value="90" />
-							</Picker>
+							/>
+
 
 							<Ionicons
 								name={Platform.OS === 'ios' ? 'ios-time' : 'md-time'}
