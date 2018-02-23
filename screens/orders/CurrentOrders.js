@@ -27,7 +27,7 @@ export default class OrdersScreen extends React.Component {
          console.log(orders);
          this.setState({
            doneFetches: 1,
-           orders: [orders.response]
+           orders: orders.response
          });
        });
    });

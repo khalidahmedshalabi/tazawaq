@@ -44,7 +44,7 @@ make_order = ()=>{
       AsyncStorage.getItem('userid').then((userid)=>{
         AsyncStorage.getItem('location').then((location)=>{
           AsyncStorage.getItem('hint').then((hint)=>{
-          fetch(Server.dest + '/api/make-order?ids='+this.state.ids+'store_id='+this.state.store_id+'&user_id='+userid+'&cost='+this.state.after_cost+'&address='+location+'&address_hint='+hint+'&info=a').then((res)=>res.json()).then((meals)=>{
+          fetch(Server.dest + '/api/make-order?ids='+this.state.ids+'&store_id='+this.state.store_id+'&user_id='+userid+'&cost='+this.state.after_cost+'&address='+location+'&address_hint='+hint+'&info=a').then((res)=>res.json()).then((meals)=>{
             alert('order done');
           })
           })

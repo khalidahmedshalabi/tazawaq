@@ -34,8 +34,8 @@ export default TabNavigator(
       },
       activeTintColor: '#000',
   },
-    tabBarPosition: 'top',
+    tabBarPosition: 'bottom',
     animationEnabled: false,
-    swipeEnabled: false,
+    swipeEnabled: true,
   }
 );

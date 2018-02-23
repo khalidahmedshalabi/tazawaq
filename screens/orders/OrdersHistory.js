@@ -27,9 +27,8 @@ export default class OrdersScreen extends React.Component {
 
          this.setState({
            doneFetches: 1,
-           orders: [orders.response]
+           orders: orders.response
          }).then(()=>{
-           alert('id is'+this.state.orders[0].response);
          })
        });
    });
@@ -68,7 +67,7 @@ export default class OrdersScreen extends React.Component {
     if (this.state.doneFetches == 0)
 			return <LoadingIndicator size="large" color="#B6E3C6" />;
 
-    if (this.state.orders.response) {
+    if (this.state.orders !=0) {
       return (
 
 
