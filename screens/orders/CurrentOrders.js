@@ -43,7 +43,6 @@ export default class OrdersScreen extends React.Component {
         this.state= {
           doneFetches:0,
           orders:[
-
           ]
         }
     }
