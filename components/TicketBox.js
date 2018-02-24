@@ -15,13 +15,13 @@ export default class TicketBox extends Component {
 		}
 	}
 	statusText = (value) =>{
-		if(value == 0){
+		if(value == 1){
 			return "لم يتم الرد بعد"
 		}
 		else if(value == -1){
 			return "مضافه"
 		}
-		else{
+		else if(value == 2){
 			return "تم الرد"
 		}
 	}
@@ -33,7 +33,7 @@ export default class TicketBox extends Component {
 
 					padding: 13,
 					paddingHorizontal: 20,
-					
+
 				}}>
 
 				<Text
