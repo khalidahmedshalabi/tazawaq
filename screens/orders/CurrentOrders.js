@@ -24,7 +24,7 @@ export default class OrdersScreen extends React.Component {
      fetch(Server.dest + '/api/show-orders-current?user_id='+id)
        .then(res => res.json())
        .then(orders => {
-         console.log(orders);
+         
          this.setState({
            doneFetches: 1,
            orders: orders.response
