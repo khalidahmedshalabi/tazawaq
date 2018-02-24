@@ -60,7 +60,7 @@ export default class OrdersScreen extends React.Component {
                 return ("تم التوصيل");
         }
     };
-
+    
   render() {
     const { navigate } = this.props.navigation;
     if (this.state.doneFetches == 0)
