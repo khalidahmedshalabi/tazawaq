@@ -35,7 +35,6 @@ export default class OrdersScreen extends React.Component {
 
     constructor(props) {
         super(props)
-
         /*orders status
          0 ----> waiting
          1 ----> accepted on way
@@ -60,7 +59,7 @@ export default class OrdersScreen extends React.Component {
                 return ("تم التوصيل");
         }
     };
-    
+
   render() {
     const { navigate } = this.props.navigation;
     if (this.state.doneFetches == 0)
