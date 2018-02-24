@@ -33,12 +33,7 @@ export default class TicketBox extends Component {
 
 					padding: 13,
 					paddingHorizontal: 20,
-					shadowColor: '#000',
-					shadowOpacity: 2,
-					shadowOffset: {
-						height: 2,
-						width: 1
-					}
+					
 				}}>
 
 				<Text

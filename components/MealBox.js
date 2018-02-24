@@ -13,7 +13,7 @@ export default class MealBox extends Component {
 
 					padding: 13,
 					paddingHorizontal: 20,
-					
+
 				}}>
 				<Image
 					style={{ flex: 1, height: 130, borderRadius: 10 }}
@@ -25,7 +25,8 @@ export default class MealBox extends Component {
 						marginRight: 10,
 						fontSize: 17,
 						padding: 5,
-						fontWeight: 'bold'
+						fontWeight: 'bold',
+						textAlign:'right'
 					}}>
 					{this.props.name}
 				</Text>
@@ -35,7 +36,8 @@ export default class MealBox extends Component {
 						marginRight: 15,
 						fontSize: 12,
 						padding: 0,
-						color: 'gray'
+						color: 'gray',
+						textAlign:'right'
 					}}>
 					{this.props.desc}
 				</Text>
@@ -45,11 +47,7 @@ export default class MealBox extends Component {
 						flexDirection: 'row',
 
 					}}>
-					<MaterialCommunityIcons
-						name="cash-multiple"
-						size={22}
-						color={Colors.secondaryColor}
-					/>
+
 					<Text
 						style={{
 							marginLeft: 4,

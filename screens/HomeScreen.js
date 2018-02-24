@@ -184,6 +184,7 @@ export default class HomeScreen extends React.Component {
 			userid: null,
 			offer: {}
 		};
+		
 	}
 
 	render() {

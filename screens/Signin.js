@@ -124,7 +124,7 @@ export default class Signin extends React.Component {
                     <Image
                         style={{ flex: 1, height: '35%', width: Dimensions.get('window').width }}
                         resizeMode='cover'
-                        source={require('../assets/images/splash.jpg')} />
+                        source={require('../assets/images/top.jpeg')} />
 
                     <KeyboardAvoidingView
                         behavior='padding'
@@ -138,7 +138,7 @@ export default class Signin extends React.Component {
                             <View style={styles.singleInputContainer}>
                                 <TextInput
                                     underlineColorAndroid='transparent'
-                                    placeholder='جوال او بريد الكتروني او اسم مستخدم'
+                                    placeholder='رقم الجوال أو البريد الالكترونى أو اسم المستخدم'
                                     placeholderTextColor='#CCCCCC'
                                     autoGrow={false}
                                     multiline={false}

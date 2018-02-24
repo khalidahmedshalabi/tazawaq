@@ -3,10 +3,14 @@ import { Text, View,Image,Dimensions,FlatList,TouchableOpacity } from 'react-nat
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 import MealBox from '../components/MealBox';
 import Colors from '../constants/Colors';
+
 const Center = ({ children }) => (
   <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1,backgroundColor:'#ffffff' }}>{children}</View>
 );
 export default class SingleOrderScreen extends React.Component {
+  displayMessage () {
+  console.log('Timer expired')
+}
   componentWillMount(){
     /*orders status
      0 ----> waiting
@@ -39,14 +43,7 @@ export default class SingleOrderScreen extends React.Component {
       ]
     }
   }
-  determineStatus = (status) => {
-		if(status == 0)
-			return ("ب انتظار موافقه المطعم");
-		else if(status == 1)
-			return ("الوجبه ب الطريق");
-		else
-			return ("تم تسليم الوجبه");
-	}
+
 
   render() {
     const { navigate } = this.props.navigation;
@@ -55,27 +52,10 @@ export default class SingleOrderScreen extends React.Component {
       return (
 
 
-          <View>
-            <FlatList
-              automaticallyAdjustContentInsets={false}
-              style={{ backgroundColor: 'white' }}
-              removeClippedSubviews={false}
-              ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
-              data={this.state.orders}
-              renderItem={({ item }) => (
-                <TouchableOpacity onPress={() =>
-              navigate('SingleMeal', { order_id:item.key })} >
-                <MealBox
-                  name={item.title}
+<View>
 
-                  desc={this.determineStatus(item.status)}
-                  image={item.image}
-                  price={item.price}
-                />
-                </TouchableOpacity>
-              )}
-            />
-          </View>
+
+</View>
 
       )
     }

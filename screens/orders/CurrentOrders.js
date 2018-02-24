@@ -65,8 +65,7 @@ export default class OrdersScreen extends React.Component {
     const { navigate } = this.props.navigation;
     if (this.state.doneFetches == 0)
 			return <LoadingIndicator size="large" color="#B6E3C6" />;
-
-    if (this.state.orders.length !=0) {
+    if ( this.state.orders) {
       return (
 
 
@@ -94,11 +93,12 @@ export default class OrdersScreen extends React.Component {
 
       );
     }
-
+    else{
     return (
         <Center><Text style={{
           fontFamily: 'myfont',
           fontSize:16 }}>ليس لديك طلبات حاليا</Text></Center>
       );
+    }
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet,Text,FlatList,TouchableOpacity,View,AsyncStorage } from 'react-native';
+import { ScrollView,KeyboardAvoidingView, TextInput,StyleSheet,Text,FlatList,TouchableOpacity,View,AsyncStorage } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
 import MealBox from '../components/MealBox';
@@ -13,11 +13,26 @@ export default class SingleMeal extends React.Component {
 
   addcart = ()=>{
     var meal = this.state.Meal[0];
+    var num = this.state.num || 1 ;
 
-    AsyncStorage.getItem('cart').then((cart)=>{
-      AsyncStorage.setItem('cart',cart+','+meal.key);
-      alert('تم اضافه الوجبه الى السله');
-    })
+      AsyncStorage.getItem('cart').then((cart)=>{
+        AsyncStorage.setItem('cart',cart+','+meal.key).then(()=>{
+          if(num > 1){
+            this.setState({
+              num : num-1,
+            })
+            this.addcart()
+          }
+          else {
+            alert('تم الاضافه الى السله')
+          }
+
+        })
+
+      })
+
+
+
   }
 
   static navigationOptions = ({ navigation }) => ({
@@ -38,7 +53,6 @@ export default class SingleMeal extends React.Component {
   });
   constructor(props) {
 		super(props);
-
 
 		this.state = {
       doneFetches:0,
@@ -94,6 +108,48 @@ if(this.state.doneFetches == 0)
         automaticallyAdjustContentInsets={false}
         style={{ backgroundColor: 'white' }}
         removeClippedSubviews={false}
+        ListFooterComponent={()=>(
+          <View>
+          <KeyboardAvoidingView>
+          <TextInput
+            underlineColorAndroid="transparent"
+            placeholder="عدد الوجبات"
+            placeholderTextColor="#CCCCCC"
+            keyboardType="numeric"
+            style={{
+              flex: 0.5,
+              fontSize: 33,
+              color: Colors.mainColor,
+              textAlign: 'center',
+              fontFamily: 'myfont',
+              borderRadius: 4,
+              backgroundColor: 'transparent',
+              borderBottomColor: Colors.fadedMainColor,
+              borderBottomWidth: 1
+            }}
+            value={this.state.num}
+            onChangeText={(text) => {
+              this.setState({ num: text },()=>{
+                alert(this.state.num);
+              })
+          }}
+          />
+          <Button
+              onPress={() => {
+                  this.addcart();
+              }}
+              color='white'
+              backgroundColor={Colors.mainColor}
+              containerViewStyle={{borderRadius:15}}
+              borderRadius={15}
+              buttonStyle={{ padding: 10 }}
+              textStyle={{ fontFamily: 'myfont' }}
+              title="اضف الى السله" />
+              </KeyboardAvoidingView>
+              </View>
+
+        )
+        }
         ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
         data={this.state.Meal}
         renderItem={({ item }) => (
@@ -107,17 +163,7 @@ if(this.state.doneFetches == 0)
           />
         )}
       />
-      <Button
-          onPress={() => {
-              this.addcart();
-          }}
-          color='white'
-          backgroundColor={Colors.mainColor}
-          containerViewStyle={{borderRadius:15}}
-          borderRadius={15}
-          buttonStyle={{ padding: 10 }}
-          textStyle={{ fontFamily: 'myfont' }}
-          title="اضف الى السله" />
+
       </View>
     );
   }

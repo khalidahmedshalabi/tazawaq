@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView,DeviceEventEmitter, StyleSheet,Text,FlatList,TouchableOpacity,View,Dimensions,Image,AsyncStorage } from 'react-native';
+import { ScrollView,DeviceEventEmitter,Modal,Button, StyleSheet,Text,FlatList,TouchableOpacity,View,Dimensions,Image,AsyncStorage } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
 import TicketBox from '../components/TicketBox';
@@ -45,7 +45,11 @@ make_order = ()=>{
         AsyncStorage.getItem('location').then((location)=>{
           AsyncStorage.getItem('hint').then((hint)=>{
           fetch(Server.dest + '/api/make-order?ids='+this.state.ids+'&store_id='+this.state.store_id+'&user_id='+userid+'&cost='+this.state.after_cost+'&address='+location+'&address_hint='+hint+'&info=a').then((res)=>res.json()).then((meals)=>{
-            alert('order done');
+            AsyncStorage.setItem('cart','').then(()=>{
+                alert('تم عمل الطلب');
+                this.props.navigation.navigate('Main');
+                this.closeModal()
+            })
           })
           })
         })
@@ -86,6 +90,15 @@ doTheFetching = ()=>{
   })
 
 }
+
+openModal() {
+   this.setState({modalVisible:true});
+ }
+
+ closeModal() {
+   this.setState({modalVisible:false});
+ }
+
   constructor(props) {
 
 		super(props);
@@ -95,7 +108,8 @@ doTheFetching = ()=>{
 			meals: [],
       before_cost: 0,
       after_cost: 0,
-      store_id: 0
+      store_id: 0,
+      modalVisible: false,
     }
   }
 
@@ -112,10 +126,35 @@ doTheFetching = ()=>{
     if(this.state.doneFetches == 0)
         return (<LoadingIndicator size="large" color="#B6E3C6" />);
 
-    if (this.state.meals.length != 0) {
+    if (this.state.ids != null) {
 
       return (
+
         <View>
+        <Modal
+              visible={this.state.modalVisible}
+              animationType={'slide'}
+              onRequestClose={() => this.closeModal()}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.innerContainer}>
+                <Text style={{fontFamily:'myfont',fontSize:25}}>تاكدي شراء المنتجات</Text>
+                <View style={styles.buttons}>
+                <TouchableOpacity
+                    onPress={() => this.closeModal()}
+                >
+                <Text   style={styles.button}>تراجع</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.make_order()}
+                >
+                <Text   style={styles.button}>شراء الان</Text>
+                </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
+
         <View style={{ backgroundColor: '#FFFFFF',
                  }}>
 
@@ -148,12 +187,12 @@ doTheFetching = ()=>{
 
                 <TouchableOpacity
                 onPress={()=>{
-                  this.make_order()
+                  this.openModal()
                 }}
                  style={{flex:1,justifyContent:'center',alignSelf:'center',padding:10,marginTop:10,flexDirection:'row',borderWidth:5,borderColor:'#e9e9ef'}}>
                 <Text style={{
                   fontFamily:'myfont',
-                }}>شراء الان</Text>
+                }}>تنفيذ الطلب</Text>
                 <MaterialCommunityIcons
     						name="plus-circle"
     						size={30}
@@ -192,5 +231,32 @@ const styles = StyleSheet.create({
   head: { height: 40, backgroundColor: Colors.mainColor },
   text: { textAlign:'center' ,fontFamily:'myfont',fontSize:18,color:'white' },
   text2: {fontFamily:'myfont',fontSize:13,color:Colors.mainColor,textAlign:'center' },
-  row: { height: 30 }
+  row: { height: 30 },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+  },
+  innerContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button:{
+    backgroundColor:Colors.mainColor,
+    fontFamily:'myfont',
+    padding:20,
+    fontSize:15,
+    color:'white',
+    marginLeft:5
+  },
+  buttons:{
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  }
 })
