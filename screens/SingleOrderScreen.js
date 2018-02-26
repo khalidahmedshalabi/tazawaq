@@ -13,6 +13,8 @@ import MealBox from '../components/MealBox';
 import Colors from '../constants/Colors';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Timeline from 'react-native-timeline-listview';
+import StarRating from 'react-native-star-rating';
+import { Button } from 'react-native-elements';
 
 const Center = ({ children }) => (
 	<View
@@ -63,8 +65,8 @@ export default class SingleOrderScreen extends React.Component {
 		super(props);
 		this.renderDetail = this.renderDetail.bind(this);
 		this.state = {
-			deliveryTime: 20, // 10sec
-			timeLeft: 20,
+			deliveryTime: 50, // sec
+			timeLeft: 50,
 			data: [
 				{
 					title: 'تم قبول طلبك من طرف البائع'
@@ -75,7 +77,8 @@ export default class SingleOrderScreen extends React.Component {
 				{
 					title: 'تقيم الخدمة'
 				}
-			]
+			],
+			starCount: 3.5
 		};
 	}
 	componentWillMount() {
@@ -95,21 +98,17 @@ export default class SingleOrderScreen extends React.Component {
 		}, 1000);
 	}
 
-	renderDetail(rowData, sectionID, rowID) {
-		let title = <Text style={styles.title}>{rowData.title}</Text>;
-		var desc = null;
-		if (rowData.description && rowData.imageUrl)
-			desc = (
-				<View style={styles.descriptionContainer}>
-					<Image source={{ uri: rowData.imageUrl }} style={styles.image} />
-					<Text style={[styles.textDescription]}>{rowData.description}</Text>
-				</View>
-			);
+	onStarRatingPress(rating) {
+		this.setState({
+			starCount: rating
+		});
+	}
 
+	renderDetail(rowData, sectionID, rowID) {
 		return (
 			<View style={{ flex: 1 }}>
-				{title}
-				{desc}
+				<Text style={styles.title}>{rowData.title}</Text>
+				{rating}
 			</View>
 		);
 	}
@@ -147,11 +146,36 @@ export default class SingleOrderScreen extends React.Component {
 				<Timeline
 					circleColor={Colors.mainColor}
 					lineColor={Colors.mainColor}
-					style={{ flex: 1, width: '100%', marginTop: 30 }}
+					style={{
+						flex: 1,
+						width: '100%',
+						marginTop: 30,
+						maxHeight: 200
+					}}
 					separator={false}
 					data={this.state.data}
 					renderEvent={this.renderEvent}
 					columnFormat="single-column-right"
+				/>
+				<StarRating
+					style={{ flex: 1 }}
+					disabled={false}
+					maxStars={5}
+					fullStarColor={Colors.mainColor}
+					rating={this.state.starCount}
+					selectedStar={rating => this.onStarRatingPress(rating)}
+				/>
+				<Button
+					onPress={() => {
+						this.props.navigation.navigate('Main');
+					}}
+					color="white"
+					backgroundColor={Colors.mainColor}
+					containerViewStyle={{ borderRadius: 15, margin: 20 }}
+					borderRadius={15}
+					buttonStyle={{ paddingHorizontal: 30 }}
+					textStyle={{ fontFamily: 'myfont' }}
+					title="إغلاق الطلب"
 				/>
 			</Center>
 		);
