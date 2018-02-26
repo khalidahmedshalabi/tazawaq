@@ -12,9 +12,9 @@ export default class MealBox extends Component {
 					backgroundColor: '#FFF',
 
 					padding: 13,
-					paddingHorizontal: 20,
-
-				}}>
+					paddingHorizontal: 20
+				}}
+			>
 				<Image
 					style={{ flex: 1, height: 130, borderRadius: 10 }}
 					source={{ uri: this.props.image }}
@@ -26,8 +26,9 @@ export default class MealBox extends Component {
 						fontSize: 17,
 						padding: 5,
 						fontWeight: 'bold',
-						textAlign:'right'
-					}}>
+						textAlign: 'right'
+					}}
+				>
 					{this.props.name}
 				</Text>
 				<Text
@@ -37,28 +38,28 @@ export default class MealBox extends Component {
 						fontSize: 12,
 						padding: 0,
 						color: 'gray',
-						textAlign:'right'
-					}}>
+						textAlign: 'right'
+					}}
+				>
 					{this.props.desc}
 				</Text>
 				<View
 					style={{
 						flex: 1,
-						flexDirection: 'row',
-
-					}}>
-
+						flexDirection: 'row'
+					}}
+				>
 					<Text
 						style={{
 							marginLeft: 4,
 							fontFamily: 'myfont',
 							fontSize: 12,
 							color: Colors.secondaryColor
-						}}>
-						{this.props.price} ر.س
+						}}
+					>
+						{this.props.price} {this.props.price ? 'ر.س' : ''}
 					</Text>
 				</View>
-
 			</View>
 		);
 	}

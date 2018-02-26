@@ -102,7 +102,6 @@ export default class OffersTab extends React.Component {
 								name={item.name}
 								desc={item.info}
 								image={item.img}
-								price={item.cost_after}
 							/>
 						</TouchableOpacity>
 					)}
