@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 
@@ -56,10 +56,60 @@ export default TabNavigator(
 								: 'md-contact';
 						break;
 					case 'السله':
-						iconName =
-							Platform.OS === 'ios'
-								? `ios-cart${focused ? '' : '-outline'}`
-								: 'md-cart';
+						return (
+							<View
+								style={{
+									zIndex: 0,
+									flex: 1,
+									alignSelf: 'stretch',
+									justifyContent: 'space-around',
+									alignItems: 'center'
+								}}
+							>
+								<Ionicons
+									name={
+										Platform.OS === 'ios'
+											? `ios-cart${focused ? '' : '-outline'}`
+											: 'md-cart'
+									}
+									size={32}
+									style={{ marginBottom: -3 }}
+									color={
+										focused ? Colors.tabIconSelected : Colors.tabIconDefault
+									}
+								/>
+								{// if there is products in the cart (from AsyncStorage)
+								// just replace `true == true` with `notifications.length > 0` when you get it from AsyncStorage.
+								true == true ? (
+									<View
+										style={{
+											position: 'absolute',
+											top: 5,
+											right: 5,
+											borderRadius: 50,
+											backgroundColor: 'red',
+											zIndex: 2
+										}}
+									>
+										<Text
+											style={{
+												color: 'white',
+												fontWeight: 'bold',
+												padding: 5,
+												textAlign: 'center',
+												fontSize: 13,
+												minHeight: 25,
+												minWidth: 25
+											}}
+										>
+											{8}
+										</Text>
+									</View>
+								) : (
+									undefined
+								)}
+							</View>
+						);
 						break;
 					case 'العروض':
 						iconName =
