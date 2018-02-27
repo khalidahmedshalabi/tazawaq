@@ -138,7 +138,7 @@ export default class Signin extends React.Component {
                             <View style={styles.singleInputContainer}>
                                 <TextInput
                                     underlineColorAndroid='transparent'
-                                    placeholder='رقم الجوال أو البريد الالكترونى أو اسم المستخدم'
+                                    placeholder='اسم المستخدم أو الإيميل أو رقم الجوال'
                                     placeholderTextColor='#CCCCCC'
                                     autoGrow={false}
                                     multiline={false}

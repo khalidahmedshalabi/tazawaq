@@ -64,9 +64,10 @@ export default class SingleOrderScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.renderDetail = this.renderDetail.bind(this);
+		var deliveryTime = this.props.navigation.state.params.deliveryTime * 60;
 		this.state = {
-			deliveryTime: 50, // sec
-			timeLeft: 50,
+			deliveryTime: deliveryTime, // sec
+			timeLeft: deliveryTime,
 			data: [
 				{
 					title: 'تم قبول طلبك من طرف البائع'
@@ -139,7 +140,7 @@ export default class SingleOrderScreen extends React.Component {
 							}}
 						>
 							{parseInt(this.state.timeLeft)}
-							<Text style={{ fontSize: 20 }}> min</Text>
+							<Text style={{ fontSize: 20 }}> Sec</Text>
 						</Text>
 					)}
 				</AnimatedCircularProgress>
