@@ -34,7 +34,8 @@ export default class Meals extends React.Component {
       doneFetches:0,
 			Meals: [
 
-      ]
+      ],
+      Restaurant:[]
       }
     }
     componentDidMount(){
@@ -45,6 +46,12 @@ export default class Meals extends React.Component {
           })
 
         })
+        fetch(Server.dest + '/api/store-info?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((restaurants)=>{
+          this.setState({
+            Restaurant: [restaurants.response],
+          })
+
+        });
     }
   render() {
     // const { params } = this.props.navigation.state;
@@ -55,6 +62,25 @@ export default class Meals extends React.Component {
       <View>
 
         <View>
+        <FlatList
+          automaticallyAdjustContentInsets={false}
+          style={{ backgroundColor: 'white',borderBottomWidth:.3,borderBottomColor:'black' }}
+          removeClippedSubviews={false}
+          ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
+          data={this.state.Restaurant}
+          renderItem={({ item }) => (
+
+            <RestaurantBox
+
+              stars={item.stars}
+              name={item.name}
+              time={item.time}
+              desc={item.desc}
+              image={item.image}
+              price={item.deliver_price}
+            />
+          )}
+        />
           <FlatList
             automaticallyAdjustContentInsets={false}
             style={{ backgroundColor: 'white' }}
