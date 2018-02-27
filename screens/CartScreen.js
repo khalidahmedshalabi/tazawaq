@@ -96,7 +96,7 @@ export default class Meals extends React.Component {
 								.then(res => res.json())
 								.then(meals => {
 									AsyncStorage.setItem('cart', '').then(() => {
-										this.props.navigation.navigate('SingleOrderScreen');
+										this.props.navigation.navigate('SingleOrderScreen',{deliveryTime:this.state.deliveryTime});
 										this.closeModal();
 									});
 								});

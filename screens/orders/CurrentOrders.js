@@ -24,13 +24,16 @@ export default class OrdersScreen extends React.Component {
      fetch(Server.dest + '/api/show-orders-current?user_id='+id)
        .then(res => res.json())
        .then(orders => {
-         
+
          this.setState({
            doneFetches: 1,
-           orders: orders.response
+           orders: orders.response,
+           deliveryTime:orders.deliveryTime
          });
        });
    });
+
+
  }
 
     constructor(props) {
@@ -76,7 +79,7 @@ export default class OrdersScreen extends React.Component {
               data={this.state.orders}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() =>
-              navigate('SingleMeal', { order_id:item.key })} >
+              navigate('SingleOrderScreen', { deliveryTime:this.state.deliveryTime })} >
                 <MealBox
                   name={item.title}
 
