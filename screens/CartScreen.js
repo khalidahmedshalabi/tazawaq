@@ -136,7 +136,8 @@ export default class Meals extends React.Component {
 							doneFetches: 1,
 							before_cost: data.before,
 							after_cost: data.after,
-							store_id: data.store_id
+							store_id: data.store_id,
+              deliveryTime:data.deliveryTime
 						});
 					});
 			});
