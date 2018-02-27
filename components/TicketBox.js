@@ -61,7 +61,7 @@ export default class TicketBox extends Component {
 					}}>
 					{this.props.desc}
 				</Text>
-				<View
+				{(this.props.status != -1) ? <View
 					style={{
 						flex: 1,
 						flexDirection: 'row',
@@ -81,7 +81,8 @@ export default class TicketBox extends Component {
 						}}>
 						{this.statusText(this.props.status)}
 					</Text>
-				</View>
+				</View> : null}
+
 
 			</View>
 		);
