@@ -45,7 +45,8 @@ export default class TicketBox extends Component {
 						marginRight: 10,
 						fontSize: 17,
 						padding: 5,
-						fontWeight: 'bold'
+						fontWeight: 'bold',
+						textAlign:'right'
 					}}>
 					{this.props.name}
 				</Text>
@@ -55,7 +56,8 @@ export default class TicketBox extends Component {
 						marginRight: 15,
 						fontSize: 12,
 						padding: 0,
-						color: 'gray'
+						color: 'gray',
+						textAlign:'right'
 					}}>
 					{this.props.desc}
 				</Text>
@@ -63,7 +65,7 @@ export default class TicketBox extends Component {
 					style={{
 						flex: 1,
 						flexDirection: 'row',
-
+						justifyContent:'flex-start',
 					}}>
 					<MaterialCommunityIcons
 						name={this.statusIcon(this.props.status)}
