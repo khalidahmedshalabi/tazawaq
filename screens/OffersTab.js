@@ -95,7 +95,7 @@ export default class OffersTab extends React.Component {
 					data={this.state.offers}
 					renderItem={({ item }) => (
 						<TouchableOpacity
-							onPress={() => navigate('SingleOffer', { offer_id: item.id })}
+							
 						>
 							<MealBox
 								style={styles.restaurant}

@@ -18,9 +18,10 @@ import SingleTicketScreen from '../screens/SingleTicketScreen';
 import SingleOrderScreen from '../screens/SingleOrderScreen';
 import FilterScreen from '../screens/FilterScreen';
 import AddTicketScreen from '../screens/AddTicketScreen';
-
+import AboutUs from '../screens/AboutUs';
 const RootStackNavigator = StackNavigator(
 	{
+		AboutUs: { screen: AboutUs },
 		 LocationSetting: { screen: LocationSetting },
 		Signin: { screen: Signin },
 		Signup: { screen: Signup },
