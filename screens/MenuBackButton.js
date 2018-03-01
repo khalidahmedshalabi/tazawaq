@@ -11,7 +11,7 @@ export default class MenuBackButton extends React.Component {
   render() {
     return (
         <TouchableOpacity
-            onPress={ () => this.props.navigation.navigate('Main') }
+            onPress={ () => this.props.navigation.goBack() }
             style={{ paddingTop: 10, paddingLeft:5, flexDirection: 'row', alignItems: 'center' }}>
 
             <Ionicons
@@ -20,7 +20,7 @@ export default class MenuBackButton extends React.Component {
               color="#000"
               style={{ backgroundColor: 'transparent', marginRight: 7}}/>
 
-            <Text style={{ backgroundColor:'transparent', color: "#000",fontFamily:'myfont', fontWeight: 'bold', fontSize: 16 }}>العوده للصفحه الرئيسيه</Text>
+            <Text style={{ backgroundColor:'transparent', color: "#000",fontFamily:'myfont', fontWeight: 'bold', fontSize: 16 }}>العوده للقائمه</Text>
         </TouchableOpacity>
     );
   }

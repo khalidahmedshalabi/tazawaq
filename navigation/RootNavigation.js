@@ -21,7 +21,6 @@ import AddTicketScreen from '../screens/AddTicketScreen';
 import AboutUs from '../screens/AboutUs';
 const RootStackNavigator = StackNavigator(
 	{
-		AboutUs: { screen: AboutUs },
 		 LocationSetting: { screen: LocationSetting },
 		Signin: { screen: Signin },
 		Signup: { screen: Signup },
@@ -36,7 +35,9 @@ const RootStackNavigator = StackNavigator(
 		SingleTicketScreen: { screen: SingleTicketScreen },
 		MyTicketsScreen: { screen: MyTicketsScreen },
 		FilterScreen: { screen: FilterScreen },
-		AddTicketScreen: { screen: AddTicketScreen }
+		AddTicketScreen: { screen: AddTicketScreen },
+		AboutUs: { screen: AboutUs },
+
 	},
 	{
 		navigationOptions: () => ({

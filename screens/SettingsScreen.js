@@ -87,10 +87,27 @@ export default class SettingsScreen extends React.Component {
 						/>
 						<Text style={styles.inputOpenOutside}>تذاكري</Text>
 					</TouchableOpacity>
+					<TouchableOpacity
+						style={styles.singleInputContainer}
+						onPress={() => {
+							this.props.navigation.navigate('AboutUs', {});
+						}}
+					>
+						<Ionicons
+							name={
+								Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'
+							}
+							size={26}
+							color={Colors.secondaryColor}
+							style={styles.inputIcon}
+						/>
+						<Text style={styles.inputOpenOutside}>عن تذوق</Text>
+					</TouchableOpacity>
 				</View>
 			);
 		} else {
 			return (
+				<View style={{ flex: 1.8, width: '100%' }}>
 				<TouchableOpacity
 					style={styles.singleInputContainer}
 					onPress={() => {
@@ -110,6 +127,23 @@ export default class SettingsScreen extends React.Component {
 
 					<Text style={styles.inputOpenOutside}>تسجيل دخول</Text>
 				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.singleInputContainer}
+					onPress={() => {
+						this.props.navigation.navigate('AboutUs', {});
+					}}
+				>
+					<Ionicons
+						name={
+							Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-dropleft'
+						}
+						size={26}
+						color={Colors.secondaryColor}
+						style={styles.inputIcon}
+					/>
+					<Text style={styles.inputOpenOutside}>عن تذوق</Text>
+				</TouchableOpacity>
+				</View>
 			);
 		}
 	};
@@ -183,7 +217,7 @@ export default class SettingsScreen extends React.Component {
 								style={styles.singleInputContainer}
 								onPress={() => {
 									AsyncStorage.removeItem('location');
-									
+
 									this.props.navigation.navigate('LocationSetting');
 								}}
 							>

@@ -77,6 +77,46 @@ export default class RestaurantBox extends Component {
 								{this.props.time} د
 							</Text>
 						</View>
+						{(this.props.status == 1)?(
+							<View
+								style={{
+									flex: 1,
+									flexDirection: 'row',
+									justifyContent: 'center',
+									alignItems: 'center'
+								}}>
+
+								<Text
+									style={{
+										marginLeft: 4,
+										fontFamily: 'myfont',
+										fontSize: 12,
+										color: 'red'
+									}}>
+									مغلق
+								</Text>
+							</View>
+						):(
+							<View
+								style={{
+									flex: 1,
+									flexDirection: 'row',
+									justifyContent: 'center',
+									alignItems: 'center'
+								}}>
+
+								<Text
+									style={{
+										marginLeft: 4,
+										fontFamily: 'myfont',
+										fontSize: 12,
+										color: 'green'
+									}}>
+									مفتوح
+								</Text>
+							</View>
+						)}
+
 
 						<View
 							style={{
