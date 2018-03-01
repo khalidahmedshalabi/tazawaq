@@ -211,6 +211,7 @@ export default class HomeScreen extends React.Component {
 					data={this.state.Restaurants}
 					renderItem={({ item }) => (
 						<TouchableOpacity
+
 							onPress={() => navigate('Restaurant', { key: item.key })}
 						>
 							<RestaurantBox

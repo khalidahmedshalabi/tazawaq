@@ -30,12 +30,13 @@ export default class App extends Component {
               scrollEnabled: true,
               labelStyle: {
               fontWeight: '300',
-              color: '#ffffff',
+              color: Colors.mainColor,
               fontFamily: 'myfont',
-              fontSize: 12
+              fontSize: 15
               },
               style: {
-                backgroundColor: '#EBB70A',
+                backgroundColor: Colors.smoothGray,
+                color: Colors.mainColor,
               },
               activeTintColor: '#000',
           }})
