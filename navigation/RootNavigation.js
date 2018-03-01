@@ -21,7 +21,7 @@ import AddTicketScreen from '../screens/AddTicketScreen';
 
 const RootStackNavigator = StackNavigator(
 	{
-		// LocationSetting: { screen: LocationSetting },
+		 LocationSetting: { screen: LocationSetting },
 		Signin: { screen: Signin },
 		Signup: { screen: Signup },
 		CodeVerification: { screen: CodeVerification },

@@ -8,6 +8,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import { NavigationActions } from 'react-navigation';
 import Saudi_Governorates from '../constants/Saudi_Governorates.js'
 import SelectInput from 'react-native-select-input-ios';
+import Server from '../constants/server';
 
 export default class LocationSetting extends React.Component {
     static navigationOptions = {
@@ -77,9 +78,9 @@ export default class LocationSetting extends React.Component {
 
                 for(var i = 0; i != Saudi_Governorates.regions.length; ++ i)
                 {
-                    if(Saudi_Governorates.regions[i].includes(foundRegion1) 
+                    if(Saudi_Governorates.regions[i].includes(foundRegion1)
 					   || foundRegion1.includes(Saudi_Governorates.regions[i])
-					   || Saudi_Governorates.regions[i].includes(foundRegion2) 
+					   || Saudi_Governorates.regions[i].includes(foundRegion2)
 					   || foundRegion2.includes(Saudi_Governorates.regions[i]))
                     {
                         this.setState({ region: Saudi_Governorates.regions[i] });

@@ -19,7 +19,6 @@ import TicketBox from '../components/TicketBox';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { NavigationActions } from 'react-navigation';
 import {
 	Table,
 	TableWrapper,
@@ -44,13 +43,16 @@ const Center = ({ children }) => (
 );
 export default class Meals extends React.Component {
 	static navigationOptions = ({ navigation }) => {
+
 		return {
+			header: null,
 			tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
 				// Inject event
 				DeviceEventEmitter.emit('ReloadMyLibraryBooks', { empty: 0 });
 
 				// Keep original behaviour
 				jumpToIndex(scene.index);
+
 			}
 		};
 	};

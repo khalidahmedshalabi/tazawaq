@@ -14,6 +14,7 @@ import Colors from '../constants/Colors';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { Ionicons } from '@expo/vector-icons';
+import Header from '../components/Header';
 
 var styles = StyleSheet.create({
 	box: {
@@ -60,6 +61,10 @@ var styles = StyleSheet.create({
 });
 
 export default class HomeScreen extends React.Component {
+	static navigationOptions = ({ navigation }) => ({
+    header: <Header navigation={navigation} />,
+
+	});
 	componentDidMount() {
 		AsyncStorage.getItem('userid').then(id => {
 			this._shouldRenderOffer(id);
@@ -177,6 +182,7 @@ export default class HomeScreen extends React.Component {
 	};
 
 	constructor(props) {
+
 		super(props);
 		this.state = {
 			doneFetches: 0,
@@ -184,7 +190,7 @@ export default class HomeScreen extends React.Component {
 			userid: null,
 			offer: {}
 		};
-		
+
 	}
 
 	render() {

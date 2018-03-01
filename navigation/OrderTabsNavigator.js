@@ -7,13 +7,13 @@ import AdminOrders from '../screens/orders/AdminOrders';
 
 export default TabNavigator(
 	{
-		'طلباتي الحالية': {
+		'الطلبات الحالية': {
 			screen: CurrentOrders
 		},
-		'طلباتي السابقة': {
+		'الطلبات السابقة': {
 			screen: OrdersHistory
 		},
-		'صاحب المتجر': {
+		'طلبات المطعم': {
 			screen: AdminOrders
 		}
 	},

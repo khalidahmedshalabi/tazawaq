@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, View, Text } from 'react-native';
+import { Platform, View, Text,AsyncStorage } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 
@@ -11,7 +11,16 @@ import SettingsScreen from '../screens/SettingsScreen';
 import Header from '../components/Header';
 import CartScreen from '../screens/CartScreen';
 import OrderTabs from '../navigation/OrderTabsNavigator';
-
+cart = ()=>{
+	AsyncStorage.getItem('cart').then((cart)=>{
+		if(cart){
+			return cart.split(",").length;
+		}
+		else{
+			return 1;
+		}
+	})
+}
 export default TabNavigator(
 	{
 		مطاعم: {
@@ -32,7 +41,7 @@ export default TabNavigator(
 	},
 	{
 		navigationOptions: ({ navigation }) => ({
-			header: <Header navigation={navigation} />,
+			header: null,
 			tabBarIcon: ({ focused }) => {
 				const { routeName } = navigation.state;
 				let iconName;
@@ -78,9 +87,7 @@ export default TabNavigator(
 										focused ? Colors.tabIconSelected : Colors.tabIconDefault
 									}
 								/>
-								{// if there is products in the cart (from AsyncStorage)
-								// just replace `true == true` with `notifications.length > 0` when you get it from AsyncStorage.
-								true == true ? (
+								{(cart() >= 1) ? (
 									<View
 										style={{
 											position: 'absolute',
@@ -102,7 +109,7 @@ export default TabNavigator(
 												minWidth: 25
 											}}
 										>
-											{8}
+											{cart()}
 										</Text>
 									</View>
 								) : (
