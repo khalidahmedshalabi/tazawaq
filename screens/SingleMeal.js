@@ -197,8 +197,8 @@ export default class SingleMeal extends React.Component {
 								containerViewStyle={{ borderRadius: 15 }}
 								borderRadius={15}
 								buttonStyle={{ padding: 10 }}
-								textStyle={{ fontFamily: 'myfont' }}
-								title="اضف الى السله"
+								textStyle={{ fontFamily: 'myfont',fontSize:15 }}
+								title={ "اضف الى السله " + this.state.num * this.state.Meal[0].price + " ريال سعودي" }
 							/>
 						</View>
 					)}
@@ -213,7 +213,9 @@ export default class SingleMeal extends React.Component {
 							desc={item.desc}
 							image={item.image}
 							price={item.price}
+
 						/>
+
 					)}
 				/>
 			</View>

@@ -11,16 +11,18 @@ import SettingsScreen from '../screens/SettingsScreen';
 import Header from '../components/Header';
 import CartScreen from '../screens/CartScreen';
 import OrderTabs from '../navigation/OrderTabsNavigator';
-cart = ()=>{
+function cart(){
 	AsyncStorage.getItem('cart').then((cart)=>{
 		if(cart){
-			return cart.split(",").length;
+			return  cart.split(",").length;
 		}
 		else{
-			return 1;
+			return 0;
 		}
 	})
 }
+
+
 export default TabNavigator(
 	{
 		مطاعم: {
