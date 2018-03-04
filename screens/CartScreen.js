@@ -11,7 +11,8 @@ import {
 	View,
 	Dimensions,
 	Image,
-	AsyncStorage
+	AsyncStorage,
+	I18nManager
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
@@ -41,6 +42,8 @@ const Center = ({ children }) => (
 		{children}
 	</View>
 );
+I18nManager.allowRTL(true);
+
 export default class Meals extends React.Component {
 	static navigationOptions = ({ navigation }) => {
 
@@ -169,8 +172,8 @@ export default class Meals extends React.Component {
 	render() {
 		const tableHead = ['السعر', 'التصنيف'];
 		const tableData = [
-			['' + this.state.before_cost, 'الاجمالى قبل الضريبه'],
-			['' + this.state.after_cost, 'الاجمالى بعد الضريبه']
+			['' + this.state.before_cost, 'سعر التوصيل'],
+			['' + this.state.after_cost, 'اجمالى السعر شامل للضريبه']
 		];
 		const { params } = this.props.navigation.state;
 		const { navigate } = this.props.navigation;

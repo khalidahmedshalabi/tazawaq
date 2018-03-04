@@ -1,3 +1,3 @@
 export default {
-    dest: 'https://tathouq.herokuapp.com'
+    dest: 'http://138.197.98.186:3000'
 };

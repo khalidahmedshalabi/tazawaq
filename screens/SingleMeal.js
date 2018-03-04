@@ -8,7 +8,8 @@ import {
 	FlatList,
 	TouchableOpacity,
 	View,
-	AsyncStorage
+	AsyncStorage,
+	Modal
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
@@ -33,7 +34,7 @@ export default class SingleMeal extends React.Component {
 					});
 					this.addcart();
 				} else {
-					alert('تم الاضافه الى السله');
+					this.setState({ modalVisible: true });
 				}
 			});
 		});
@@ -62,8 +63,13 @@ export default class SingleMeal extends React.Component {
 			doneFetches: 0,
 			Restaurant: [],
 			Meal: [],
-			num: 1
+			num: 1,
+			modalVisible:false
 		};
+	}
+	cart = ()=>{
+		this.props.navigation.navigate('Main');
+		this.setState({ modalVisible: false });
 	}
 	componentDidMount() {
 		fetch(
@@ -95,7 +101,30 @@ export default class SingleMeal extends React.Component {
 			return <LoadingIndicator size="large" color="#B6E3C6" />;
 
 		return (
+
+
 			<View>
+			<Modal
+				visible={this.state.modalVisible}
+				animationType={'slide'}
+				onRequestClose={() => this.closeModal()}
+			>
+				<View style={styles.modalContainer}>
+					<View style={styles.innerContainer}>
+						<Text style={{ fontFamily: 'myfont', fontSize: 25 }}>
+							تم اضافه المنتج الى السله
+						</Text>
+						<View style={styles.buttons}>
+							<TouchableOpacity onPress={() => 	this.setState({ modalVisible: false })}>
+								<Text style={styles.button}>تكمله التسوق</Text>
+							</TouchableOpacity>
+							<TouchableOpacity onPress={() => this.cart() }>
+								<Text style={styles.button}>الذهاب الي السله</Text>
+							</TouchableOpacity>
+						</View>
+					</View>
+				</View>
+			</Modal>
 				<FlatList
 					automaticallyAdjustContentInsets={false}
 					style={{
@@ -222,3 +251,45 @@ export default class SingleMeal extends React.Component {
 		);
 	}
 }
+const styles = StyleSheet.create({
+	head: { height: 40, backgroundColor: Colors.mainColor },
+	text: {
+		textAlign: 'center',
+		fontFamily: 'myfont',
+		fontSize: 18,
+		color: 'white'
+	},
+	text2: {
+		fontFamily: 'myfont',
+		fontSize: 13,
+		color: Colors.mainColor,
+		textAlign: 'center'
+	},
+	row: { height: 30 },
+	container: {
+		flex: 1,
+		justifyContent: 'center'
+	},
+	modalContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		backgroundColor: 'grey'
+	},
+	innerContainer: {
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	button: {
+		backgroundColor: Colors.mainColor,
+		fontFamily: 'myfont',
+		padding: 20,
+		fontSize: 15,
+		color: 'white',
+		marginLeft: 5
+	},
+	buttons: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center'
+	}
+});

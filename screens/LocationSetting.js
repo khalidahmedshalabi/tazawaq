@@ -237,7 +237,7 @@ export default class LocationSetting extends React.Component {
                     <Image
                         style={ {width: '100%', height: '30%'}}
                         resizeMode='cover'
-                        source={require('../assets/images/location-picker-cover.jpeg')}/>
+                        source={require('../assets/images/head.jpg')}/>
 
                     {this.shouldRenderLocationInputs()}
                 </KeyboardAvoidingView>

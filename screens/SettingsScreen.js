@@ -158,7 +158,8 @@ export default class SettingsScreen extends React.Component {
 					flexDirection: 'column',
 					justifyContent: 'flex-start',
 					alignItems: 'center',
-					backgroundColor: Colors.smoothGray
+					backgroundColor: Colors.smoothGray,
+
 				}}
 			>
 				<View
@@ -167,7 +168,7 @@ export default class SettingsScreen extends React.Component {
 						width: '92%',
 						backgroundColor: 'white',
 						borderRadius: 10,
-						marginTop: 15
+						marginTop: 40
 					}}
 				>
 					<View

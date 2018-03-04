@@ -32,6 +32,45 @@ export default class RestaurantBox extends Component {
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}>
+						{(this.props.status == 1)?(
+							<View
+								style={{
+									flex: 1,
+									flexDirection: 'row',
+									justifyContent: 'center',
+									alignItems: 'center'
+								}}>
+
+								<Text
+									style={{
+										marginLeft: 4,
+										fontFamily: 'myfont',
+										fontSize: 12,
+										color: 'red'
+									}}>
+									مغلق
+								</Text>
+							</View>
+						):(
+							<View
+								style={{
+									flex: 1,
+									flexDirection: 'row',
+									justifyContent: 'center',
+									alignItems: 'center'
+								}}>
+
+								<Text
+									style={{
+										marginLeft: 4,
+										fontFamily: 'myfont',
+										fontSize: 12,
+										color: 'green'
+									}}>
+									مفتوح
+								</Text>
+							</View>
+						)}
 						<View
 							style={{
 								flex: 1,
@@ -77,45 +116,7 @@ export default class RestaurantBox extends Component {
 								{this.props.time} د
 							</Text>
 						</View>
-						{(this.props.status == 1)?(
-							<View
-								style={{
-									flex: 1,
-									flexDirection: 'row',
-									justifyContent: 'center',
-									alignItems: 'center'
-								}}>
 
-								<Text
-									style={{
-										marginLeft: 4,
-										fontFamily: 'myfont',
-										fontSize: 12,
-										color: 'red'
-									}}>
-									مغلق
-								</Text>
-							</View>
-						):(
-							<View
-								style={{
-									flex: 1,
-									flexDirection: 'row',
-									justifyContent: 'center',
-									alignItems: 'center'
-								}}>
-
-								<Text
-									style={{
-										marginLeft: 4,
-										fontFamily: 'myfont',
-										fontSize: 12,
-										color: 'green'
-									}}>
-									مفتوح
-								</Text>
-							</View>
-						)}
 
 
 						<View
@@ -126,7 +127,7 @@ export default class RestaurantBox extends Component {
 								alignItems: 'center'
 							}}>
 							<MaterialCommunityIcons
-								name="cash-multiple"
+								name="motorbike"
 								size={22}
 								color={Colors.secondaryColor}
 							/>
@@ -137,7 +138,7 @@ export default class RestaurantBox extends Component {
 									fontSize: 12,
 									color: Colors.secondaryColor
 								}}>
-								{this.props.price} ر.س
+								{this.props.price} رس
 							</Text>
 						</View>
 					</View>
