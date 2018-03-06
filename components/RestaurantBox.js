@@ -102,7 +102,7 @@ export default class RestaurantBox extends Component {
 								alignItems: 'center'
 							}}>
 							<MaterialCommunityIcons
-								name="car-pickup"
+								name="clock"
 								size={22}
 								color={Colors.secondaryColor}
 							/>

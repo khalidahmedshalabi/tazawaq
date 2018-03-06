@@ -4,6 +4,7 @@ import { TabNavigator } from 'react-navigation';
 import CurrentOrders from '../screens/orders/CurrentOrders';
 import OrdersHistory from '../screens/orders/OrdersHistory';
 import AdminOrders from '../screens/orders/AdminOrders';
+import Colors from '../constants/Colors';
 
 export default TabNavigator(
 	{
@@ -25,9 +26,9 @@ export default TabNavigator(
 			showLabel: true,
 			labelStyle: {
 				fontWeight: '300',
-				color: '#ffffff',
+				color: Colors.secondCol,
 				fontFamily: 'myfont',
-				fontSize: 12
+				fontSize: 15
 			},
 			style: {
 				backgroundColor: '#EBB70A'

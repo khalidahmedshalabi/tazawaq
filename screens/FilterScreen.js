@@ -20,6 +20,8 @@ import TicketBox from '../components/TicketBox';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { Ionicons } from '@expo/vector-icons';
+import SelectInput from 'react-native-select-input-ios';
+
 const Center = ({ children }) => (
 	<View
 		style={{
@@ -49,6 +51,46 @@ export default class FilterScreen extends React.Component {
 			fontSize: 16
 		}
 	});
+
+	getPrice() {
+    return [
+      { value: 50, label: '50'      },
+      { value: 100, label: '100'     },
+      { value: 150, label: '150'     },
+      { value: 200, label: '200' },
+			{ value: 250, label: '250' },
+			{ value: 300, label: '300' },
+			{ value: 350, label: '350' },
+			{ value: 400, label: '400' },
+			{ value: 450, label: '450' },
+    ];
+  }
+
+	getTime() {
+    return [
+      { value: 5, label:  '5'  },
+      { value: 10, label: '10' },
+      { value: 15, label: '15' },
+      { value: 20, label: '20' },
+			{ value: 25, label: '25' },
+			{ value: 30, label: '30' },
+			{ value: 35, label: '35' },
+			{ value: 40, label: '40' },
+			{ value: 45, label: '45' },
+    ];
+  }
+
+	getSort() {
+    return [
+      { value: 3, label:  'التوصيل الارخص اولا'  },
+      { value: 2, label: 'التوصيل الاسرع اولا' },
+      { value: 1, label: 'التقييم الاعلى اولا' },
+      { value: 0, label: 'المطاعم الاقرب اولا' },
+    ];
+  }
+
+
+
 	componentWillMount() {
 		AsyncStorage.getItem('userid').then(id => {
 			fetch(Server.dest + '/api/get-my-tickets?user_id=' + id)
@@ -111,17 +153,19 @@ export default class FilterScreen extends React.Component {
 				>
 					<View style={styles.inputsContainer}>
 						<View style={styles.singleInputContainer}>
-							<TextInput
-								style={{ flex: 1 }}
-								placeholder="اقصي سعر توصيل ب الريال السعودي"
-								selectedValue={this.state.maxcost}
-								onChangeText={(value) =>
+						<SelectInput
+              value={this.state.maxcost}
+              options={this.getPrice()}
+              onCancelEditing={() => console.log('onCancel')}
+              onSubmitEditing={(value) =>
 
-									this.setState({ maxcost: value }, () => {
-										AsyncStorage.setItem('maxcost', value);
-									})
-								}
-							/>
+								this.setState({ maxcost: value }, () => {
+									AsyncStorage.setItem('maxcost', value);
+								})
+							}
+							style={{ flex: 1 }}
+            />
+
 
 
 							<Ionicons
@@ -133,15 +177,18 @@ export default class FilterScreen extends React.Component {
 						</View>
 
 						<View style={styles.singleInputContainer}>
-							<TextInput
-								style={{ flex: 1 }}
-								placeholder="اقصي مده للتوصيل ب الدقيقه"
-								onChangeText={(value) =>
-									this.setState({ maxtime: value }, () => {
-										AsyncStorage.setItem('maxtime', value);
-									})
-								}
-							/>
+						<SelectInput
+              value={this.state.maxtime}
+              options={this.getTime()}
+              onCancelEditing={() => console.log('onCancel')}
+              onSubmitEditing={(value) =>
+								this.setState({ maxtime: value }, () => {
+									AsyncStorage.setItem('maxtime', value);
+											})
+							}
+							style={{ flex: 1 }}
+            />
+
 
 
 							<Ionicons
@@ -153,20 +200,18 @@ export default class FilterScreen extends React.Component {
 						</View>
 
 						<View style={styles.singleInputContainer}>
-							<Picker
-								style={{ flex: 1 }}
-								selectedValue={this.state.sortby}
-								onValueChange={(itemValue, itemIndex) =>
-									this.setState({ sortby: itemValue }, () => {
-										AsyncStorage.setItem('sortby', itemValue);
-									})
-								}
-							>
-								<Picker.Item label="التوصيل الارخص اولا" value="3" />
-								<Picker.Item label="التوصيل الاسرع اولا" value="2" />
-								<Picker.Item label="التقييم الاعلى اولا" value="1" />
-								<Picker.Item label="المطاعم الاقرب اولا" value="0" />
-							</Picker>
+						<SelectInput
+              value={this.state.sortby}
+              options={this.getSort()}
+              onCancelEditing={() => console.log('onCancel')}
+              onSubmitEditing={(value) =>
+								this.setState({sortby: value }, () => {
+									AsyncStorage.setItem('sortby', value);
+											})
+							}
+							style={{ flex: 1 }}
+            />
+
 
 							<Ionicons
 								name={Platform.OS === 'ios' ? 'ios-funnel' : 'md-funnel'}

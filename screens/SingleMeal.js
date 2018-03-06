@@ -112,15 +112,27 @@ export default class SingleMeal extends React.Component {
 				<View style={styles.modalContainer}>
 					<View style={styles.innerContainer}>
 						<Text style={{ fontFamily: 'myfont', fontSize: 25 }}>
-							تم اضافه المنتج الى السله
+							تم إضافة المنتج للسلة
 						</Text>
 						<View style={styles.buttons}>
-							<TouchableOpacity onPress={() => 	this.setState({ modalVisible: false })}>
-								<Text style={styles.button}>تكمله التسوق</Text>
-							</TouchableOpacity>
-							<TouchableOpacity onPress={() => this.cart() }>
-								<Text style={styles.button}>الذهاب الي السله</Text>
-							</TouchableOpacity>
+
+							<Button onPress={() => 	this.setState({ modalVisible: false })}
+							color='white'
+							backgroundColor={Colors.mainColor}
+							containerViewStyle={{borderRadius:15}}
+							borderRadius={15}
+							buttonStyle={{ padding: 15 }}
+							textStyle={{ fontFamily: 'myfont' }}
+							title="اكمل التسوق"/>
+							<Button onPress={() => this.cart() }
+							color='white'
+							backgroundColor={Colors.mainColor}
+							containerViewStyle={{borderRadius:15}}
+							borderRadius={15}
+							buttonStyle={{ padding: 15 }}
+							textStyle={{ fontFamily: 'myfont' }}
+							title="الذهاب للسلة"/>
+
 						</View>
 					</View>
 				</View>

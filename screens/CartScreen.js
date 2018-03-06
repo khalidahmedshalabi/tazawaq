@@ -188,17 +188,22 @@ export default class Meals extends React.Component {
 						animationType={'slide'}
 						onRequestClose={() => this.closeModal()}
 					>
+
 						<View style={styles.modalContainer}>
 							<View style={styles.innerContainer}>
 								<Text style={{ fontFamily: 'myfont', fontSize: 25 }}>
-									تاكدي شراء المنتجات
+								تأكيد عملية الشراء
 								</Text>
 								<View style={styles.buttons}>
-									<TouchableOpacity onPress={() => this.closeModal()}>
-										<Text style={styles.button}>تراجع</Text>
+
+									<TouchableOpacity style={styles.button}
+									            onPress={() => this.closeModal()}>
+										<Text style={{fontSize: 18,
+										color: 'white'}} >رجوع</Text>
 									</TouchableOpacity>
-									<TouchableOpacity onPress={() => this.make_order()}>
-										<Text style={styles.button}>شراء الان</Text>
+									<TouchableOpacity style={styles.button} onPress={() => this.make_order()}>
+										<Text style={{fontSize: 18,
+										color: 'white'}}>شراء الان</Text>
 									</TouchableOpacity>
 								</View>
 							</View>
@@ -352,9 +357,10 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.mainColor,
 		fontFamily: 'myfont',
 		padding: 20,
-		fontSize: 15,
-		color: 'white',
-		marginLeft: 5
+
+		marginLeft: 5,
+		borderRadius:15,
+
 	},
 	buttons: {
 		flexDirection: 'row',

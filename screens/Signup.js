@@ -152,10 +152,7 @@ export default class Signup extends React.Component {
                         flex: 1, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center',
                         height: Dimensions.get('window').height, width: Dimensions.get('window').width }}>
 
-                    <Image
-                        style={{ flex: 1, height: '35%', width: Dimensions.get('window').width }}
-                        resizeMode='cover'
-                        source={require('../assets/images/splash.jpg')} />
+                    
 
                     <KeyboardAvoidingView
                         behavior='padding'

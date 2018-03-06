@@ -21,7 +21,8 @@ const Center = ({ children }) => (
 		style={{
 			alignItems: 'center',
 			flex: 1,
-			backgroundColor: '#ffffff'
+			backgroundColor: '#ffffff',
+			textAlign:'right'
 		}}
 	>
 		{children}
@@ -44,7 +45,8 @@ const styles = StyleSheet.create({
 	},
 	descriptionContainer: {
 		flexDirection: 'row',
-		paddingRight: 50
+		paddingRight: 50,
+		textAlign:'right'
 	},
 	image: {
 		width: 50,
@@ -53,7 +55,8 @@ const styles = StyleSheet.create({
 	},
 	textDescription: {
 		marginLeft: 10,
-		color: 'gray'
+		color: 'gray',
+		textAlign:'right'
 	}
 });
 
@@ -151,7 +154,8 @@ export default class SingleOrderScreen extends React.Component {
 						flex: 1,
 						width: '100%',
 						marginTop: 30,
-						maxHeight: 200
+						maxHeight: 200,
+						textAlign:'right'
 					}}
 					separator={false}
 					data={this.state.data}
