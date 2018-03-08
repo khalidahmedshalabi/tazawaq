@@ -154,7 +154,7 @@ export default class FilterScreen extends React.Component {
 					<View style={styles.inputsContainer}>
 						<View style={styles.singleInputContainer}>
 						<SelectInput
-              value={this.state.maxcost}
+              value={this.state.maxcost || 50}
               options={this.getPrice()}
               onCancelEditing={() => console.log('onCancel')}
               onSubmitEditing={(value) =>
@@ -178,7 +178,7 @@ export default class FilterScreen extends React.Component {
 
 						<View style={styles.singleInputContainer}>
 						<SelectInput
-              value={this.state.maxtime}
+              value={this.state.maxtime || 15}
               options={this.getTime()}
               onCancelEditing={() => console.log('onCancel')}
               onSubmitEditing={(value) =>

@@ -1,5 +1,5 @@
 const tintColor = '#000000';
-const secondCol = '#2E4C62';
+const secondCol = '#2b4a62';
 const secondColFaded = 'rgba(46, 76, 98, 0.3)';
 
 export default {

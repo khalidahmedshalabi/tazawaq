@@ -106,6 +106,7 @@ export default class Meals extends React.Component {
                 desc={item.desc}
                 image={item.image}
                 price={item.deliver_price}
+                min_delivery_cost={item.min_delivery_cost}
               />
             )}
           />

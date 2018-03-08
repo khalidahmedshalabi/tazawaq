@@ -124,7 +124,7 @@ export default class Signin extends React.Component {
                     <Image
                         style={{ flex: 1, height: '35%', width: Dimensions.get('window').width }}
                         resizeMode='cover'
-                        source={require('../assets/images/top.jpeg')} />
+                        source={require('../assets/images/head.jpg')} />
 
                     <KeyboardAvoidingView
                         behavior='padding'

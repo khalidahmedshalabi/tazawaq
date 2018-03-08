@@ -173,7 +173,7 @@ export default class Meals extends React.Component {
 		const tableHead = ['السعر', 'التصنيف'];
 		const tableData = [
 			['' + this.state.before_cost, 'سعر التوصيل'],
-			['' + this.state.after_cost, 'اجمالى السعر شامل للضريبه']
+			['' + this.state.after_cost, 'اجمالى السعر مع الضريبه']
 		];
 		const { params } = this.props.navigation.state;
 		const { navigate } = this.props.navigation;
@@ -219,7 +219,8 @@ export default class Meals extends React.Component {
 							style={{
 								flex: 1,
 								height: '100%',
-								width: Dimensions.get('window').width
+								width: Dimensions.get('window').width,
+								marginTop:15
 							}}
 							resizeMode="cover"
 							source={require('../assets/images/splash.jpg')}

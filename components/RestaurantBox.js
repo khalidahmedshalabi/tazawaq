@@ -64,7 +64,7 @@ export default class RestaurantBox extends Component {
 									style={{
 										marginLeft: 4,
 										fontFamily: 'myfont',
-										fontSize: 12,
+										fontSize: 10,
 										color: 'green'
 									}}>
 									مفتوح
@@ -80,14 +80,14 @@ export default class RestaurantBox extends Component {
 							}}>
 							<MaterialCommunityIcons
 								name={this.determineStarIcon(this.props.stars)}
-								size={22}
+								size={20}
 								color="#FFC400"
 							/>
 							<Text
 								style={{
 									marginLeft: 4,
 									fontFamily: 'myfont',
-									fontSize: 12,
+									fontSize: 10,
 									color: Colors.secondaryColor
 								}}>
 								{this.props.stars}/5
@@ -103,17 +103,40 @@ export default class RestaurantBox extends Component {
 							}}>
 							<MaterialCommunityIcons
 								name="clock"
-								size={22}
+								size={20}
 								color={Colors.secondaryColor}
 							/>
 							<Text
 								style={{
 									marginLeft: 4,
 									fontFamily: 'myfont',
-									fontSize: 12,
+									fontSize: 10,
 									color: Colors.secondaryColor
 								}}>
 								{this.props.time} د
+							</Text>
+						</View>
+
+						<View
+							style={{
+								flex: 1,
+								flexDirection: 'row',
+								justifyContent: 'center',
+								alignItems: 'center'
+							}}>
+							<MaterialCommunityIcons
+								name="cash"
+								size={20}
+								color={Colors.secondaryColor}
+							/>
+							<Text
+								style={{
+									marginLeft: 4,
+									fontFamily: 'myfont',
+									fontSize: 10,
+									color: Colors.secondaryColor
+								}}>
+								{this.props.min_delivery_cost} رس
 							</Text>
 						</View>
 
@@ -127,15 +150,16 @@ export default class RestaurantBox extends Component {
 								alignItems: 'center'
 							}}>
 							<MaterialCommunityIcons
-								name="motorbike"
-								size={22}
+								name="truck-delivery"
+								size={19}
 								color={Colors.secondaryColor}
+								style={{marginLeft:10}}
 							/>
 							<Text
 								style={{
 									marginLeft: 4,
 									fontFamily: 'myfont',
-									fontSize: 12,
+									fontSize: 10,
 									color: Colors.secondaryColor
 								}}>
 								{this.props.price} رس

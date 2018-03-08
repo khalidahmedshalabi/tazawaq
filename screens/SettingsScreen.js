@@ -141,7 +141,7 @@ export default class SettingsScreen extends React.Component {
 						color={Colors.secondaryColor}
 						style={styles.inputIcon}
 					/>
-					<Text style={styles.inputOpenOutside}>عن تذوق</Text>
+					<Text style={styles.inputOpenOutside}>عن التطبيق</Text>
 				</TouchableOpacity>
 				</View>
 			);

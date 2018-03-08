@@ -148,11 +148,11 @@ export default class Signup extends React.Component {
         else
         {
             return (
-                <View style={{ backgroundColor: '#FFFFFF',
+                <View style={{ backgroundColor: '#FFFFFF',marginTop:15,
                         flex: 1, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center',
                         height: Dimensions.get('window').height, width: Dimensions.get('window').width }}>
 
-                    
+
 
                     <KeyboardAvoidingView
                         behavior='padding'

@@ -267,7 +267,7 @@ export default class Signin extends React.Component {
 									borderRadius: 15
 								}}
 								textStyle={{ fontFamily: 'myfont' }}
-								title="تسجيل دخول المحل"
+								title="تسجيل دخول التاجر"
 							/>
 						</View>
 					</View>

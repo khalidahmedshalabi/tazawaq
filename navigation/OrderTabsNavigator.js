@@ -14,7 +14,7 @@ export default TabNavigator(
 		'الطلبات السابقة': {
 			screen: OrdersHistory
 		},
-		'طلبات المطعم': {
+		'صاحب المتجر': {
 			screen: AdminOrders
 		}
 	},
@@ -25,10 +25,13 @@ export default TabNavigator(
 		tabBarOptions: {
 			showLabel: true,
 			labelStyle: {
-				fontWeight: '300',
-				color: Colors.secondCol,
+				fontWeight: '500',
+				color: 'white',
 				fontFamily: 'myfont',
-				fontSize: 15
+				fontSize: 15,
+				alignItems:'center',
+				justifyContent:'center',
+				textAlign:'center'
 			},
 			style: {
 				backgroundColor: '#EBB70A'
