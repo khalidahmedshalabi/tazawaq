@@ -69,7 +69,7 @@ export default class HomeScreen extends React.Component {
 		AsyncStorage.getItem('userid').then(id => {
 			this._shouldRenderOffer(id);
 			if (id == null) {
-				var id = 1;
+				var id = -1;
 			}
 			AsyncStorage.getItem('maxcost').then(maxcost => {
 				if (maxcost == null) {
