@@ -58,63 +58,73 @@ export default class LocationSetting extends React.Component {
     };
 
     loadScreen = () => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            this.setState({pos: {long: position.coords.longitude, lat: position.coords.latitude}});
+		Alert.alert(
+		'خدمة تحديد الموقع',
+		'نستخدم خدمة تحديد الموقع لكي نرسل لك الطلبات اينما تكون فى اقل وقت. من فضلك اضغط تمكين',
+		[
+			{text: 'تمكين', onPress: () => {
+				navigator.geolocation.getCurrentPosition((position) => {
+					this.setState({pos: {long: position.coords.longitude, lat: position.coords.latitude}});
 
-            fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ position.coords.latitude +
-                "," + position.coords.longitude +
-                "&sensor=false&language=ar&result_type=locality&key=AIzaSyCxXoRqTcOTvsOLQPOiVtPnSxLUyGJBFqw",
-                {headers: {'Cache-Control': 'no-cache'}}).then((res) => res.json()).then((resJson) => {
+					fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng="+ position.coords.latitude +
+						"," + position.coords.longitude +
+						"&sensor=false&language=ar&result_type=locality&key=AIzaSyCxXoRqTcOTvsOLQPOiVtPnSxLUyGJBFqw",
+						{headers: {'Cache-Control': 'no-cache'}}).then((res) => res.json()).then((resJson) => {
 
-                var target = resJson.results[0].address_components;
+						var target = resJson.results[0].address_components;
 
-                var foundRegion1 = target.find(function(element) {
-					return element.types.includes('locality');
-				}).long_name;
+						var foundRegion1 = target.find(function(element) {
+							return element.types.includes('locality');
+						}).long_name;
 
-				var foundRegion2 = target.find(function(element) {
-					return element.types.includes('administrative_area_level_1');
-				}).long_name;
+						var foundRegion2 = target.find(function(element) {
+							return element.types.includes('administrative_area_level_1');
+						}).long_name;
 
-                for(var i = 0; i != Saudi_Governorates.regions.length; ++ i)
-                {
-                    if(Saudi_Governorates.regions[i].includes(foundRegion1)
-					   || foundRegion1.includes(Saudi_Governorates.regions[i])
-					   || Saudi_Governorates.regions[i].includes(foundRegion2)
-					   || foundRegion2.includes(Saudi_Governorates.regions[i]))
-                    {
-                        this.setState({ region: Saudi_Governorates.regions[i] });
-                        break;
-                    }
-                }
+						for(var i = 0; i != Saudi_Governorates.regions.length; ++ i)
+						{
+							if(Saudi_Governorates.regions[i].includes(foundRegion1)
+							   || foundRegion1.includes(Saudi_Governorates.regions[i])
+							   || Saudi_Governorates.regions[i].includes(foundRegion2)
+							   || foundRegion2.includes(Saudi_Governorates.regions[i]))
+							{
+								this.setState({ region: Saudi_Governorates.regions[i] });
+								break;
+							}
+						}
 
-                this.setState({ fetchedLocationData: true });
+						this.setState({ fetchedLocationData: true });
 
-                // Store data
-                AsyncStorage.setItem('longitude', String(position.coords.longitude));
-                AsyncStorage.setItem('latitude', String(position.coords.latitude));
-                AsyncStorage.setItem('region', this.state.region);
-            })
-        }, (error) => {
-            if(error.code === "E_LOCATION_SERVICES_DISABLED" || error.code === undefined)
-            {
-                Alert.alert(
-                    'خدمة الموقع',
-                    'من فضلك قم بتفعيل خدمة الموقع على جوالك لاستخدام افضل. بعد التفعيل اعد المحاولة',
-                    [
-                    {text: 'اعد المحاولة', onPress: () => this.loadScreen()},
-                    {text: 'الغاء', onPress: () => this.setState({ display: 1, fetchedLocationData: true }), style: 'cancel'},
-                    ],
-                    { cancelable: false }
-                );
-            }
-            else alert(JSON.stringify(error))
-        }, {
-            enableHighAccuracy: true,
-            timeout: 20000,
-            maximumAge: 60000
-        });
-        this.setState({display: 1});
+						// Store data
+						AsyncStorage.setItem('longitude', String(position.coords.longitude));
+						AsyncStorage.setItem('latitude', String(position.coords.latitude));
+						AsyncStorage.setItem('region', this.state.region);
+					})
+				}, (error) => {
+					if(error.code === "E_LOCATION_SERVICES_DISABLED" || error.code === undefined)
+					{
+						Alert.alert(
+							'خدمة الموقع',
+							'من فضلك قم بتفعيل خدمة الموقع على جوالك لاستخدام افضل. بعد التفعيل اعد المحاولة',
+							[
+							{text: 'اعد المحاولة', onPress: () => this.loadScreen()},
+							{text: 'الغاء', onPress: () => this.setState({ display: 1, fetchedLocationData: true }), style: 'cancel'},
+							],
+							{ cancelable: false }
+						);
+					}
+					else alert(JSON.stringify(error))
+				}, {
+					enableHighAccuracy: true,
+					timeout: 20000,
+					maximumAge: 60000
+				});
+				this.setState({display: 1});
+			}},
+			{text: 'الغاء', onPress: () => alert('عليك بتفعيل خدمة الموقع على جهازك لكي تستخدم التطبيق'), style: 'cancel'},
+		],
+			{ cancelable: false }
+		)
     }
 
     shouldRenderLocationInputs = () => {
