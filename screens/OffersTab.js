@@ -83,7 +83,7 @@ export default class OffersTab extends React.Component {
 			return <LoadingIndicator size="large" color="#B6E3C6" />;
 
 		return (
-			<View>
+			<View style={{marginTop:15}}>
 				<FlatList
 					automaticallyAdjustContentInsets={false}
 					style={{ backgroundColor: 'white' }}
@@ -95,7 +95,7 @@ export default class OffersTab extends React.Component {
 					data={this.state.offers}
 					renderItem={({ item }) => (
 						<TouchableOpacity
-							
+
 						>
 							<MealBox
 								style={styles.restaurant}
