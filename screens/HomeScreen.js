@@ -184,7 +184,6 @@ export default class HomeScreen extends React.Component {
 	constructor(props) {
 
 		super(props);
-		AsyncStorage.setItem('cart','');
 		this.state = {
 			doneFetches: 0,
 			Restaurants: [],
