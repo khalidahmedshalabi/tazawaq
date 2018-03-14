@@ -5,6 +5,8 @@ import MealsWrapper from '../components/MealsWrapper';
 import Colors from '../constants/Colors';
 import Server from '../constants/server';
 import RestaurantBox from '../components/RestaurantBox';
+import LoadingIndicator from '../components/LoadingIndicator';
+
 const Center = ({ children }) => (
   <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>{children}</View>
 );
@@ -94,9 +96,6 @@ export default class App extends Component {
 
       )
     }
-    return  <Image
-        style={{ flex: 1, height: '100%', width: Dimensions.get('window').width }}
-        resizeMode='cover'
-        source={require('../assets/images/splash.jpg')} />
+    return  <LoadingIndicator size="large" color="#B6E3C6" />;
   }
 }
