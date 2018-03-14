@@ -224,7 +224,8 @@ export default class HomeScreen extends React.Component {
 								image={item.image}
 								price={item.deliver_price}
 								min_delivery_cost={item.min_delivery_cost}
-								status="0"
+
+								status={item.status}
 							/>
 						</TouchableOpacity>
 					)}

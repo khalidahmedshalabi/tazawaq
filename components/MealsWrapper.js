@@ -94,12 +94,15 @@ export default class Meals extends React.Component {
 
             <RestaurantBox
 
-              stars={item.stars}
-              name={item.name}
-              time={item.time}
-              desc={item.desc}
-              image={item.image}
-              price={item.deliver_price}
+            stars={item.stars}
+            name={item.name}
+            time={item.time}
+            desc={item.desc}
+            image={item.image}
+            price={item.deliver_price}
+            min_delivery_cost={item.min_delivery_cost}
+
+            status={item.status}
             />
           )}
         />
