@@ -160,7 +160,7 @@ export default class FilterScreen extends React.Component {
               onSubmitEditing={(value) =>
 
 								this.setState({ maxcost: value }, () => {
-									AsyncStorage.setItem('maxcost', value);
+									AsyncStorage.setItem('maxcost', ''+value);
 								})
 							}
 							style={{ flex: 1 }}
@@ -183,7 +183,7 @@ export default class FilterScreen extends React.Component {
               onCancelEditing={() => console.log('onCancel')}
               onSubmitEditing={(value) =>
 								this.setState({ maxtime: value }, () => {
-									AsyncStorage.setItem('maxtime', value);
+									AsyncStorage.setItem('maxtime', ''+value);
 											})
 							}
 							style={{ flex: 1 }}
@@ -206,7 +206,9 @@ export default class FilterScreen extends React.Component {
               onCancelEditing={() => console.log('onCancel')}
               onSubmitEditing={(value) =>
 								this.setState({sortby: value }, () => {
-									AsyncStorage.setItem('sortby', value);
+									AsyncStorage.setItem('sortby', ''+value);
+
+
 											})
 							}
 							style={{ flex: 1 }}
