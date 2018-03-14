@@ -122,7 +122,7 @@ export default class Signin extends React.Component {
                         height: Dimensions.get('window').height, width: Dimensions.get('window').width }}>
 
                     <Image
-                        style={{ flex: 1, height: '100%', width: Dimensions.get('window').width }}
+                        style={{ flex: 1, height: '20%', width: '100%' }}
                         resizeMode='cover'
                         source={require('../assets/images/head.jpg')} />
 

@@ -237,7 +237,7 @@ export default class LocationSetting extends React.Component {
             return (    <LoadingIndicator size="large" />   );
 
         return (
-            <View style={{ flex:1, backgroundColor: 'white'}}>
+            <View style={{ flex:1, backgroundColor: 'white', ios: {marginTop:15} }}>
                 <KeyboardAvoidingView
                     behavior='padding'
                     keyboardVerticalOffset={60}
