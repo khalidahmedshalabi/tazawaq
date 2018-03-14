@@ -4,7 +4,7 @@ import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 import MealsWrapper from '../components/MealsWrapper';
 import Colors from '../constants/Colors';
 import Server from '../constants/server';
-
+import RestaurantBox from '../components/RestaurantBox';
 const Center = ({ children }) => (
   <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>{children}</View>
 );
@@ -14,7 +14,12 @@ export default class App extends Component {
     const {state} = props.navigation;
 
 
+    fetch(Server.dest + '/api/store-info?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((restaurants)=>{
+      this.setState({
+        Restaurant: [restaurants.response],
+      })
 
+    });
 
     fetch(Server.dest + '/api/store-categories?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((categories)=>{
 
@@ -39,6 +44,10 @@ export default class App extends Component {
                 color: Colors.mainColor,
               },
               activeTintColor: '#000',
+              tabBarOptions: {
+                  scrollEnabled: true,
+                  activeTintColor: '#e91e63',
+                },
           }})
           });
           }, 500);
@@ -78,7 +87,12 @@ export default class App extends Component {
 
     if (this.state.tabs) {
 
-      return <this.state.tabs />
+      return (
+
+        <this.state.tabs />
+
+
+      )
     }
     return  <Image
         style={{ flex: 1, height: '100%', width: Dimensions.get('window').width }}

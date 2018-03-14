@@ -68,6 +68,28 @@ export default class Meals extends React.Component {
           removeClippedSubviews={false}
           ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
           data={this.state.Restaurant}
+          ListFooterComponent = {()=>(
+            <FlatList
+              automaticallyAdjustContentInsets={false}
+              style={{ backgroundColor: 'white',borderTopColor:Colors.secondaryColor,borderTopWidth:1 }}
+              removeClippedSubviews={false}
+              ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
+              data={this.state.Meals}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() =>
+              navigate('SingleMeal', { meal_id:item.key,restaurant_id:this.props.restaurant_id })} >
+                <MealBox
+                  name={item.name}
+                  time={item.time}
+                  desc={item.desc}
+                  image={item.image}
+                  price={item.price}
+                />
+                </TouchableOpacity>
+              )}
+            />
+
+          )}
           renderItem={({ item }) => (
 
             <RestaurantBox
@@ -81,25 +103,7 @@ export default class Meals extends React.Component {
             />
           )}
         />
-          <FlatList
-            automaticallyAdjustContentInsets={false}
-            style={{ backgroundColor: 'white' }}
-            removeClippedSubviews={false}
-            ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
-            data={this.state.Meals}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() =>
-            navigate('SingleMeal', { meal_id:item.key,restaurant_id:this.props.restaurant_id })} >
-              <MealBox
-                name={item.name}
-                time={item.time}
-                desc={item.desc}
-                image={item.image}
-                price={item.price}
-              />
-              </TouchableOpacity>
-            )}
-          />
+
         </View>
       </View>
     );
