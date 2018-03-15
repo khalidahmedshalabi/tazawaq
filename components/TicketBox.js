@@ -81,7 +81,30 @@ export default class TicketBox extends Component {
 						}}>
 						{this.statusText(this.props.status)}
 					</Text>
-				</View> : null}
+				</View> :(
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'row',
+							justifyContent:'flex-start',
+						}}>
+
+						<Text
+							style={{
+								marginLeft: 4,
+								fontFamily: 'myfont',
+								fontSize: 12,
+								color: Colors.secondaryColor
+							}}>
+							العدد {this.props.count}
+						</Text>
+						<MaterialCommunityIcons
+							name={'counter'}
+							size={22}
+							color={Colors.secondaryColor}
+						/>
+						</View>
+				)}
 
 
 			</View>

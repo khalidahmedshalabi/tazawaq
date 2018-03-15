@@ -304,6 +304,7 @@ export default class Meals extends React.Component {
 									status="-1"
 									desc={item.desc}
 									price={item.price}
+									count={item.count}
 								/>
 							</TouchableOpacity>
 						)}
