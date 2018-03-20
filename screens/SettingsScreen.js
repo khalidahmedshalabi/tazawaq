@@ -36,11 +36,16 @@ export default class SettingsScreen extends React.Component {
 				else if (i == 1) this.setState({ hint: store[i][1] });
 				else if (i == 2) {
 					if (store[i][1] != 'null') {
-						fetch(`${Server.dest}/api/user-by-id?user_id=${store[i][1]}`)
-							.then(res => res.json())
-							.then(res =>
-								this.setState({ username: res.response[0].username })
-							);
+						AsyncStorage.getItem('login').then(value => {
+							if(value === '1')
+							{
+								fetch(`${Server.dest}/api/user-by-id?user_id=${store[i][1]}`)
+									.then(res => res.json())
+									.then(res =>
+										this.setState({ username: res.response[0].username })
+									);
+							}
+						});
 					}
 				}
 			});
