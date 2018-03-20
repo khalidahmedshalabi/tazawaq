@@ -18,8 +18,6 @@ import { NavigationActions } from 'react-navigation';
 import Colors from '../../constants/Colors';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Server from '../../constants/server';
-import { Notifications } from 'expo';
-import registerForPushNotificationsAsync from '../../api/registerForPushNotificationsAsync';
 
 export default class Signin extends React.Component {
 	constructor(props) {
@@ -66,26 +64,12 @@ export default class Signin extends React.Component {
 		})
 	};
 	componentWillUnmount() {
-		registerForPushNotificationsAsync();
-		// Handle notifications that are received or selected while the app
-		// is open. If the app was closed and then opened by tapping the
-		// notification (rather than just tapping the app icon to open it),
-		// this function will fire on the next tick after the app starts
-		// with the notification data.
-		this._notificationSubscription = Notifications.addListener(
-			this._handleNotification
-		);
-
 		// cleaning up listeners
 		// I am using lodash
 		_.each(this.listeners, listener => {
 			listener.remove();
 		});
 	}
-
-	_handleNotification = notification => {
-		this.setState({ notification: notification });
-	};
 
 	setOwnerLoginStatus = value => {
 		AsyncStorage.setItem('owner_login', value);
@@ -133,8 +117,6 @@ export default class Signin extends React.Component {
 		)
 			.then(res => res.json())
 			.then(resJson => {
-				// console.log(resJson.response);
-				console.log('OKIII LOKIIII ..');
 				if (resJson.response == 0)
 					this.setState({
 						errorMsg: 'هذا المحل التجاري غير مُسجل عندنا او كلمة مرور غير صحيحة'
@@ -143,7 +125,19 @@ export default class Signin extends React.Component {
 					AsyncStorage.setItem('storeid', resJson.response);
 					this.setOwnerLoginStatus('1');
 					this.fetchStoreOrders(parseInt(resJson.response));
-					// Here
+					AsyncStorage.getItem('token', (err, result) => {
+						if(result)
+						{
+							fetch(
+							  Server.dest +
+								  '/api/store-push-tokens?store_id=' +
+								  resJson.response +
+								  '&token=' +
+								  result,
+							  { headers: { 'Cache-Control': 'no-cache' } }
+						  );
+						}
+					});
 				}
 			});
 	};
