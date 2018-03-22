@@ -282,13 +282,13 @@ export default class Signin extends React.Component {
 							data={['بيانات الزبون', 'الموقع', 'السعر', 'التفاصيل', 'الحالة']}
 							style={styles.head}
 							textStyle={styles.headText}
-							flexArr={[1, 1, 1, 2, 1]}
+							flexArr={[2, 2, .9, 2, 1]}
 						/>
 						<Rows
 							data={this.state.orders}
 							style={styles.row}
 							textStyle={styles.text}
-							flexArr={[1, 1, 1, 2, 1]}
+							flexArr={[2, 2, .7, 2, 1]}
 						/>
 					</Table>
 					</ScrollView>
