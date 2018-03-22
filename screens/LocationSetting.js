@@ -7,7 +7,8 @@ import {
 	Image,
 	Alert,
 	Text,
-	Platform
+	Platform,
+	TextInput
 } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Colors from '../constants/Colors';
@@ -27,12 +28,13 @@ export default class LocationSetting extends React.Component {
 
 		this.state = {
 			display: 0,
+			details:'',
 			pos: {
 				long: 360,
 				lat: 360
 			},
 			fetchedLocationData: false,
-			region: Saudi_Governorates.regions[0],
+			country: Saudi_Governorates.regions[0],
 			pickerData: []
 		};
 
@@ -50,7 +52,33 @@ export default class LocationSetting extends React.Component {
 			}
 		});
 	}
+	set_location = (location) =>{
+		fetch(
+			'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
+				location.coordinate.latitude +
+				',' +
+				location.coordinate.longitude +
+				'&language=ar&key=AIzaSyCxXoRqTcOTvsOLQPOiVtPnSxLUyGJBFqw',
+			{ headers: { 'Cache-Control': 'no-cache' } }
+		)
+			.then(res => res.json())
+			.then(resJson => {
+				console.log(location.coordinate)
+				var target = resJson.results[0].address_components;
 
+				this.setState({
+					region:resJson.results[0].formatted_address
+				})
+			});
+
+			this.setState({
+				pos: {
+					lat: location.coordinate.latitude,
+					long: location.coordinate.longitude
+				}
+			})
+
+	}
 	navigateToHome = () => {
 		this.props.navigation.dispatch(
 			NavigationActions.reset({
@@ -88,7 +116,9 @@ export default class LocationSetting extends React.Component {
 									.then(res => res.json())
 									.then(resJson => {
 										var target = resJson.results[0].address_components;
-
+										this.setState({
+											region:resJson.results[0].formatted_address
+										})
 										var foundRegion1 = target.find(function(element) {
 											return element.types.includes('locality');
 										}).long_name;
@@ -207,7 +237,7 @@ export default class LocationSetting extends React.Component {
 							buttonsTextColor={Colors.mainColor}
 							cancelKeyText="الغاء"
 							submitKeyText="اختيار"
-							value={this.state.region}
+							value={this.state.country}
 							options={this.state.pickerData}
 							labelStyle={{ color: Colors.secondaryColor }}
 							onSubmitEditing={itemValue =>
@@ -216,19 +246,26 @@ export default class LocationSetting extends React.Component {
 						/>
 					</View>
 
-					<GooglePlacesAutocomplete
+					<TextInput
 						placeholder="اكتب عنوانك"
 						minLength={2}
 						autoFocus={false}
-						returnKeyType={'search'}
 						listViewDisplayed="auto"
 						fetchDetails={false}
-						renderDescription={row => row.description}
-						onPress={(data, details = null) => {
+						value={this.state.region}
+						onChangeText={(text)=>{
+							this.setState({
+								region:text
+							})
+						}}
+						onSubmitEditing ={() => {
+							var data= this.state.region;
+							 var details = this.state.details;
 							// 'details' is provided when fetchDetails = true
 							//console.log(data.description);
 							//console.log(details);
-							AsyncStorage.setItem('location', data.description).then(() => {
+							AsyncStorage.setItem('hint',this.state.details);
+							AsyncStorage.setItem('location', data).then(() => {
 								AsyncStorage.getItem('login').then(value => {
 									if (value === '1') {
 										AsyncStorage.getItem('userid').then(userid => {
@@ -237,9 +274,9 @@ export default class LocationSetting extends React.Component {
 													'/api/user_location?id=' +
 													userid +
 													'&location=' +
-													data.description +
+													data +
 													'&region=' +
-													this.state.region +
+													this.state.country +
 													'&longitude=' +
 													this.state.pos.long +
 													'&latitude=' +
@@ -259,51 +296,15 @@ export default class LocationSetting extends React.Component {
 								});
 							});
 						}}
-						getDefaultValue={() => {
-							return ''; // text input default value
-						}}
-						query={{
-							key: 'AIzaSyDS5yK4xbCDrLVcF-88zwcKRPnSoPxdKIc',
-							language: 'ar' // language of the results
-						}}
-						styles={{
-							description: {
-								fontWeight: 'bold',
-								color: '#444444'
-							},
-							predefinedPlacesDescription: {
-								color: Colors.mainColor
-							},
-							textInputContainer: {
-								backgroundColor: 'white',
-								borderBottomColor: '#F2F3F5',
-								height: 60
-							},
-							textInput: {
-								borderRadius: 13,
-								backgroundColor: Colors.smoothGray,
-								height: 45
-							},
-							container: {
-								backgroundColor: 'white'
-							}
-						}}
-						currentLocation={false}
-						currentLocationLabel="مكاني الحالي"
-						nearbyPlacesAPI="GooglePlacesSearch"
-						GoogleReverseGeocodingQuery={
-							{
-								// available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-							}
-						}
-						GooglePlacesSearchQuery={{
-							// available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-							rankby: 'distance',
-							radius: 50000
-						}}
-						debounce={200}
-					/>
 
+
+
+					/>
+					<TextInput placeholder="رقم العماره و الشقه " value={this.state.details} onChangeText={(text)=>{
+						this.setState({
+							details:text
+						})
+					}}/>
 					<MapView
 						style={{ flex: 1 }}
 						showsMyLocationButton={true}
@@ -317,13 +318,11 @@ export default class LocationSetting extends React.Component {
 								latitude: this.state.pos.lat,
 								longitude: this.state.pos.long
 							}}
-							onDragEnd={e =>
-								this.setState({
-									pos: {
-										lat: coordinate.latitude,
-										long: coordinate.longitude
-									}
-								})
+							onDragEnd={(e) =>
+							{
+								this.set_location(e.nativeEvent);
+
+							}
 							}
 							draggable
 							title="your locationr"

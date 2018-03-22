@@ -1,8 +1,8 @@
 {
 	"expo": {
 		"name": "Talbatk",
-		"description": "A very interesting project.",
-		"slug": "tazawaq",
+		"description": "Talbatk.",
+		"slug": "Talbatk",
 		"privacy": "public",
 		"sdkVersion": "24.0.0",
 		"platforms": ["ios", "android"],
@@ -18,9 +18,9 @@
 			"supportsTablet": true
 		},
 		"android": {
-      "package": "com.Tathouq.GarashSoftwareHouse",
+      "package": "com.Talbatk.GarashSoftwareHouse",
       "permissions": [ "MANAGE_DOCUMENTS", "READ_EXTERNAL_STORAGE", "READ_INTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "ACCESS_FINE_LOCATION" ],
-      "versionCode": 2
+      "versionCode": 3
     },
 
 	}
