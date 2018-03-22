@@ -151,7 +151,13 @@ export default class Meals extends React.Component {
 	openModal() {
 		this.setState({ modalVisible: true });
 	}
+	navigate_location(){
+		this.closeModal();
+		AsyncStorage.removeItem('location').then(()=>{
+			this.props.navigation.navigate('LocationSetting');
+		});
 
+	}
 	closeModal() {
 		this.setState({ modalVisible: false });
 	}
@@ -200,6 +206,11 @@ export default class Meals extends React.Component {
 									            onPress={() => this.closeModal()}>
 										<Text style={{fontSize: 18,
 										color: 'white'}} >رجوع</Text>
+									</TouchableOpacity>
+									<TouchableOpacity style={styles.button}
+															onPress={() => this.navigate_location()}>
+										<Text style={{fontSize: 18,
+										color: 'white'}} >مراجعه العنوان</Text>
 									</TouchableOpacity>
 									<TouchableOpacity style={styles.button} onPress={() => this.make_order()}>
 										<Text style={{fontSize: 18,
@@ -342,7 +353,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center'
 	},
 	row: { height: 30 },
-	
+
 	container: {
 		flex: 1,
 		justifyContent: 'center'
