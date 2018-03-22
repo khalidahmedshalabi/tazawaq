@@ -342,6 +342,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center'
 	},
 	row: { height: 30 },
+	
 	container: {
 		flex: 1,
 		justifyContent: 'center'
