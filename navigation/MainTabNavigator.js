@@ -41,6 +41,7 @@ export default TabNavigator(
 			screen: SettingsScreen
 		}
 	},
+	
 	{
 		navigationOptions: ({ navigation }) => ({
 			header: null,

@@ -15,6 +15,7 @@ import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
+import { TabNavigator, NavigationActions } from 'react-navigation';
 
 var styles = StyleSheet.create({
 	box: {
@@ -190,7 +191,7 @@ export default class HomeScreen extends React.Component {
 			userid: null,
 			offer: {}
 		};
-
+this.navigator && this.navigator.dispatch(NavigationActions.navigate({routeName: 'CartScreen'}));
 	}
 
 	render() {

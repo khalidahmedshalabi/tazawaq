@@ -9,7 +9,8 @@ import {
 	Text,
 	Image,
 	Platform,
-	DeviceEventEmitter
+	DeviceEventEmitter,
+	ScrollView
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -272,6 +273,7 @@ export default class Signin extends React.Component {
 		} else {
 			return (
 				<View style={{ height: '100%' }}>
+				<ScrollView>
 					<Table
 						style={styles.table}
 						borderStyle={{ borderWidth: 0.5, borderColor: Colors.mainColor }}
@@ -289,6 +291,7 @@ export default class Signin extends React.Component {
 							flexArr={[1, 1, 1, 2, 1]}
 						/>
 					</Table>
+					</ScrollView>
 				</View>
 			);
 		}
