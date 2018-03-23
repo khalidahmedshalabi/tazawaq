@@ -68,7 +68,7 @@ export default class SingleMeal extends React.Component {
 		};
 	}
 	cart = ()=>{
-		this.props.navigation.navigate('Main');
+		this.props.navigation.navigate('السله');
 		this.setState({ modalVisible: false });
 	}
 	componentDidMount() {
