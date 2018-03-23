@@ -10,7 +10,9 @@ import {
 	Image,
 	Platform,
 	DeviceEventEmitter,
-	ScrollView
+	ScrollView,
+	TouchableOpacity,
+	Share
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -85,7 +87,14 @@ export default class Signin extends React.Component {
 			.then(resJson => {
 				console.log(resJson.response);
 				if (resJson.response == 1) {
-					this.setState({ orders: resJson.orders, storeOrdersFetched: true });
+					var data = [];
+					console.log('num'+resJson.orders[0][0])
+					resJson.orders.map((order)=>{
+						data.push([order[0],this.location(order[1]),order[2],order[3],order[4]]);
+						console.log(order);
+					})
+						this.setState({ orders: data, storeOrdersFetched: true });
+
 				}
 			});
 	};
@@ -160,8 +169,27 @@ export default class Signin extends React.Component {
 			);
 		}
 	};
+	 location = (value) => (
+		<TouchableOpacity onPress={() =>{
+			Share.share({
+		    message: 'The location is : '+value,
 
+		    title: 'Location for an order'
+		  }, {
+		    // Android only:
+		    dialogTitle: 'Share Location',
+		    // iOS only:
+		    excludedActivityTypes: [
+		      'com.apple.UIKit.activity.PostToTwitter'
+		    ]
+		  })
+		}}>
+				<Text >{value}</Text>
+		</TouchableOpacity>
+	);
 	render() {
+
+
 		if (this.state.owner_login == '0') {
 			return (
 				<View
