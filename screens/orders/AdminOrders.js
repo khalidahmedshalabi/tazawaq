@@ -21,6 +21,7 @@ import { NavigationActions } from 'react-navigation';
 import Colors from '../../constants/Colors';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Server from '../../constants/server';
+import SelectInput from 'react-native-select-input-ios';
 
 export default class Signin extends React.Component {
 	constructor(props) {
@@ -31,7 +32,21 @@ export default class Signin extends React.Component {
 			passname: '',
 			password: '',
 			errorMsg: '',
-			orders: []
+			orders: [],
+			pickerData:[
+				{
+					label:'قيد القبول',
+					value:0
+				},
+				{
+					label: 'جاري التوصيل',
+					value: 1
+				},
+				{
+					label:'تم التوصيل',
+					value:2
+				}
+			]
 		};
 	}
 
@@ -85,13 +100,10 @@ export default class Signin extends React.Component {
 		})
 			.then(res => res.json())
 			.then(resJson => {
-				console.log(resJson.response);
 				if (resJson.response == 1) {
 					var data = [];
-					console.log('num'+resJson.orders[0][0])
 					resJson.orders.map((order)=>{
-						data.push([order[0],this.location(order[1]),order[2],order[3],order[4]]);
-						console.log(order);
+						data.push([order[0],this.location(order[1]),order[2],order[3],this.order_status_changer(order[4],order[5])]);
 					})
 						this.setState({ orders: data, storeOrdersFetched: true });
 
@@ -187,6 +199,44 @@ export default class Signin extends React.Component {
 				<Text >{value}</Text>
 		</TouchableOpacity>
 	);
+	change_order_status = (value,id)=>{
+		if(value == 1){
+			console.log('cahnged to 1'+id);
+			fetch(`${Server.dest}/api/delivering-order?id=${id}`, {
+				headers: { 'Cache-Control': 'no-cache' }
+			})
+				.then(res => res.json())
+				.then(resJson => {
+
+				});
+		}
+		else {
+			AsyncStorage.getItem('storeid').then((store_id) => {
+			fetch(`${Server.dest}/api/delivered-order?id=${id}&store_id=${store_id}`, {
+				headers: { 'Cache-Control': 'no-cache' }
+			})
+				.then(res => res.json())
+				.then(resJson => {
+
+				});
+			})
+		}
+
+	}
+	order_status_changer = (value,id) => (
+		<SelectInput
+ 		 buttonsBackgroundColor={Colors.smoothGray}
+ 		 buttonsTextColor={Colors.mainColor}
+ 		 cancelKeyText="الغاء"
+ 		 submitKeyText="اختيار"
+ 		 value={value}
+ 		 options={this.state.pickerData}
+ 		 labelStyle={{ color: Colors.secondaryColor }}
+ 		 onSubmitEditing={itemValue =>
+ 			 this.change_order_status(itemValue,id)
+ 		 }
+ 	 />
+ );
 	render() {
 
 
@@ -316,7 +366,7 @@ export default class Signin extends React.Component {
 							data={this.state.orders}
 							style={styles.row}
 							textStyle={styles.text}
-							flexArr={[2, 2, .7, 2, 1]}
+							flexArr={[2, 2, .7, 2, 2.5]}
 						/>
 					</Table>
 					</ScrollView>
