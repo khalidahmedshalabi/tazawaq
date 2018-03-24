@@ -182,9 +182,10 @@ export default class Signin extends React.Component {
 		}
 	};
 	 location = (value) => (
+
 		<TouchableOpacity onPress={() =>{
 			Share.share({
-		    message: 'The location is : '+value,
+		    message: ''+value.replace("- null",""),
 
 		    title: 'Location for an order'
 		  }, {
@@ -196,7 +197,7 @@ export default class Signin extends React.Component {
 		    ]
 		  })
 		}}>
-				<Text >{value}</Text>
+				<Text >{value.replace("- null","")}</Text>
 		</TouchableOpacity>
 	);
 	change_order_status = (value,id)=>{

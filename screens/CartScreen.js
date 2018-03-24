@@ -212,7 +212,7 @@ export default class Meals extends React.Component {
 									<TouchableOpacity style={styles.button}
 															onPress={() => this.navigate_location()}>
 										<Text style={{fontSize: 18,
-										color: 'white'}} >مراجعه العنوان</Text>
+										color: 'white'}} >تغير عنوان التوصيل</Text>
 									</TouchableOpacity>
 									<TouchableOpacity style={styles.button} onPress={() => this.make_order()}>
 										<Text style={{fontSize: 18,
