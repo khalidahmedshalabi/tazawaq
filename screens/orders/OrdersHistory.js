@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,Image,Dimensions,FlatList,TouchableOpacity,AsyncStorage } from 'react-native';
+import { Text, View,Image,Dimensions,FlatList,TouchableOpacity,AsyncStorage,DeviceEventEmitter } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 import MealBox from '../../components/MealBox';
 import Colors from '../../constants/Colors';
@@ -28,7 +28,7 @@ fetch_data(){
     fetch(Server.dest + '/api/show-orders-past?user_id='+id)
       .then(res => res.json())
       .then(orders => {
-
+        console.log(orders);
         this.setState({
           doneFetches: 1,
           orders: orders.response
@@ -122,11 +122,13 @@ fetch_data(){
 
       );
     }
+    else{
+      return (
+          <Center><Text style={{
+            fontFamily: 'myfont',
+            fontSize:16 }}>ليس لديك طلبات حاليا</Text></Center>
+        );
+    }
 
-    return (
-        <Center><Text style={{
-          fontFamily: 'myfont',
-          fontSize:16 }}>ليس لديك طلبات حاليا</Text></Center>
-      );
   }
 }
