@@ -32,7 +32,7 @@ export default class RestaurantBox extends Component {
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}>
-						{(this.props.status == 1)?(
+						{(this.props.status == 0)?(
 							<View
 								style={{
 									flex: 1,
