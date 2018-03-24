@@ -22,6 +22,9 @@
       "permissions": [ "MANAGE_DOCUMENTS", "READ_EXTERNAL_STORAGE", "READ_INTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "ACCESS_FINE_LOCATION" ],
       "versionCode": 3
     },
+		"infoPlist": {
+  "NSLocationWhenInUseUsageDescription": "This app uses your location to get the nearest restaurants and deliver food for you."
+	},
 
 	}
 }
