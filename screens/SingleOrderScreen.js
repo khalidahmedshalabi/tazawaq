@@ -85,6 +85,17 @@ export default class SingleOrderScreen extends React.Component {
 			starCount: 3.5
 		};
 	}
+	getStatusAsStr = (status) => {
+			switch(status)
+			{
+					case 0:
+							return ("قيد القبول");
+					case 1:
+							return ("جاري التوصيل");
+					case 2:
+							return ("تم التوصيل");
+			}
+	};
 	componentWillMount() {
 		/*orders status
      0 ----> waiting
@@ -120,48 +131,42 @@ export default class SingleOrderScreen extends React.Component {
 	render() {
 		return (
 			<Center>
-				<AnimatedCircularProgress
-					style={{ marginTop: 40 }}
-					size={200}
-					width={3}
-					fill={this.state.timeLeft / this.state.deliveryTime * 100}
-					tintColor={Colors.mainColor}
-					backgroundColor="#3d5875"
-				>
-					{fill => (
-						<Text
-							style={{
-								backgroundColor: 'transparent',
-								position: 'absolute',
-								top: 60,
-								left: 56,
-								width: 90,
-								textAlign: 'center',
-								color: '#7591af',
-								fontSize: 50,
-								fontWeight: '100'
-							}}
+			{(this.props.navigation.state.params.status !=0)?
+					(
+						<AnimatedCircularProgress
+							style={{ marginTop: 40 }}
+							size={200}
+							width={3}
+							fill={this.state.timeLeft / this.state.deliveryTime * 100}
+							tintColor={Colors.mainColor}
+							backgroundColor="#3d5875"
 						>
-							{parseInt(this.state.timeLeft)}
-							<Text style={{ fontSize: 20 }}> Sec</Text>
-						</Text>
-					)}
-				</AnimatedCircularProgress>
-				<Timeline
-					circleColor={Colors.mainColor}
-					lineColor={Colors.mainColor}
-					style={{
-						flex: 1,
-						width: '100%',
-						marginTop: 30,
-						maxHeight: 200,
-						textAlign: 'right'
-					}}
-					separator={false}
-					data={this.state.data}
-					renderEvent={this.renderEvent}
-					columnFormat="single-column-right"
-				/>
+							{fill => (
+								<Text
+									style={{
+										backgroundColor: 'transparent',
+										position: 'absolute',
+										top: 60,
+										left: 56,
+										width: 90,
+										textAlign: 'center',
+										color: '#7591af',
+										fontSize: 50,
+										fontWeight: '100'
+									}}
+								>
+									{parseInt(this.state.timeLeft)}
+									<Text style={{ fontSize: 20 }}> Sec</Text>
+								</Text>
+							)}
+						</AnimatedCircularProgress>
+					):(<Image
+							style={{ flex: 1, height: '20%', width: '100%' }}
+							resizeMode='cover'
+							source={require('../assets/images/not-accepted.png')} />)
+			}
+
+			<Text>{this.getStatusAsStr(this.props.navigation.state.params.status)}</Text>
 				<StarRating
 					style={{ flex: 1 }}
 					disabled={false}
@@ -172,7 +177,7 @@ export default class SingleOrderScreen extends React.Component {
 				/>
 				<Button
 					onPress={() => {
-						this.props.navigation.navigate('Main');
+						this.props.navigation.goBack();
 					}}
 					color="white"
 					backgroundColor={Colors.mainColor}

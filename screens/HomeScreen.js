@@ -191,7 +191,14 @@ export default class HomeScreen extends React.Component {
 			userid: null,
 			offer: {}
 		};
-this.navigator && this.navigator.dispatch(NavigationActions.navigate({routeName: 'CartScreen'}));
+		AsyncStorage.getItem('hot_request').then((value)=>{
+			if(value == '1'){
+				AsyncStorage.setItem('hot_request','0').then(()=>{
+					this.props.navigation.navigate('طلبات')
+				})
+			}
+		})
+
 	}
 
 	render() {

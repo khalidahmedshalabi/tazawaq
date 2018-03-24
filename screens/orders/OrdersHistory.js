@@ -20,19 +20,22 @@ export default class OrdersScreen extends React.Component {
  }
 
  componentDidMount(){
-   AsyncStorage.getItem('userid').then(id => {
-     fetch(Server.dest + '/api/show-orders-past?user_id='+id)
-       .then(res => res.json())
-       .then(orders => {
-
-         this.setState({
-           doneFetches: 1,
-           orders: orders.response
-         })
-       });
-   });
+this.fetch_data();
  }
 
+fetch_data(){
+  AsyncStorage.getItem('userid').then(id => {
+    fetch(Server.dest + '/api/show-orders-past?user_id='+id)
+      .then(res => res.json())
+      .then(orders => {
+
+        this.setState({
+          doneFetches: 1,
+          orders: orders.response
+        })
+      });
+  });
+}
     constructor(props) {
         super(props)
 
@@ -48,7 +51,32 @@ export default class OrdersScreen extends React.Component {
           ]
         }
     }
+    static navigationOptions = ({ navigation }) => {
+      return {
+        header: null,
+        tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
+          // Inject event
+          DeviceEventEmitter.emit('ReloadPastOrders', { empty: 0 });
 
+          // Keep original behaviour
+          jumpToIndex(scene.index);
+        }
+      };
+    };
+
+    listeners = {
+      update: DeviceEventEmitter.addListener('ReloadPastOrders', ({ empty }) => {
+        this.setState({ doneFetches: 0 });
+      this.fetch_data();
+      })
+    };
+    componentWillUnmount() {
+      // cleaning up listeners
+      // I am using lodash
+      _.each(this.listeners, listener => {
+        listener.remove();
+      });
+    }
     getStatusAsStr = (status) => {
         switch(status)
         {
@@ -66,7 +94,7 @@ export default class OrdersScreen extends React.Component {
     if (this.state.doneFetches == 0)
 			return <LoadingIndicator size="large" color="#B6E3C6" />;
 
-    if (this.state.orders !=0) {
+    if (this.state.orders) {
       return (
 
 

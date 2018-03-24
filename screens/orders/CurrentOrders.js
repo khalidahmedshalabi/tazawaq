@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,Image,Dimensions,FlatList,TouchableOpacity,AsyncStorage } from 'react-native';
+import { Text, View,Image,Dimensions,FlatList,TouchableOpacity,AsyncStorage,DeviceEventEmitter } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 import MealBox from '../../components/MealBox';
 import Colors from '../../constants/Colors';
@@ -20,6 +20,11 @@ export default class OrdersScreen extends React.Component {
  }
 
  componentDidMount(){
+  this.fetch_data();
+
+
+ }
+ fetch_data(){
    AsyncStorage.getItem('userid').then(id => {
      fetch(Server.dest + '/api/show-orders-current?user_id='+id)
        .then(res => res.json())
@@ -32,8 +37,6 @@ export default class OrdersScreen extends React.Component {
          });
        });
    });
-
-
  }
 
     constructor(props) {
@@ -50,6 +53,32 @@ export default class OrdersScreen extends React.Component {
         }
     }
 
+    static navigationOptions = ({ navigation }) => {
+      return {
+        header: null,
+        tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
+          // Inject event
+          DeviceEventEmitter.emit('ReloadCurrentOrders', { empty: 0 });
+
+          // Keep original behaviour
+          jumpToIndex(scene.index);
+        }
+      };
+    };
+
+    listeners = {
+  		update: DeviceEventEmitter.addListener('ReloadCurrentOrders', ({ empty }) => {
+        this.setState({ doneFetches: 0 });
+  		this.fetch_data();
+  		})
+  	};
+    componentWillUnmount() {
+      // cleaning up listeners
+      // I am using lodash
+      _.each(this.listeners, listener => {
+        listener.remove();
+      });
+    }
     getStatusAsStr = (status) => {
         switch(status)
         {
@@ -80,7 +109,7 @@ export default class OrdersScreen extends React.Component {
               data={this.state.orders}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() =>
-              navigate('SingleOrderScreen', { deliveryTime:this.state.deliveryTime })} >
+              navigate('SingleOrderScreen', { deliveryTime:this.state.deliveryTime,status:item.status })} >
                 <MealBox
                   name={item.title}
 
