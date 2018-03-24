@@ -20,8 +20,49 @@ export default class RestaurantBox extends Component {
 		return (
 			<View style={{ flex:1, flexDirection: 'row', justifyContent:'flex-end', alignItems: 'center' }}>
 				<View style={{ flex: 1, paddingTop: 9, paddingRight:10, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end'}}>
+				<View style={{flex:1,flexDirection:'row'}}>
+				{(this.props.status == 0)?(
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'row',
+							justifyContent: 'flex-start',
+						}}>
+
+						<Text
+							style={{
+								marginLeft: 4,
+								fontFamily: 'myfont',
+								fontSize: 12,
+								color: 'red'
+							}}>
+							مغلق
+						</Text>
+					</View>
+				):(
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'row',
+							justifyContent: 'flex-start',
+						}}>
+
+						<Text
+							style={{
+								marginLeft: 4,
+								fontFamily: 'myfont',
+								fontSize: 10,
+								color: 'green'
+							}}>
+							مفتوح
+						</Text>
+					</View>
+				)}
+				<Text style={{ fontFamily: 'myfont', fontSize: 15,textAlign:'right',justifyContent:'flex-end' }}>{this.props.name}</Text>
+
+
+				</View>
 					<View style={{ flex: 1 }}>
-						<Text style={{ fontFamily: 'myfont', fontSize: 15,textAlign:'right' }}>{this.props.name}</Text>
 						<Text style={{ fontFamily: 'myfont', color: '#777777', fontSize: 12,textAlign:'right'}}>{this.props.desc}</Text>
 					</View>
 
@@ -32,45 +73,7 @@ export default class RestaurantBox extends Component {
 							justifyContent: 'center',
 							alignItems: 'center'
 						}}>
-						{(this.props.status == 0)?(
-							<View
-								style={{
-									flex: 1,
-									flexDirection: 'row',
-									justifyContent: 'center',
-									alignItems: 'center'
-								}}>
 
-								<Text
-									style={{
-										marginLeft: 4,
-										fontFamily: 'myfont',
-										fontSize: 12,
-										color: 'red'
-									}}>
-									مغلق
-								</Text>
-							</View>
-						):(
-							<View
-								style={{
-									flex: 1,
-									flexDirection: 'row',
-									justifyContent: 'center',
-									alignItems: 'center'
-								}}>
-
-								<Text
-									style={{
-										marginLeft: 4,
-										fontFamily: 'myfont',
-										fontSize: 10,
-										color: 'green'
-									}}>
-									مفتوح
-								</Text>
-							</View>
-						)}
 						<View
 							style={{
 								flex: 1,
