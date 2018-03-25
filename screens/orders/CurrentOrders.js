@@ -12,10 +12,10 @@ const Center = ({ children }) => (
 export default class OrdersScreen extends React.Component {
  return_image = (status)=>{
    if(status == 0){
-     return '../assets/images/not-accepted.png'
+     return require('../../assets/images/not-accepted.png');
    }
    else {
-     return 'https://images.pexels.com/photos/296888/pexels-photo-296888.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+     return require('../../assets/images/delevering.png');
    }
  }
 

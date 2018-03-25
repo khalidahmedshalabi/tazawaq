@@ -81,7 +81,7 @@ export default class OrderBox extends Component {
 									fontSize: 10,
 									color: Colors.secondaryColor
 								}}>
-								{this.props.price} رس
+								{this.props.price} د
 							</Text>
 						</View>
 					):null}
@@ -93,7 +93,7 @@ export default class OrderBox extends Component {
 
 				<View style={{ flex: 0.5 }}>
 					<Image
-						source={{ uri: this.props.image }}
+						source={this.props.image}
 						style={{ width: 100, height: 100, marginTop: 10, marginBottom: 11,
 							marginRight: 4, borderRadius: 10 }}
 					/>

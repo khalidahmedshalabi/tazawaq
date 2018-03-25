@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View,Image,Dimensions,FlatList,TouchableOpacity,AsyncStorage,DeviceEventEmitter } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
-import MealBox from '../../components/MealBox';
+import OrderBox from '../../components/OrderBox';
 import Colors from '../../constants/Colors';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Server from '../../constants/server';
@@ -108,9 +108,9 @@ fetch_data(){
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() =>
               navigate('SingleMeal', { order_id:item.key })} >
-                <MealBox
+                <OrderBox
                   name={item.title}
-
+                  status={item.status}
                   desc='تم التوصيل'
                   image='https://images.pexels.com/photos/262918/pexels-photo-262918.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
                   price={item.price}
