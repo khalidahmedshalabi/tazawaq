@@ -16,6 +16,7 @@
 		},
 		"ios": {
 			"supportsTablet": true,
+			"bundleIdentifier": "com.Talbatk.GarashSoftwareHouse",
 			"infoPlist": {
 		"NSLocationWhenInUseUsageDescription": "This app uses your location to get the nearest restaurants and deliver food for you."
 		},
