@@ -32,7 +32,7 @@ export default class App extends Component {
             });
 
           this.setState({ tabs: TabNavigator(screens,{
-              tabBarPosition: 'bottom',
+              tabBarPosition: 'top',
               tabBarOptions: {
               scrollEnabled: true,
               labelStyle: {

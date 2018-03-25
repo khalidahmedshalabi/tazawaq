@@ -8,7 +8,10 @@ import {
 	Alert,
 	Text,
 	Platform,
-	TextInput
+	TextInput,
+	Button,
+	StyleSheet,
+	TouchableOpacity
 } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Colors from '../constants/Colors';
@@ -87,7 +90,44 @@ export default class LocationSetting extends React.Component {
 			})
 		);
 	};
-
+	submit_location = () =>{
+		var data= this.state.region;
+		 var details = this.state.details;
+		// 'details' is provided when fetchDetails = true
+		//console.log(data.description);
+		//console.log(details);
+		AsyncStorage.setItem('hint',this.state.details);
+		AsyncStorage.setItem('location', data).then(() => {
+			AsyncStorage.getItem('login').then(value => {
+				if (value === '1') {
+					AsyncStorage.getItem('userid').then(userid => {
+						fetch(
+							Server.dest +
+								'/api/user_location?id=' +
+								userid +
+								'&location=' +
+								data +
+								'&region=' +
+								this.state.country +
+								'&longitude=' +
+								this.state.pos.long +
+								'&latitude=' +
+								this.state.pos.lat,
+							{ headers: { 'Cache-Control': 'no-cache' } }
+						)
+							.then(res => res.json())
+							.then(resJson => {
+								this.navigateToHome();
+							})
+							.catch(error => {
+								//console.error(error);
+								this.navigateToHome();
+							});
+					});
+				} else this.props.navigation.navigate('Signin', {});
+			});
+		});
+	}
 	loadScreen = () => {
 		Alert.alert(
 			'خدمة تحديد الموقع',
@@ -245,8 +285,12 @@ export default class LocationSetting extends React.Component {
 							}
 						/>
 					</View>
-
+					<View style={styles.box}>
 					<TextInput
+					placeholderTextColor="#999999"
+
+					underlineColorAndroid="transparent"
+					style={styles.input}
 						placeholder="اكتب عنوانك"
 						minLength={2}
 						autoFocus={false}
@@ -259,58 +303,42 @@ export default class LocationSetting extends React.Component {
 							})
 						}}
 						onSubmitEditing ={() => {
-							var data= this.state.region;
-							 var details = this.state.details;
-							// 'details' is provided when fetchDetails = true
-							//console.log(data.description);
-							//console.log(details);
-							AsyncStorage.setItem('hint',this.state.details);
-							AsyncStorage.setItem('location', data).then(() => {
-								AsyncStorage.getItem('login').then(value => {
-									if (value === '1') {
-										AsyncStorage.getItem('userid').then(userid => {
-											fetch(
-												Server.dest +
-													'/api/user_location?id=' +
-													userid +
-													'&location=' +
-													data +
-													'&region=' +
-													this.state.country +
-													'&longitude=' +
-													this.state.pos.long +
-													'&latitude=' +
-													this.state.pos.lat,
-												{ headers: { 'Cache-Control': 'no-cache' } }
-											)
-												.then(res => res.json())
-												.then(resJson => {
-													this.navigateToHome();
-												})
-												.catch(error => {
-													//console.error(error);
-													this.navigateToHome();
-												});
-										});
-									} else this.props.navigation.navigate('Signin', {});
-								});
-							});
+						this.submit_location();
 						}}
-
-
-
 					/>
-					<TextInput placeholder="رقم العماره و الشقه " value={this.state.details} onChangeText={(text)=>{
+					</View>
+						<View style={styles.box}>
+					<TextInput
+					placeholderTextColor="#999999"
+					underlineColorAndroid="transparent"
+					placeholder="رقم العماره و الشقه " style={styles.input} value={this.state.details} onChangeText={(text)=>{
 						this.setState({
 							details:text
 						})
+					}}
+					onSubmitEditing = {()=>{
+						this.submit_location()
 					}}/>
+					</View>
+				<TouchableOpacity>
+					<View style={{backgroundColor:Colors.mainColor,padding:10,borderRadius:10, width:120,justifyContent:'center'}}>
+						<Text style={{fontFamily:'myfont',color:Colors.secondaryColor,textAlign:'center'}}>حفظ العنوان</Text>
+					</View>
+				</TouchableOpacity>
 					<MapView
 						style={{ flex: 1 }}
 						showsMyLocationButton={true}
+						showsUserLocation = {true}
+						followUserLocation = {true}
+						showsMyLocationButton = {true}
+						zoomEnabled = {true}
+
 						initialRegion={{
 							latitude: this.state.pos.lat,
-							longitude: this.state.pos.long
+							longitude: this.state.pos.long,
+							longitudeDelta:0.04250270688370961,
+            latitudeDelta:0.03358723958820065
+
 						}}
 					>
 						<MapView.Marker
@@ -362,3 +390,29 @@ export default class LocationSetting extends React.Component {
 		);
 	}
 }
+const styles = StyleSheet.create({
+	input: {
+		justifyContent: 'center',
+		height: 22,
+		fontFamily: 'myfont',
+		marginTop: 5,
+		backgroundColor: 'transparent',
+		fontSize: 15,
+		alignItems: 'center',
+		marginRight: 7,
+		marginLeft: 7,
+
+		flex: 1
+	},
+	box: {
+		height: 45,
+		backgroundColor: Colors.smoothGray,
+		borderRadius: 9,
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		alignItems: 'center',
+		marginVertical: 12,
+		marginHorizontal: 10
+	},
+
+})
