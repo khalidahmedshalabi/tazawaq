@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View,Image,Dimensions,FlatList,TouchableOpacity,AsyncStorage,DeviceEventEmitter } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
-import MealBox from '../../components/MealBox';
+import OrderBox from '../../components/OrderBox';
 import Colors from '../../constants/Colors';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Server from '../../constants/server';
@@ -110,9 +110,9 @@ export default class OrdersScreen extends React.Component {
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() =>
               navigate('SingleOrderScreen', { deliveryTime:this.state.deliveryTime,status:item.status })} >
-                <MealBox
+                <OrderBox
                   name={item.title}
-
+                  status={item.status}
                   desc={this.getStatusAsStr(item.status)}
                   image={this.return_image(item.status)}
                   price={item.price}
