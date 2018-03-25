@@ -320,7 +320,7 @@ export default class LocationSetting extends React.Component {
 						this.submit_location()
 					}}/>
 					</View>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => this.submit_location()}> 
 					<View style={{backgroundColor:Colors.mainColor,padding:10,borderRadius:10, width:120,justifyContent:'center'}}>
 						<Text style={{fontFamily:'myfont',color:Colors.secondaryColor,textAlign:'center'}}>حفظ العنوان</Text>
 					</View>
