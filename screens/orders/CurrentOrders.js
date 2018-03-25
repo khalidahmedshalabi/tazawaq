@@ -12,7 +12,7 @@ const Center = ({ children }) => (
 export default class OrdersScreen extends React.Component {
  return_image = (status)=>{
    if(status == 0){
-     return 'https://images.pexels.com/photos/41280/agent-business-call-center-41280.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+     return '../assets/images/not-accepted.png'
    }
    else {
      return 'https://images.pexels.com/photos/296888/pexels-photo-296888.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
