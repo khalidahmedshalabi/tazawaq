@@ -367,7 +367,7 @@ export default class Signin extends React.Component {
 							data={this.state.orders}
 							style={styles.row}
 							textStyle={styles.text}
-							flexArr={[2.1, 2, .7, 2.5, 2.5]}
+							flexArr={[2.1, 3, .7, 2.5, 1.5]}
 						/>
 					</Table>
 					</ScrollView>

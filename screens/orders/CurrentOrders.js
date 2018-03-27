@@ -121,7 +121,7 @@ export default class OrdersScreen extends React.Component {
               data={this.state.orders}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() =>
-              navigate('SingleOrderScreen', { deliveryTime:this.state.deliveryTime,status:item.status })} >
+              navigate('SingleOrderScreen', { deliveryTime:this.state.deliveryTime,time:item.time,status:item.status })} >
                 <OrderBox
                   name={item.title}
                   idkey={item.key}

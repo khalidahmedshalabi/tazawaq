@@ -68,9 +68,11 @@ export default class SingleOrderScreen extends React.Component {
 		super(props);
 		this.renderDetail = this.renderDetail.bind(this);
 		var deliveryTime = this.props.navigation.state.params.deliveryTime * 60;
+		var time = this.props.navigation.state.params.time * 60;
+
 		this.state = {
 			deliveryTime: deliveryTime, // sec
-			timeLeft: deliveryTime,
+			timeLeft: time,
 			data: [
 				{
 					title: 'تم قبول طلبك من طرف البائع'
