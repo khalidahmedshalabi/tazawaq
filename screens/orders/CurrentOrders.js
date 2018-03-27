@@ -36,7 +36,19 @@ export default class OrdersScreen extends React.Component {
            deliveryTime:orders.deliveryTime
          });
        });
-   });
+   })
+   setInterval(()=>{ AsyncStorage.getItem('userid').then(id => {
+     fetch(Server.dest + '/api/show-orders-current?user_id='+id)
+       .then(res => res.json())
+       .then(orders => {
+
+         this.setState({
+           doneFetches: 1,
+           orders: orders.response,
+           deliveryTime:orders.deliveryTime
+         });
+       });
+   })}, 60000);
  }
 
     constructor(props) {
@@ -112,7 +124,9 @@ export default class OrdersScreen extends React.Component {
               navigate('SingleOrderScreen', { deliveryTime:this.state.deliveryTime,status:item.status })} >
                 <OrderBox
                   name={item.title}
+                  idkey={item.key}
                   status={item.status}
+                  time={item.time}
                   desc={this.getStatusAsStr(item.status)}
                   image={this.return_image(item.status)}
                   price={item.price}

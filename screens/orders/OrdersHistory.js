@@ -106,13 +106,13 @@ fetch_data(){
               ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
               data={this.state.orders}
               renderItem={({ item }) => (
-                <TouchableOpacity onPress={() =>
-              navigate('SingleMeal', { order_id:item.key })} >
+                <TouchableOpacity  >
                 <OrderBox
                   name={item.title}
+                  idkey={item.key}
                   status={item.status}
                   desc='تم التوصيل'
-                  image='https://images.pexels.com/photos/262918/pexels-photo-262918.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+                  image={require('../../assets/images/delivered.png')}
                   price={item.price}
                 />
                 </TouchableOpacity>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ActivityIndicator, View, Text, Image } from 'react-native';
 import Colors from '../constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Server from '../constants/server';
 
 const AVERAGE_STARS_COUNT = 2; // between 5 and 0, recommended: 2 or 2.5
 
@@ -16,7 +17,29 @@ export default class OrderBox extends Component {
 			return ("star");
 	}
 
+	fetch_time = ()=>{
+		var id = this.props.idkey;
+
+		// fetch(Server.dest + '/api/order-time?id=' + this.props.idkey)
+		// 	.then(res => res.json())
+		// 	.then(time => {
+		// 		console.log(time);
+		// 	});
+	}
+	constructor(props) {
+		super(props);
+		//this.props.screenName  the key here for the category  restaurant_id---->
+
+		this.state = {
+			Time:0
+		}
+	}
+		componentDidMount(){
+
+			this.fetch_time();
+		}
 	render() {
+
 		return (
 			<View style={{ flex:1, flexDirection: 'row', justifyContent:'flex-end', alignItems: 'center' }}>
 				<View style={{ flex: 1, paddingTop: 9, paddingRight:10, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end'}}>
@@ -81,7 +104,7 @@ export default class OrderBox extends Component {
 									fontSize: 10,
 									color: Colors.secondaryColor
 								}}>
-								{this.props.price} د
+								{ this.props.time} د
 							</Text>
 						</View>
 					):null}

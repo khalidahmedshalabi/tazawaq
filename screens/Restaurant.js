@@ -45,11 +45,7 @@ export default class App extends Component {
                 backgroundColor: Colors.smoothGray,
                 color: Colors.mainColor,
               },
-              activeTintColor: '#000',
-              tabBarOptions: {
-                  scrollEnabled: true,
-                  activeTintColor: '#e91e63',
-                },
+              activeTintColor: '#000',            
           }})
           });
           }, 500);
