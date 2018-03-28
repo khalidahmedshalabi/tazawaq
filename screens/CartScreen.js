@@ -156,10 +156,10 @@ export default class Meals extends React.Component {
 	navigate_location(){
 		this.closeModal();
 		AsyncStorage.removeItem('location').then(()=>{
-			AsyncStorage.setItem('LocationToCart','1');
-			this.props.navigation.navigate('LocationSetting');
+			AsyncStorage.setItem('LocationToCart','1').then(()=>{
+				this.props.navigation.navigate('LocationSetting');
+			});
 		});
-		this.make_order();
 	}
 	closeModal() {
 		this.setState({ modalVisible: false });

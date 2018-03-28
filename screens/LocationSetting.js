@@ -83,12 +83,7 @@ export default class LocationSetting extends React.Component {
 
 	}
 	navigateToHome = () => {
-		this.props.navigation.dispatch(
-			NavigationActions.reset({
-				index: 0,
-				actions: [NavigationActions.navigate({ routeName: 'Main' })]
-			})
-		);
+		this.props.navigation.navigate('Main');
 	};
 	submit_location = () =>{
 		var data= this.state.region;
@@ -118,6 +113,7 @@ export default class LocationSetting extends React.Component {
 							.then(res => res.json())
 							.then(resJson => {
 								AsyncStorage.getItem('LocationToCart').then((LocationToCart)=>{
+									console.log('location var is '+LocationToCart);
 									if(LocationToCart == 1){
 										AsyncStorage.setItem('LocationToCart','0');
 										this.props.navigation.navigate('السله');
@@ -129,7 +125,16 @@ export default class LocationSetting extends React.Component {
 							})
 							.catch(error => {
 								//console.error(error);
-								this.navigateToHome();
+								AsyncStorage.getItem('LocationToCart').then((LocationToCart)=>{
+									console.log('location var is '+LocationToCart);
+									if(LocationToCart == 1){
+										AsyncStorage.setItem('LocationToCart','0');
+										this.props.navigation.navigate('السله');
+									}
+									else{
+										this.navigateToHome();
+									}
+								})
 							});
 					});
 				} else this.props.navigation.navigate('Signin', {});
