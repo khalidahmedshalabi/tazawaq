@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,Image,Dimensions,FlatList,TouchableOpacity,AsyncStorage,DeviceEventEmitter } from 'react-native';
+import { Text, View,SafeAreaView,Image,Dimensions,FlatList,TouchableOpacity,AsyncStorage,DeviceEventEmitter } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 import OrderBox from '../../components/OrderBox';
 import Colors from '../../constants/Colors';
@@ -97,7 +97,7 @@ fetch_data(){
     if (this.state.orders) {
       return (
 
-
+        <SafeAreaView style={{flex: 1}}>
           <View>
             <FlatList
               automaticallyAdjustContentInsets={false}
@@ -119,6 +119,7 @@ fetch_data(){
               )}
             />
           </View>
+          </SafeAreaView>
 
       );
     }
