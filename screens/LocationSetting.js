@@ -117,7 +117,15 @@ export default class LocationSetting extends React.Component {
 						)
 							.then(res => res.json())
 							.then(resJson => {
-								this.navigateToHome();
+								AsyncStorage.getItem('LocationToCart').then((LocationToCart)=>{
+									if(LocationToCart == 1){
+										AsyncStorage.setItem('LocationToCart','0');
+										this.props.navigation.navigate('السله');
+									}
+									else{
+										this.navigateToHome();
+									}
+								})
 							})
 							.catch(error => {
 								//console.error(error);
@@ -320,7 +328,7 @@ export default class LocationSetting extends React.Component {
 						this.submit_location()
 					}}/>
 					</View>
-				<TouchableOpacity onPress={() => this.submit_location()}> 
+				<TouchableOpacity onPress={() => this.submit_location()}>
 					<View style={{backgroundColor:Colors.mainColor,padding:10,borderRadius:10, width:120,justifyContent:'center'}}>
 						<Text style={{fontFamily:'myfont',color:Colors.secondaryColor,textAlign:'center'}}>حفظ العنوان</Text>
 					</View>
