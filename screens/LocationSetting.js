@@ -269,21 +269,11 @@ export default class LocationSetting extends React.Component {
 						style={{
 							flex: 0.3,
 							backgroundColor: Colors.mainColor,
-							borderWidth: 0
+							borderWidth: 0,
+							marginTop:10
 						}}
 					>
-						<Text
-							style={{
-								textAlign: 'right',
-								flex: 1,
-								margin: 10,
-								color: 'white',
-								fontSize: 16,
-								fontFamily: 'myfont'
-							}}
-						>
-							اختر المنطقة
-						</Text>
+
 
 						<SelectInput
 							buttonsBackgroundColor={Colors.smoothGray}
@@ -392,7 +382,7 @@ export default class LocationSetting extends React.Component {
 					contentContainerStyle={{ flex: 1 }}
 				>
 					<Image
-						style={{ width: '100%', height: '30%' }}
+						style={{ width: '100%', height: '34%' }}
 						resizeMode="cover"
 						source={require('../assets/images/head.jpg')}
 					/>
