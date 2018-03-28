@@ -200,6 +200,14 @@ export default class HomeScreen extends React.Component {
 		})
 
 	}
+	navigate_home = (key,status)=>{
+		if(status == 1){
+			navigate('Restaurant', { key: key })
+		}
+		else {
+			alert('هذا المحل مغلق الان لا يمكن الطلب')
+		}
+	}
 
 	render() {
 		const { navigate } = this.props.navigation;
@@ -220,7 +228,7 @@ export default class HomeScreen extends React.Component {
 					renderItem={({ item }) => (
 						<TouchableOpacity
 
-							onPress={() => navigate('Restaurant', { key: item.key })}
+							onPress={() => this.navigate_home(item.key,item.status)}
 						>
 							<RestaurantBox
 								style={styles.restaurant}
