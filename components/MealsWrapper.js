@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet,Text,FlatList,TouchableOpacity,View } from 'react-native';
+import { ScrollView, StyleSheet,Text,FlatList,TouchableOpacity,View,SafeAreaView } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
 import MealBox from '../components/MealBox';
@@ -59,6 +59,7 @@ export default class Meals extends React.Component {
     if(this.state.doneFetches == 0)
 				return (<LoadingIndicator size="large" color="#B6E3C6" />);
     return (
+
       <View>
 
         <View>

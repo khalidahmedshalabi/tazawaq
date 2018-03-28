@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View,Image,Dimensions,FlatList } from 'react-native';
+import { Text, View,Image,Dimensions,FlatList,TabBarTop,SafeAreaView } from 'react-native';
 import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 import MealsWrapper from '../components/MealsWrapper';
 import Colors from '../constants/Colors';
@@ -32,6 +32,8 @@ export default class App extends Component {
             });
 
           this.setState({ tabs: TabNavigator(screens,{
+            tabBarComponent: TabBarTop,
+
               tabBarPosition: 'top',
               tabBarOptions: {
               scrollEnabled: true,
@@ -44,8 +46,9 @@ export default class App extends Component {
               style: {
                 backgroundColor: Colors.smoothGray,
                 color: Colors.mainColor,
+                top:100
               },
-              activeTintColor: '#000',            
+              activeTintColor: '#000',
           }})
           });
           }, 500);
@@ -86,9 +89,7 @@ export default class App extends Component {
     if (this.state.tabs) {
 
       return (
-
         <this.state.tabs />
-
 
       )
     }

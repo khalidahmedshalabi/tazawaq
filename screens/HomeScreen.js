@@ -202,7 +202,7 @@ export default class HomeScreen extends React.Component {
 	}
 	navigate_home = (key,status)=>{
 		if(status == 1){
-			navigate('Restaurant', { key: key })
+			this.props.navigation.navigate('Restaurant', { key: key })
 		}
 		else {
 			alert('هذا المحل مغلق الان لا يمكن الطلب')
