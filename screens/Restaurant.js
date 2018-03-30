@@ -32,9 +32,9 @@ export default class App extends Component {
             });
 
           this.setState({ tabs: TabNavigator(screens,{
-            tabBarComponent: TabBarTop,
+            // tabBarComponent: TabBarTop,
 
-              tabBarPosition: 'top',
+              tabBarPosition: 'bottom',
               tabBarOptions: {
               scrollEnabled: true,
               labelStyle: {
@@ -46,7 +46,6 @@ export default class App extends Component {
               style: {
                 backgroundColor: Colors.smoothGray,
                 color: Colors.mainColor,
-                top:100
               },
               activeTintColor: '#000',
           }})

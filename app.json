@@ -24,7 +24,7 @@
 		"android": {
       "package": "com.Talbatk.GarashSoftwareHouse",
       "permissions": [ "MANAGE_DOCUMENTS", "READ_EXTERNAL_STORAGE", "READ_INTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "ACCESS_FINE_LOCATION" ],
-      "versionCode": 3
+      "versionCode": 4
     },
 
 
