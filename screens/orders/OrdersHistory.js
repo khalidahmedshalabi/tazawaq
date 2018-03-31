@@ -28,7 +28,6 @@ fetch_data(){
     fetch(Server.dest + '/api/show-orders-past?user_id='+id)
       .then(res => res.json())
       .then(orders => {
-        console.log(orders);
         this.setState({
           doneFetches: 1,
           orders: orders.response

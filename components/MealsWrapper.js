@@ -10,22 +10,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 
 export default class Meals extends React.Component {
 
-  static navigationOptions = ({ navigation }) => ({
-    title:'الوجبات',
-    headerTintColor: Colors.smoothGray,
-    fontFamily:'myfont',
-  headerStyle: {
-    backgroundColor: Colors.mainColor,
-    borderBottomColor: Colors.mainColor,
-    borderBottomWidth: 3,
-  },
-  headerTitleStyle: {
-    fontWeight: '300',
-    color: '#ffffff',
-    fontFamily: 'myfont',
-    fontSize: 16
-  },
-  });
+  
   constructor(props) {
 		super(props);
     //this.props.screenName  the key here for the category  restaurant_id---->

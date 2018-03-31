@@ -1,97 +1,107 @@
-import React, { Component } from 'react';
-import { Text, View,Image,Dimensions,FlatList,TabBarTop,SafeAreaView } from 'react-native';
-import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
-import MealsWrapper from '../components/MealsWrapper';
-import Colors from '../constants/Colors';
+import React from 'react';
+import {
+  Text,
+  TouchableHighlight,
+  View,Image,Dimensions,FlatList,TabBarTop,SafeAreaView
+} from 'react-native';
+import TimerMixin from 'react-timer-mixin';
+import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
+import createReactClass from 'create-react-class';
 import Server from '../constants/server';
+import MealsWrapper from '../components/MealsWrapper';
+import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
+import Colors from '../constants/Colors';
 import RestaurantBox from '../components/RestaurantBox';
 import LoadingIndicator from '../components/LoadingIndicator';
+const Child = createReactClass({
+  onEnter() {
+    console.log('enter: ' + this.props.i); // eslint-disable-line no-console
+  },
 
-const Center = ({ children }) => (
-  <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>{children}</View>
-);
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    const {state} = props.navigation;
+  onLeave() {
+    console.log('leave: ' + this.props.i); // eslint-disable-line no-console
+  },
 
+  render() {
+    const i = this.props.i;
+    return <MealsWrapper navigation={this.props.navigation} restaurant_id={this.props.navigation.state.params.key} screenName={i}  />;
+  },
+});
 
-    fetch(Server.dest + '/api/store-info?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((restaurants)=>{
-      this.setState({
-        Restaurant: [restaurants.response],
-      })
+export default class Restaurants extends React.Component {
 
-    });
-
-    fetch(Server.dest + '/api/store-categories?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((categories)=>{
-
-        setTimeout(() => {
-          const screens = {};
-            categories.response.forEach(page => {
-              screens[page.screenName] = { screen: props => <MealsWrapper navigation={this.props.navigation} restaurant_id={this.props.navigation.state.params.key} screenName={page.key}  /> };
-            });
-
-          this.setState({ tabs: TabNavigator(screens,{
-            // tabBarComponent: TabBarTop,
-
-              tabBarPosition: 'bottom',
-              tabBarOptions: {
-              scrollEnabled: true,
-              labelStyle: {
-              fontWeight: '300',
-              color: Colors.mainColor,
-              fontFamily: 'myfont',
-              fontSize: 15
-              },
-              style: {
-                backgroundColor: Colors.smoothGray,
-                color: Colors.mainColor,
-              },
-              activeTintColor: '#000',
-          }})
-          });
-          }, 500);
-      })
+  constructor(){
+    super();
     this.state = {
-      doneFetches:0,
-      pages:[
-
-      ],
-      Restaurant:[]
-    };
-
+      tabs: [{
+      key:5,
+      screenName:'تحميل ...'
+      },
+    {
+      key:6,
+      screenName:'تحميل ...'
+      }],
+    }
   }
   static navigationOptions = ({ navigation }) => ({
-    title:'الوجبات',
-    headerTintColor: Colors.smoothGray,
-    fontFamily:'myfont',
-  headerStyle: {
-    backgroundColor: Colors.mainColor,
-    borderBottomColor: Colors.mainColor,
-    borderBottomWidth: 3,
-  },
-  headerTitleStyle: {
-    fontWeight: '300',
-    color: '#ffffff',
-    fontFamily: 'myfont',
-    fontSize: 16
-  },
+     title:'الوجبات',
+     headerTintColor: Colors.smoothGray,
+     fontFamily:'myfont',
+   headerStyle: {
+     backgroundColor: Colors.mainColor,
+     borderBottomColor: Colors.mainColor,
+     borderBottomWidth: 3,
+   },
+   headerTitleStyle: {
+     fontWeight: '300',
+     color: '#ffffff',
+     fontFamily: 'myfont',
+     fontSize: 16
+   },
+   });
+
+  componentDidMount() {
+    fetch(Server.dest + '/api/store-categories?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((categories)=>{
+       this.setState({ tabs: categories.response });
+
+
   });
-  componentWillMount() {
 
+}
 
+  renderTab(name, page, isTabActive, onPressHandler, onLayoutHandler) {
+    return <TouchableHighlight
+      key={`${name}_${page}`}
 
+      onPress={() => onPressHandler(page)}
+      onLayout={onLayoutHandler}
+      style={{flex: 1, width: 100,backgroundColor:Colors.mainColor }}
+      underlayColor={Colors.mainColor}
+    >
+      <Text style={{
+        fontFamily:'myfont',
+        textAlign:'center',
+        color:'white',
+        marginTop:5
+      }} >{name}</Text>
+    </TouchableHighlight>;
   }
 
   render() {
-
-    if (this.state.tabs) {
-
-      return (
-        <this.state.tabs />
-
-      )
-    }
-    return  <LoadingIndicator size="large" color="#B6E3C6" />;
+    return
+    <ScrollableTabView
+      tabBarPosition="bottom"
+      renderTabBar={() => <ScrollableTabBar renderTab={this.renderTab}/>}
+    >
+      {this.state.tabs.map((tab, i) => {
+        return <Child
+          tabLabel={`${tab.screenName}`}
+          i={`${tab.key}`}
+          key={i}
+          navigation={this.props.navigation}
+        />;
+      })}
+    </ScrollableTabView>;
   }
-}
+
+};

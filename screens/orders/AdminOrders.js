@@ -202,7 +202,6 @@ export default class Signin extends React.Component {
 	);
 	change_order_status = (value,id)=>{
 		if(value == 1){
-			console.log('cahnged to 1'+id);
 			fetch(`${Server.dest}/api/delivering-order?id=${id}`, {
 				headers: { 'Cache-Control': 'no-cache' }
 			})

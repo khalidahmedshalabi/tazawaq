@@ -98,7 +98,6 @@ export default class HomeScreen extends React.Component {
 						)
 							.then(res => res.json())
 							.then(restaurants => {
-								console.log(AsyncStorage.getItem('userid'));
 								this.setState({
 									doneFetches: 1,
 									Restaurants: restaurants.stores
