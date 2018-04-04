@@ -88,8 +88,7 @@ export default class Restaurants extends React.Component {
   }
 
   render() {
-    return
-    <ScrollableTabView
+    return <ScrollableTabView
       tabBarPosition="bottom"
       renderTabBar={() => <ScrollableTabBar renderTab={this.renderTab}/>}
     >
@@ -102,6 +101,7 @@ export default class Restaurants extends React.Component {
         />;
       })}
     </ScrollableTabView>;
+
   }
 
 };
