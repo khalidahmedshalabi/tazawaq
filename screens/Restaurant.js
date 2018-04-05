@@ -72,24 +72,24 @@ export default class Restaurants extends React.Component {
   renderTab(name, page, isTabActive, onPressHandler, onLayoutHandler) {
     return <TouchableHighlight
       key={`${name}_${page}`}
-
       onPress={() => onPressHandler(page)}
       onLayout={onLayoutHandler}
-      style={{flex: 1, width: 100,backgroundColor:Colors.mainColor }}
+      style={{flex: 1, width: 200,backgroundColor:Colors.mainColor }}
       underlayColor={Colors.mainColor}
     >
       <Text style={{
         fontFamily:'myfont',
         textAlign:'center',
         color:'white',
-        marginTop:5
+        fontSize:12,
+        marginTop:10
       }} >{name}</Text>
     </TouchableHighlight>;
   }
 
   render() {
     return <ScrollableTabView
-      tabBarPosition="bottom"
+    tabBarPosition="bottom"
       renderTabBar={() => <ScrollableTabBar renderTab={this.renderTab}/>}
     >
       {this.state.tabs.map((tab, i) => {

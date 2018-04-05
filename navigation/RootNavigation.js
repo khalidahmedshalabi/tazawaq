@@ -22,7 +22,7 @@ import AboutUs from '../screens/AboutUs';
 const RootStackNavigator = StackNavigator(
 	{
 		Signin: { screen: Signin },
-		LocationSetting: { screen: LocationSetting },
+		// LocationSetting: { screen: LocationSetting },
 
 		Signup: { screen: Signup },
 		CodeVerification: { screen: CodeVerification },

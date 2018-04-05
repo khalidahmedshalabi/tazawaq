@@ -83,7 +83,7 @@ export default class OffersTab extends React.Component {
 			return <LoadingIndicator size="large" color="#B6E3C6" />;
 
 		return (
-			<View style={{marginTop:15}}>
+			<View style={{ios:{marginTop:20}}}>
 				<FlatList
 					automaticallyAdjustContentInsets={false}
 					style={{ backgroundColor: 'white' }}

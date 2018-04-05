@@ -111,7 +111,7 @@ export default class OrdersScreen extends React.Component {
     if ( this.state.orders) {
       return (
 
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1,ios:{marginTop:20}}}>
           <View>
             <FlatList
               automaticallyAdjustContentInsets={false}

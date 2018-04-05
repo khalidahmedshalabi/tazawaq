@@ -153,7 +153,7 @@ export default class SingleOrderScreen extends React.Component {
 										width: 90,
 										textAlign: 'center',
 										color: '#7591af',
-										fontSize: 50,
+										fontSize: 35,
 										fontWeight: '100'
 									}}
 								>

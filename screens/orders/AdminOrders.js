@@ -230,6 +230,7 @@ export default class Signin extends React.Component {
  		 cancelKeyText="الغاء"
  		 submitKeyText="اختيار"
  		 value={value}
+
  		 options={this.state.pickerData}
  		 labelStyle={{ color: Colors.secondaryColor }}
  		 onSubmitEditing={itemValue =>
@@ -366,7 +367,7 @@ export default class Signin extends React.Component {
 							data={this.state.orders}
 							style={styles.row}
 							textStyle={styles.text}
-							flexArr={[2.1, 3, .7, 2.5, 1.5]}
+							flexArr={[2.1, 2.5, .7, 2.5, 2]}
 						/>
 					</Table>
 					</ScrollView>
