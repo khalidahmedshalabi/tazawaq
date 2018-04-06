@@ -98,11 +98,17 @@ export default class TicketBox extends Component {
 							}}>
 							العدد {this.props.count}
 						</Text>
-						<MaterialCommunityIcons
-							name={'counter'}
-							size={22}
-							color={Colors.secondaryColor}
-						/>
+
+						<Text
+							style={{
+								marginLeft: 4,
+								fontFamily: 'myfont',
+								fontSize: 12,
+								color: Colors.secondaryColor
+							}}>
+							السعر {this.props.count * this.props.price} رس /
+						</Text>
+
 						</View>
 				)}
 

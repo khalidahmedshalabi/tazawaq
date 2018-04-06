@@ -25,19 +25,46 @@ export default class SingleMeal extends React.Component {
 	addcart = () => {
 		var meal = this.state.Meal[0];
 		var num = this.state.num || 1;
-
-		AsyncStorage.getItem('cart').then(cart => {
-			AsyncStorage.setItem('cart', cart + ',' + meal.key).then(() => {
-				if (num > 1) {
-					this.setState({
-						num: num - 1
+	AsyncStorage.getItem('CartResturantId').then((CartResturantId)=>{
+		if(CartResturantId || CartResturantId == ''){ // if resturant id saved
+			if(CartResturantId == this.props.navigation.state.params.restaurant_id){ //if resturant in cart is the same one here
+				AsyncStorage.getItem('cart').then(cart => {
+					AsyncStorage.setItem('cart', cart + ',' + meal.key).then(() => {
+						if (num > 1) {
+							this.setState({
+								num: num - 1
+							});
+							this.addcart();
+						} else {
+							this.setState({ modalVisible: true });
+						}
 					});
-					this.addcart();
-				} else {
-					this.setState({ modalVisible: true });
-				}
+				});
+				AsyncStorage.setItem('CartResturantId',''+this.props.navigation.state.params.restaurant_id)
+			} //end if resturant in cart is the same one here
+			else {
+				alert('لديك وجبات ب السله لمطعم اخر الرجاء حذفها او طلبها لتتمكن من تنفيذ هذا الطلب')
+			}
+		} // end if resturant id saved
+		else{
+			AsyncStorage.setItem('CartResturantId',''+this.props.navigation.state.params.restaurant_id)
+			AsyncStorage.getItem('cart').then(cart => {
+				AsyncStorage.setItem('cart', cart + ',' + meal.key).then(() => {
+					if (num > 1) {
+						this.setState({
+							num: num - 1
+						});
+						this.addcart();
+					} else {
+						this.setState({ modalVisible: true });
+					}
+				});
 			});
-		});
+		}
+
+	})
+
+
 	};
 
 	static navigationOptions = ({ navigation }) => ({

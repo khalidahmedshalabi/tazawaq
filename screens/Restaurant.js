@@ -66,23 +66,25 @@ export default class Restaurants extends React.Component {
 
 
   });
+// Inneed      onPress={() => onPressHandler(page)
 
 }
 
   renderTab(name, page, isTabActive, onPressHandler, onLayoutHandler) {
     return <TouchableHighlight
       key={`${name}_${page}`}
-      onPress={() => onPressHandler(page)}
+
       onLayout={onLayoutHandler}
-      style={{flex: 1, width: 200,backgroundColor:Colors.mainColor }}
-      underlayColor={Colors.mainColor}
+      style={{flex: 1,width:150,backgroundColor:Colors.mainColor }}
     >
       <Text style={{
         fontFamily:'myfont',
         textAlign:'center',
         color:'white',
-        fontSize:12,
-        marginTop:10
+        fontSize:10,
+        marginTop:10,
+        flex:1,
+        width:150
       }} >{name}</Text>
     </TouchableHighlight>;
   }

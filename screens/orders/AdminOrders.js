@@ -39,7 +39,7 @@ export default class Signin extends React.Component {
 					value:0
 				},
 				{
-					label: 'جاري التوصيل',
+					label: 'التوصيل',
 					value: 1
 				},
 				{
