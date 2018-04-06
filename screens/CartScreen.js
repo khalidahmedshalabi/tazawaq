@@ -149,7 +149,14 @@ export default class Meals extends React.Component {
 					});
 			});
 	};
-
+clear_cart = ()=>{
+	AsyncStorage.setItem('cart','').then(()=>{
+		AsyncStorage.setItem('CartResturantId','').then(()=>{
+			alert('تم الغاء الطلب يمكنك التسوق بحريه')
+			this.props.navigation.navigate('Main');
+		})
+	})
+}
 	openModal() {
 		this.setState({ modalVisible: true });
 	}
@@ -275,7 +282,7 @@ export default class Meals extends React.Component {
 										textStyle={styles.text2}
 									/>
 								</Table>
-
+								<View style={{flexDirection:'row'}}>
 								<TouchableOpacity
 									onPress={() => {
 										this.openModal();
@@ -305,14 +312,42 @@ export default class Meals extends React.Component {
 										style={{ paddingLeft: 5 }}
 									/>
 								</TouchableOpacity>
+
+								<TouchableOpacity
+									onPress={() => {
+										this.clear_cart();
+									}}
+									style={{
+										flex: 1,
+										justifyContent: 'center',
+										alignSelf: 'center',
+										padding: 10,
+										marginTop: 10,
+										flexDirection: 'row',
+										borderWidth: 5,
+										borderColor: '#e9e9ef'
+									}}
+								>
+									<Text
+										style={{
+											fontFamily: 'myfont'
+										}}
+									>
+										الغاء الطلب
+									</Text>
+									<MaterialCommunityIcons
+										name="minus-circle"
+										size={30}
+										color={Colors.secondaryColor}
+										style={{ paddingLeft: 5 }}
+									/>
+								</TouchableOpacity>
+								</View>
 							</View>
+
 						)}
 						renderItem={({ item }) => (
-							<TouchableOpacity
-								onPress={() =>
-									navigate('SingleTicketScreen', { Ticket_id: item.key })
-								}
-							>
+
 								<TicketBox
 									name={item.name}
 									status="-1"
@@ -320,7 +355,6 @@ export default class Meals extends React.Component {
 									price={item.price}
 									count={item.count}
 								/>
-							</TouchableOpacity>
 						)}
 					/>
 				</View>
