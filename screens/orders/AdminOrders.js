@@ -353,6 +353,25 @@ export default class Signin extends React.Component {
 			return (
 				<View style={{ height: '100%' }}>
 				<ScrollView>
+					<View style={{ flex: 1, marginBottom: 15 }}>
+						<Button
+							onPress={() => {
+								this.setOwnerLoginStatus('0');
+							}}
+							color="white"
+							backgroundColor={Colors.mainColor}
+							borderRadius={15}
+							buttonStyle={{ padding: 10 }}
+							containerViewStyle={{
+								marginTop: 15,
+								marginHorizontal: 7,
+								borderRadius: 15
+							}}
+							textStyle={{ fontFamily: 'myfont' }}
+							title="تسجيل خروج من المتجر"
+						/>
+					</View>
+
 					<Table
 						style={styles.table}
 						borderStyle={{ borderWidth: 0.5, borderColor: Colors.mainColor }}
@@ -370,6 +389,8 @@ export default class Signin extends React.Component {
 							flexArr={[2.1, 2.5, .7, 2.5, 2]}
 						/>
 					</Table>
+
+
 					</ScrollView>
 				</View>
 			);
