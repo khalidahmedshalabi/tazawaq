@@ -258,7 +258,8 @@ export default class Signin extends React.Component {
 						style={{
 							flex: 1,
 							height: '35%',
-							width: Dimensions.get('window').width
+							width: Dimensions.get('window').width,
+							marginTop:20
 						}}
 						resizeMode="cover"
 						source={require('../../assets/images/splash.jpg')}
@@ -351,7 +352,7 @@ export default class Signin extends React.Component {
 			return <LoadingIndicator size="large" />;
 		} else {
 			return (
-				<View style={{ height: '100%' }}>
+				<View style={{ height: '100%',marginTop:20 }}>
 				<ScrollView>
 					<View style={{ flex: 1, marginBottom: 15 }}>
 						<Button

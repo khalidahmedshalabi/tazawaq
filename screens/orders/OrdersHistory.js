@@ -97,7 +97,7 @@ fetch_data(){
       return (
 
         <SafeAreaView style={{flex: 1,ios:{marginTop:20}}}>
-          <View>
+          <View style={{flex: 1,marginTop:20}}>
             <FlatList
               automaticallyAdjustContentInsets={false}
               style={{ backgroundColor: 'white' }}
