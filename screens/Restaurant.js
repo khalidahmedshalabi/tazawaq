@@ -81,7 +81,7 @@ export default class Restaurants extends React.Component {
         fontFamily:'myfont',
         textAlign:'center',
         color:'white',
-        fontSize:10,
+        fontSize:12,
         marginTop:10,
         flex:1,
         width:150

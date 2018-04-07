@@ -43,7 +43,7 @@ export default class SingleMeal extends React.Component {
 				AsyncStorage.setItem('CartResturantId',''+this.props.navigation.state.params.restaurant_id)
 			} //end if resturant in cart is the same one here
 			else {
-				alert('لديك وجبات ب السله لمطعم اخر الرجاء حذفها او طلبها لتتمكن من تنفيذ هذا الطلب')
+				alert('لديك طلبات ب السله لمحل تجاري اخر الرجاء تنفيذ الطلب او الغاءه اولا')
 			}
 		} // end if resturant id saved
 		else{

@@ -152,7 +152,7 @@ export default class Meals extends React.Component {
 clear_cart = ()=>{
 	AsyncStorage.setItem('cart','').then(()=>{
 		AsyncStorage.setItem('CartResturantId','').then(()=>{
-			alert('تم الغاء الطلب يمكنك التسوق بحريه')
+			alert(' تم إفراع سلة الشراء و بانتظار طلباتك القادمة من المحلات الأخرى')
 			this.props.navigation.navigate('Main');
 		})
 	})
