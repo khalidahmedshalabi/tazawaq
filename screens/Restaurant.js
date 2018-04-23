@@ -14,13 +14,7 @@ import Colors from '../constants/Colors';
 import RestaurantBox from '../components/RestaurantBox';
 import LoadingIndicator from '../components/LoadingIndicator';
 const Child = createReactClass({
-  onEnter() {
-    console.log('enter: ' + this.props.i); // eslint-disable-line no-console
-  },
 
-  onLeave() {
-    console.log('leave: ' + this.props.i); // eslint-disable-line no-console
-  },
 
   render() {
     const i = this.props.i;
@@ -81,7 +75,7 @@ export default class Restaurants extends React.Component {
         fontFamily:'myfont',
         textAlign:'center',
         color:'white',
-        fontSize:12,
+        fontSize:16,
         marginTop:10,
         flex:1,
         width:150
@@ -98,7 +92,7 @@ export default class Restaurants extends React.Component {
         return <Child
           tabLabel={`${tab.screenName}`}
           i={`${tab.key}`}
-          key={i}
+          key={`${tab.key}`}
           navigation={this.props.navigation}
         />;
       })}

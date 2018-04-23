@@ -21,9 +21,8 @@ import AddTicketScreen from '../screens/AddTicketScreen';
 import AboutUs from '../screens/AboutUs';
 const RootStackNavigator = StackNavigator(
 	{
+		LocationSetting: { screen: LocationSetting },
 		Signin: { screen: Signin },
-		// LocationSetting: { screen: LocationSetting },
-
 		Signup: { screen: Signup },
 		CodeVerification: { screen: CodeVerification },
 		ResetPassword: { screen: ResetPassword },

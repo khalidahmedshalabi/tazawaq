@@ -101,10 +101,12 @@ export default class Meals extends React.Component {
 								.then(res => res.json())
 								.then(meals => {
 									AsyncStorage.setItem('cart', '').then(() => {
+										AsyncStorage.setItem('CartResturantId','').then(()=>{
 										AsyncStorage.setItem('hot_request','1').then(()=>{
 											this.props.navigation.navigate('Main');
 											this.closeModal();
 										})
+									});
 									});
 								});
 						});
