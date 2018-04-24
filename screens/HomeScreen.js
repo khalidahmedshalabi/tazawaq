@@ -87,14 +87,13 @@ export default class HomeScreen extends React.Component {
 
 						fetch(
 							Server.dest +
-								'/api/stores?user_id=' +
-								id +
-								'&maxcost=' +
-								maxcost +
-								'&maxtime=' +
-								maxtime +
-								'&sortby=' +
-								sortby
+								'/api/stores?user_id=9' +
+
+								'&maxcost=500' +
+
+								'&maxtime=500' +
+
+								'&sortby=3'
 						)
 							.then(res => res.json())
 							.then(restaurants => {
