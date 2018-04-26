@@ -76,10 +76,36 @@ export default class Meals extends React.Component {
 			listener.remove();
 		});
 	}
-	make_order = () => {
+	CheckIfBannedThenOrder = () => {
 		AsyncStorage.getItem('login').then(logged => {
 			if (logged == 1) {
-				AsyncStorage.getItem('userid').then(userid => {
+				AsyncStorage.getItem('userid').then((userid)=>{
+					if(userid){
+						fetch(Server.dest + '/api/is-user-banned?user_id=' + userid).
+							then((res) => res.json()).then((resJson) => {
+					            if(resJson.response == 0)
+								{
+					                {this.make_order()}
+								}
+					            else
+					            {
+									alert('نعتذر و نقدر لك تعاونك ، و يؤسفنا حظر حسابك لعدة أسباب ، راجع إدارة التطبيق لإلغاء الحظر');
+								}
+							}
+							)
+							}
+
+					else {
+						alert('يجب عليك تسجيل الدخول اولا');
+						}
+				}
+			)
+			}
+		}
+	)
+	}
+	make_order = () => {
+					AsyncStorage.getItem('userid').then((userid)=>{
 					AsyncStorage.getItem('location').then(location => {
 						AsyncStorage.getItem('hint').then(hint => {
 							fetch(
@@ -106,17 +132,15 @@ export default class Meals extends React.Component {
 											this.props.navigation.navigate('Main');
 											this.closeModal();
 										})
-									});
-									});
-								});
-						});
-					});
-				});
-			} else {
-				alert('يجب عليك تسجيل الدخول اولا');
+									})
+									})
+								})
+						})
+					})
+				})
 			}
-		});
-	};
+
+
 
 	componentDidMount() {
 		this.doTheFetching();
@@ -224,7 +248,7 @@ clear_cart = ()=>{
 										<Text style={{fontSize: 18,
 										color: 'white'}} >تغير عنوان التوصيل</Text>
 									</TouchableOpacity>
-									<TouchableOpacity style={styles.button} onPress={() => this.make_order()}>
+									<TouchableOpacity style={styles.button} onPress={() => this.CheckIfBannedThenOrder()}>
 										<Text style={{fontSize: 18,
 										color: 'white'}}>شراء الان</Text>
 									</TouchableOpacity>

@@ -79,8 +79,11 @@ export default class Signin extends React.Component {
         fetch(Server.dest + '/api/signin?identifier='+this.state.identifier+
             '&password='+this.state.password, {headers: {'Cache-Control': 'no-cache'}}).
         then((res) => res.json()).then((resJson) => {
+            console.log("response"+resJson.response)
             if(resJson.response == 0)
                 this.setState({ errorMsg: 'انت لست مُسجل عندنا او كلمة مرور غير صحيحة'});
+            else if (resJson.response == -1)
+                this.setState({ errorMsg:  'نعتذر و نقدر لك تعاونك ، و يؤسفنا حظر حسابك لعدة أسباب ، راجع إدارة التطبيق لإلغاء الحظر'});
             else
             {
                 AsyncStorage.setItem('userid', resJson.response);
