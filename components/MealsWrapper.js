@@ -10,7 +10,6 @@ import LoadingIndicator from '../components/LoadingIndicator';
 
 export default class Meals extends React.Component {
 
-  
   constructor(props) {
 		super(props);
     //this.props.screenName  the key here for the category  restaurant_id---->
@@ -23,6 +22,7 @@ export default class Meals extends React.Component {
       Restaurant:[]
       }
     }
+
     componentDidMount(){
       fetch(Server.dest + '/api/store-products?category_id='+this.props.screenName+'&store_id='+this.props.restaurant_id).then((res)=>res.json()).then((meals)=>{
         this.setState({
@@ -78,18 +78,7 @@ export default class Meals extends React.Component {
           )}
           renderItem={({ item }) => (
 
-            <RestaurantBox
-
-            stars={item.stars}
-            name={item.name}
-            time={item.time}
-            desc={item.desc}
-            image={item.image}
-            price={item.deliver_price}
-            min_delivery_cost={item.min_delivery_cost}
-
-            status={item.status}
-            />
+            null
           )}
         />
 

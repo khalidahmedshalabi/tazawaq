@@ -23,7 +23,27 @@ const Child = createReactClass({
 });
 
 export default class Restaurants extends React.Component {
+    shouldRenderRestaurants = () => {
+            if(this.state.Restaurant)
+            {
+                return (
+                    <View style={{flex:0.3,backgroundColor:'white'}}>
+                    <RestaurantBox
 
+                    stars={this.state.Restaurant.stars}
+                    name={this.state.Restaurant.name}
+                    time={this.state.Restaurant.time}
+                    desc={this.state.Restaurant.desc}
+                    image={this.state.Restaurant.image}
+                    price={this.state.Restaurant.deliver_price}
+                    min_delivery_cost={this.state.Restaurant.min_delivery_cost}
+
+                    status={this.state.Restaurant.status}
+                    />
+                    </View>
+                );
+            }
+        };
   constructor(){
     super();
     this.state = {
@@ -54,10 +74,17 @@ export default class Restaurants extends React.Component {
    },
    });
 
+
   componentDidMount() {
     fetch(Server.dest + '/api/store-categories?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((categories)=>{
        this.setState({ tabs: categories.response });
 
+      fetch(Server.dest + '/api/store-info?store_id='+this.props.navigation.state.params.key).then((res)=>res.json()).then((restaurants)=>{
+         this.setState({
+           Restaurant: restaurants.response
+         })
+
+       })
 
   });
 // Inneed      onPress={() => onPressHandler(page)
@@ -71,6 +98,7 @@ export default class Restaurants extends React.Component {
       onLayout={onLayoutHandler}
       style={{flex: 1,width:150,backgroundColor:Colors.mainColor }}
     >
+
       <Text style={{
         fontFamily:'myfont',
         textAlign:'center',
@@ -79,12 +107,15 @@ export default class Restaurants extends React.Component {
         marginTop:10,
         flex:1,
         width:150
-      }} >{name}</Text>
+    }} >{name}</Text>
     </TouchableHighlight>;
   }
 
   render() {
-    return <ScrollableTabView
+    return(
+        <View style={{flex:1}}>
+        {this.shouldRenderRestaurants()}
+         <ScrollableTabView
     tabBarPosition="bottom"
       renderTabBar={() => <ScrollableTabBar renderTab={this.renderTab}/>}
     >
@@ -96,8 +127,12 @@ export default class Restaurants extends React.Component {
           navigation={this.props.navigation}
         />;
       })}
-    </ScrollableTabView>;
+    </ScrollableTabView>
+    </View>
+);
+}
 
-  }
+}
 
-};
+
+;
