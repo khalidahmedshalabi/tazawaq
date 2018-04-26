@@ -15,7 +15,7 @@ import SingleMeal from '../screens/SingleMeal';
 import SingleOffer from '../screens/SingleOffer';
 import MyTicketsScreen from '../screens/MyTicketsScreen';
 import SingleTicketScreen from '../screens/SingleTicketScreen';
-import SingleOrderScreen from '../screens/SingleOrderScreen';
+//import SingleOrderScreen from '../screens/SingleOrderScreen';
 import FilterScreen from '../screens/FilterScreen';
 import AddTicketScreen from '../screens/AddTicketScreen';
 import AboutUs from '../screens/AboutUs';
@@ -31,7 +31,7 @@ const RootStackNavigator = StackNavigator(
 		MealsScreen: { screen: MealsScreen },
 		SingleMeal: { screen: SingleMeal },
 		SingleOffer: { screen: SingleOffer },
-		SingleOrderScreen: { screen: SingleOrderScreen },
+		//SingleOrderScreen: { screen: SingleOrderScreen },
 		SingleTicketScreen: { screen: SingleTicketScreen },
 		MyTicketsScreen: { screen: MyTicketsScreen },
 		FilterScreen: { screen: FilterScreen },
