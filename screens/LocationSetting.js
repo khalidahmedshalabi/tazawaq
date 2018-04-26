@@ -21,6 +21,7 @@ import Saudi_Governorates from '../constants/Saudi_Governorates.js';
 import SelectInput from 'react-native-select-input-ios';
 import Server from '../constants/server';
 
+
 export default class LocationSetting extends React.Component {
 	static navigationOptions = {
 		header: null
@@ -38,7 +39,8 @@ export default class LocationSetting extends React.Component {
 			},
 			fetchedLocationData: false,
 			country: Saudi_Governorates.regions[0],
-			pickerData: []
+			pickerData: [],
+	
 		};
 
 		Saudi_Governorates.regions.map((data, index) => {
@@ -68,12 +70,11 @@ export default class LocationSetting extends React.Component {
 			.then(resJson => {
 				console.log(location.coordinate)
 				var target = resJson.results[0].address_components;
-
+				console.log('resJSON '+JSON.stringify (resJson));
 				this.setState({
 					region:resJson.results[0].formatted_address
 				})
 			});
-
 			this.setState({
 				pos: {
 					lat: location.coordinate.latitude,
@@ -163,41 +164,44 @@ export default class LocationSetting extends React.Component {
 										position.coords.latitude +
 										',' +
 										position.coords.longitude +
-										'&sensor=false&language=ar&result_type=locality&key=AIzaSyCxXoRqTcOTvsOLQPOiVtPnSxLUyGJBFqw',
+										'&language=ar&key=AIzaSyCxXoRqTcOTvsOLQPOiVtPnSxLUyGJBFqw',
 									{ headers: { 'Cache-Control': 'no-cache' } }
 								)
+
 									.then(res => res.json())
 									.then(resJson => {
+
 										var target = resJson.results[0].address_components;
+										console.log('resJSON '+JSON.stringify (resJson));
 										this.setState({
 											region:resJson.results[0].formatted_address
 										})
-										var foundRegion1 = target.find(function(element) {
-											return element.types.includes('locality');
-										}).long_name;
+										//var foundRegion1 = target.find(function(element) {
+										//	return element.types.includes('locality');
+										//}).long_name;
 
-										var foundRegion2 = target.find(function(element) {
-											return element.types.includes(
-												'administrative_area_level_1'
-											);
-										}).long_name;
+										//var foundRegion2 = target.find(function(element) {
+										//	return element.types.includes(
+										//		'administrative_area_level_1'
+										//	);
+									//	}).long_name;
 
 										for (
 											var i = 0;
 											i != Saudi_Governorates.regions.length;
 											++i
 										) {
-											if (
+										/*	if (
 												Saudi_Governorates.regions[i].includes(foundRegion1) ||
 												foundRegion1.includes(Saudi_Governorates.regions[i]) ||
-												Saudi_Governorates.regions[i].includes(foundRegion2) ||
+												Saudi_Governorates.regions[i].includes(foundRegion2)
 												foundRegion2.includes(Saudi_Governorates.regions[i])
 											) {
 												this.setState({
 													region: Saudi_Governorates.regions[i]
 												});
 												break;
-											}
+											}*/
 										}
 
 										this.setState({ fetchedLocationData: true });
@@ -323,7 +327,7 @@ export default class LocationSetting extends React.Component {
 						this.submit_location()
 					}}/>
 					</View>
-				<TouchableOpacity onPress={() => this.submit_location()}>
+				<TouchableOpacity style={{justifyContent:'center',alignItems:'center'}} onPress={() => this.submit_location()}>
 					<View style={{backgroundColor:Colors.mainColor,padding:10,borderRadius:10, width:120,justifyContent:'center'}}>
 						<Text style={{fontFamily:'myfont',color:Colors.secondaryColor,textAlign:'center'}}>حفظ العنوان</Text>
 					</View>
@@ -356,7 +360,7 @@ export default class LocationSetting extends React.Component {
 							}
 							}
 							draggable
-							title="your locationr"
+							title={this.state.region}
 						/>
 					</MapView>
 				</View>
