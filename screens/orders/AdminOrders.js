@@ -250,7 +250,7 @@ export default class Signin extends React.Component {
 		return (
 			<Select
 				ref={(c) => TheSelect = c}
-	            defaultText={selectLabels[this.state.orderStates[rowNum]]}
+	            defaultText={selectLabels[value]}
 	            style = {{borderWidth:0}}
 	            textStyle = {{}}
 	            backdropStyle  = {{backgroundColor : "white"}}
