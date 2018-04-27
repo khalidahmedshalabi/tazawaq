@@ -33,6 +33,7 @@ export default class Signin extends React.Component {
 			password: '',
 			errorMsg: '',
 			orders: [],
+			orderStates: [],
 			pickerData:[
 				{
 					label:'قيد القبول',
@@ -102,11 +103,14 @@ export default class Signin extends React.Component {
 			.then(resJson => {
 				if (resJson.response == 1) {
 					var data = [];
+					var rowNum = 0;
+					var orderStates = [];
 					resJson.orders.map((order)=>{
-						data.push([order[0],this.location(order[1]),order[2],order[3],this.order_status_changer(order[4],order[5])]);
+						data.push([order[0],this.location(order[1]),order[2],order[3],this.order_status_changer(order[4],order[5], rowNum++)]);
+						orderStates.push(order[4])
 					})
-						this.setState({ orders: data, storeOrdersFetched: true });
 
+					this.setState({ orders: data, orderStates, storeOrdersFetched: true });
 				}
 			});
 	};
@@ -223,20 +227,34 @@ export default class Signin extends React.Component {
 		}
 
 	}
-	order_status_changer = (value,id) => (
+	order_status_changer = (value,id, rowNum) => (
 		<SelectInput
  		 buttonsBackgroundColor={Colors.smoothGray}
  		 buttonsTextColor={Colors.mainColor}
  		 cancelKeyText="الغاء"
  		 submitKeyText="اختيار"
- 		 value={value}
+ 		 value={this.state.orderStates[rowNum]}
 
  		 options={this.state.pickerData}
  		 labelStyle={{ color: Colors.secondaryColor }}
- 		 onSubmitEditing={itemValue =>
+ 		 onSubmitEditing={itemValue => {
  			 this.change_order_status(itemValue,id)
- 		 }
- 	 />
+
+			// Make a copy of the order states array
+			let copy_orderStates = [...this.state.orderStates];
+
+			// Make a copy of the target order state
+			let orderState = copy_orderStates[rowNum];
+
+			/// Change order state
+			orderState = itemValue;
+
+			// Update our copy of order states array
+			copy_orderStates[rowNum] = orderState;
+
+			// Update component's state
+			this.setState({ orderStates: copy_orderStates });
+		}} />
  );
 	render() {
 
@@ -381,13 +399,13 @@ export default class Signin extends React.Component {
 							data={['بيانات الزبون', 'الموقع', 'السعر', 'التفاصيل', 'الحالة']}
 							style={styles.head}
 							textStyle={styles.headText}
-							flexArr={[2, 2, .9, 2, 1]}
+							flexArr={[2, 2, .9, 2, 2.8]}
 						/>
 						<Rows
 							data={this.state.orders}
 							style={styles.row}
 							textStyle={styles.text}
-							flexArr={[2.1, 2.5, .7, 2.5, 2]}
+							flexArr={[2, 2, .9, 2, 2.8]}
 						/>
 					</Table>
 
