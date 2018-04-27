@@ -40,7 +40,7 @@ export default class LocationSetting extends React.Component {
 			fetchedLocationData: false,
 			country: Saudi_Governorates.regions[0],
 			pickerData: [],
-	
+
 		};
 
 		Saudi_Governorates.regions.map((data, index) => {
@@ -314,22 +314,9 @@ export default class LocationSetting extends React.Component {
 						}}
 					/>
 					</View>
-						<View style={styles.box}>
-					<TextInput
-					placeholderTextColor="#999999"
-					underlineColorAndroid="transparent"
-					placeholder="رقم العماره و الشقه " style={styles.input} value={this.state.details} onChangeText={(text)=>{
-						this.setState({
-							details:text
-						})
-					}}
-					onSubmitEditing = {()=>{
-						this.submit_location()
-					}}/>
-					</View>
 				<TouchableOpacity style={{justifyContent:'center',alignItems:'center'}} onPress={() => this.submit_location()}>
 					<View style={{backgroundColor:Colors.mainColor,padding:10,borderRadius:10, width:120,justifyContent:'center'}}>
-						<Text style={{fontFamily:'myfont',color:Colors.secondaryColor,textAlign:'center'}}>حفظ العنوان</Text>
+						<Text style={{marginBottom:6,fontFamily:'myfont',color:Colors.secondaryColor,textAlign:'center'}}>حفظ العنوان</Text>
 					</View>
 				</TouchableOpacity>
 					<MapView

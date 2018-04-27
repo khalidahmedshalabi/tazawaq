@@ -102,9 +102,10 @@ export default class OrderBox extends Component {
 									marginLeft: 4,
 									fontFamily: 'myfont',
 									fontSize: 10,
-									color: Colors.secondaryColor
+									color: Colors.secondaryColor,
+									textAlign:'right',
 								}}>
-								{ this.props.time} د
+								الوقت المتبقي لوصول الطلب د { this.props.time}
 							</Text>
 						</View>
 					):null}
