@@ -85,7 +85,18 @@ export default class Meals extends React.Component {
 							then((res) => res.json()).then((resJson) => {
 					            if(resJson.response == 0)
 								{
-					                {this.make_order()}
+									AsyncStorage.getItem('userid').then((userid)=>{
+									AsyncStorage.getItem('token').then(token => {
+										fetch(Server.dest + '/api/add-user-token?user_id='+userid+
+								            '&token='+token, {headers: {'Cache-Control': 'no-cache'}}).
+											then((res) => res.json()).then((resJson) => {
+												//console.log("reJson"+resJson.response);
+												console.log("token"+token);
+												console.log("userid"+userid);
+											})
+										})
+									})
+					                this.make_order()
 								}
 					            else
 					            {
@@ -105,6 +116,7 @@ export default class Meals extends React.Component {
 	)
 	}
 	make_order = () => {
+		console.log('start');
 					AsyncStorage.getItem('userid').then((userid)=>{
 					AsyncStorage.getItem('location').then(location => {
 						AsyncStorage.getItem('hint').then(hint => {
@@ -123,14 +135,16 @@ export default class Meals extends React.Component {
 									'&address_hint=' +
 									hint +
 									'&info=a'
-							)
+									, {headers: {'Cache-Control': 'no-cache'}})
 								.then(res => res.json())
 								.then(meals => {
+									console.log('two');
 									AsyncStorage.setItem('cart', '').then(() => {
 										AsyncStorage.setItem('CartResturantId','').then(()=>{
 										AsyncStorage.setItem('hot_request','1').then(()=>{
 											this.props.navigation.navigate('Main');
 											this.closeModal();
+											console.log('end');
 										})
 									})
 									})
@@ -138,6 +152,7 @@ export default class Meals extends React.Component {
 						})
 					})
 				})
+
 			}
 
 
