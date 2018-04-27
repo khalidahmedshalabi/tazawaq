@@ -304,7 +304,7 @@ export default class Signup extends React.Component {
                         </View>
 
                         <TouchableOpacity style={{ flex:0.8, marginTop:1, width: '80%' }}
-                            onPress={() => Linking.openURL('')}>
+                            onPress={() => Linking.openURL('http://138.197.98.186:3000/terms-and-policy')}>
                             <Text style={{ fontSize: 13, textAlign:'center', fontFamily: 'myfont', color: Colors.mainColor }}>
                             اوافق على الشروط و الاحكام و سياسة التطبيق
                             </Text>
