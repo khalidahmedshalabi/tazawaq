@@ -238,49 +238,61 @@ export default class Signin extends React.Component {
 		}
 
 	}
-	order_status_changer = (value,id, rowNum) => (
-		<Select
-            defaultText={selectLabels[value]}
-			selected={this.state.orderStates[rowNum]}
-            style = {{borderWidth:0}}
-            textStyle = {{}}
-            backdropStyle  = {{backgroundColor : "#d3d5d6"}}
-            optionListStyle = {{backgroundColor : "#F5FCFF"}}
-			onSelect={(itemValue,  label) => {
-				let oldOrderState = this.state.orderStates[rowNum];
+	order_status_changer = (value,id, rowNum) => {
+		let TheSelect = null;
 
-			    //console.log(this.state.orderStates);
-			    //console.log('old', oldOrderState, 'new', itemValue);
+		function resetText (oldOrderState) {
+			setTimeout(() => {
+				TheSelect.setSelectedText(selectLabels[oldOrderState])
+			}, 0)
+		}
 
-			    if (itemValue == oldOrderState)
-			        Alert.alert('لا يمكن تغيير الحالة', 'هذا الطلب بالفعل فى هذه الحالة')
-			    else if (itemValue < oldOrderState)
-			        Alert.alert('لا يمكن تغيير الحالة', 'لا يمكنك ارجاع حالة الطلب.')
-			    else {
-			        //console.log('success')
-			        // Make a copy of the order states array
-			        let copy_orderStates = [...this.state.orderStates];
+		return (
+			<Select
+				ref={(c) => TheSelect = c}
+	            defaultText={selectLabels[this.state.orderStates[rowNum]]}
+	            style = {{borderWidth:0}}
+	            textStyle = {{}}
+	            backdropStyle  = {{backgroundColor : "white"}}
+	            optionListStyle = {{backgroundColor : "white"}}
+				onSelect={(itemValue,  label) => {
+					let oldOrderState = this.state.orderStates[rowNum];
 
-			        // Make a copy of the target order state
-			        let orderState = copy_orderStates[rowNum];
+				    //console.log(this.state.orderStates);
+				    //console.log('old', oldOrderState, 'new', itemValue);
 
-			        /// Change order state
-			        orderState = itemValue;
+				    if (itemValue == oldOrderState)
+				        Alert.alert('لا يمكن تغيير الحالة', 'هذا الطلب بالفعل فى هذه الحالة')
+				    else if (itemValue < oldOrderState) {
+				        Alert.alert('لا يمكن تغيير الحالة', 'لا يمكنك ارجاع حالة الطلب.')
+						resetText(oldOrderState)
+					}
+				    else {
+				        //console.log('success')
+				        // Make a copy of the order states array
+				        let copy_orderStates = [...this.state.orderStates];
 
-			        // Update our copy of order states array
-			        copy_orderStates[rowNum] = orderState;
+				        // Make a copy of the target order state
+				        let orderState = copy_orderStates[rowNum];
 
-			        // Update component's state
-			        this.setState({ orderStates: copy_orderStates });
+				        /// Change order state
+				        orderState = itemValue;
 
-			        // Send to server
-			        this.change_order_status(itemValue,id)
-			}}} >
-		  <Option value='0'>تم القبول</Option>
-		  <Option value='1'>جاري التوصيل</Option>
-		  <Option value='2'>تم التوصيل</Option>
-        </Select>
- );
+				        // Update our copy of order states array
+				        copy_orderStates[rowNum] = orderState;
+
+				        // Update component's state
+				        this.setState({ orderStates: copy_orderStates });
+
+				        // Send to server
+				        this.change_order_status(itemValue,id)
+				}}} >
+			  <Option value='0'>تم القبول</Option>
+			  <Option value='1'>جاري التوصيل</Option>
+			  <Option value='2'>تم التوصيل</Option>
+	        </Select>
+		)
+ 	};
 	render() {
 
 
