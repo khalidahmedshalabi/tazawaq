@@ -91,8 +91,8 @@ export default class Meals extends React.Component {
 								            '&token='+token, {headers: {'Cache-Control': 'no-cache'}}).
 											then((res) => res.json()).then((resJson) => {
 												//console.log("reJson"+resJson.response);
-												console.log("token"+token);
-												console.log("userid"+userid);
+												//console.log("token"+token);
+												//console.log("userid"+userid);
 											})
 										})
 									})
