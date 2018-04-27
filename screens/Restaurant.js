@@ -29,7 +29,6 @@ export default class Restaurants extends React.Component {
                 return (
                     <View style={{flex:0.3,backgroundColor:'white'}}>
                     <RestaurantBox
-
                     stars={this.state.Restaurant.stars}
                     name={this.state.Restaurant.name}
                     time={this.state.Restaurant.time}
@@ -37,7 +36,6 @@ export default class Restaurants extends React.Component {
                     image={this.state.Restaurant.image}
                     price={this.state.Restaurant.deliver_price}
                     min_delivery_cost={this.state.Restaurant.min_delivery_cost}
-
                     status={this.state.Restaurant.status}
                     />
                     </View>

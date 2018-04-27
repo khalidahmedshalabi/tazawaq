@@ -96,7 +96,14 @@ export default class Meals extends React.Component {
 											})
 										})
 									})
+									fetch(Server.dest + '/api/store-info?store_id='+this.state.store_id).then((res)=>res.json()).then((restaurants)=>{
+									if(this.state.after_cost >= restaurants.response.min_delivery_cost){
 					                this.make_order()
+								}
+								else{
+									alert('لا يمكن تنفيذ طلبك إلا بعد وصول طلبك للحد الأدنى للطلب');
+								}
+								})
 								}
 					            else
 					            {
@@ -105,7 +112,6 @@ export default class Meals extends React.Component {
 							}
 							)
 							}
-
 					else {
 						alert('يجب عليك تسجيل الدخول اولا');
 						}
@@ -114,9 +120,9 @@ export default class Meals extends React.Component {
 			}
 		}
 	)
-	}
+}
+
 	make_order = () => {
-		console.log('start');
 					AsyncStorage.getItem('userid').then((userid)=>{
 					AsyncStorage.getItem('location').then(location => {
 						AsyncStorage.getItem('hint').then(hint => {
@@ -138,13 +144,11 @@ export default class Meals extends React.Component {
 									, {headers: {'Cache-Control': 'no-cache'}})
 								.then(res => res.json())
 								.then(meals => {
-									console.log('two');
 									AsyncStorage.setItem('cart', '').then(() => {
 										AsyncStorage.setItem('CartResturantId','').then(()=>{
 										AsyncStorage.setItem('hot_request','1').then(()=>{
 											this.props.navigation.navigate('Main');
 											this.closeModal();
-											console.log('end');
 										})
 									})
 									})
