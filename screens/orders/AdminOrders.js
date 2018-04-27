@@ -12,7 +12,8 @@ import {
 	DeviceEventEmitter,
 	ScrollView,
 	TouchableOpacity,
-	Share
+	Share,
+	Alert
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -64,12 +65,16 @@ export default class Signin extends React.Component {
 		};
 	};
 
+	componentDidMount () {
+		AsyncStorage.getItem('storeid', (err, storeid) => {
+			if(storeid) this.fetchStoreOrders(parseInt(storeid));
+		})
+	}
+
 	listeners = {
 		update: DeviceEventEmitter.addListener('ReloadStoreOrders', ({ empty }) => {
 			AsyncStorage.getItem('owner_login').then(logged => {
 				if (logged === null) return;
-
-				this.setState({ owner_login: logged });
 
 				if (logged == '1') {
 					AsyncStorage.getItem('storeid').then(val => {
@@ -107,10 +112,11 @@ export default class Signin extends React.Component {
 					var orderStates = [];
 					resJson.orders.map((order)=>{
 						data.push([order[0],this.location(order[1]),order[2],order[3],this.order_status_changer(order[4],order[5], rowNum++)]);
+						//console.log('pushed', order[4], 'at', rowNum-1);
 						orderStates.push(order[4])
 					})
 
-					this.setState({ orders: data, orderStates, storeOrdersFetched: true });
+					this.setState({ orders: data, orderStates, storeOrdersFetched: true }, () => this.setOwnerLoginStatus('1'));
 				}
 			});
 	};
@@ -149,7 +155,6 @@ export default class Signin extends React.Component {
 					});
 				else {
 					AsyncStorage.setItem('storeid', resJson.response);
-					this.setOwnerLoginStatus('1');
 					this.fetchStoreOrders(parseInt(resJson.response));
 					AsyncStorage.getItem('token', (err, result) => {
 						if(result)
@@ -238,22 +243,35 @@ export default class Signin extends React.Component {
  		 options={this.state.pickerData}
  		 labelStyle={{ color: Colors.secondaryColor }}
  		 onSubmitEditing={itemValue => {
- 			 this.change_order_status(itemValue,id)
+			let oldOrderState = this.state.orderStates[rowNum];
 
-			// Make a copy of the order states array
-			let copy_orderStates = [...this.state.orderStates];
+			//console.log(this.state.orderStates);
+			//console.log('old', oldOrderState, 'new', itemValue);
 
-			// Make a copy of the target order state
-			let orderState = copy_orderStates[rowNum];
+			if (itemValue == oldOrderState)
+			 	Alert.alert('لا يمكن تغيير الحالة', 'هذا الطلب بالفعل فى هذه الحالة')
+			else if (itemValue < oldOrderState)
+			 	Alert.alert('لا يمكن تغيير الحالة', 'لا يمكنك ارجاع حالة الطلب.')
+			else {
+				//console.log('success')
+				// Make a copy of the order states array
+				let copy_orderStates = [...this.state.orderStates];
 
-			/// Change order state
-			orderState = itemValue;
+				// Make a copy of the target order state
+				let orderState = copy_orderStates[rowNum];
 
-			// Update our copy of order states array
-			copy_orderStates[rowNum] = orderState;
+				/// Change order state
+				orderState = itemValue;
 
-			// Update component's state
-			this.setState({ orderStates: copy_orderStates });
+				// Update our copy of order states array
+				copy_orderStates[rowNum] = orderState;
+
+				// Update component's state
+				this.setState({ orderStates: copy_orderStates });
+
+				// Send to server
+				this.change_order_status(itemValue,id)
+			}
 		}} />
  );
 	render() {
@@ -399,13 +417,13 @@ export default class Signin extends React.Component {
 							data={['بيانات الزبون', 'الموقع', 'السعر', 'التفاصيل', 'الحالة']}
 							style={styles.head}
 							textStyle={styles.headText}
-							flexArr={[2, 2, .9, 2, 2.8]}
+							flexArr={[2, 2, 1, 2, 2.8]}
 						/>
 						<Rows
 							data={this.state.orders}
 							style={styles.row}
 							textStyle={styles.text}
-							flexArr={[2, 2, .9, 2, 2.8]}
+							flexArr={[2, 2, 1, 2, 2.8]}
 						/>
 					</Table>
 
