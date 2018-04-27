@@ -101,6 +101,7 @@ export default class Meals extends React.Component {
 					                this.make_order()
 								}
 								else{
+										this.closeModal();
 									alert('لا يمكن تنفيذ طلبك إلا بعد وصول طلبك للحد الأدنى للطلب');
 								}
 								})
