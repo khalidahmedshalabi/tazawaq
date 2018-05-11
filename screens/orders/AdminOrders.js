@@ -1,6 +1,7 @@
 import React from 'react';
 import {
 	Dimensions,
+	Modal,
 	KeyboardAvoidingView,
 	AsyncStorage,
 	StyleSheet,
@@ -40,7 +41,10 @@ export default class Signin extends React.Component {
 			password: '',
 			errorMsg: '',
 			orders: [],
+			note:'...',
+			details:'...',
 			orderStates: [],
+			 modalVisible: false,
 			pickerData:[
 				{
 					label:'قيد القبول',
@@ -100,7 +104,13 @@ export default class Signin extends React.Component {
 			listener.remove();
 		});
 	}
+	openModal() {
+		this.setState({ modalVisible: true });
+	}
 
+	closeModal() {
+		this.setState({ modalVisible: false });
+	}
 	setOwnerLoginStatus = value => {
 		AsyncStorage.setItem('owner_login', value);
 		this.setState({ owner_login: value });
@@ -117,7 +127,7 @@ export default class Signin extends React.Component {
 					var rowNum = 0;
 					var orderStates = [];
 					resJson.orders.map((order)=>{
-						data.push([order[0],this.location(order[1]),order[2],order[3],this.order_status_changer(order[4],order[5], rowNum++)]);
+						data.push([order[0],this.location(order[1]),order[2],this.SeeMore(order[3],order[6]),this.order_status_changer(order[4],order[5], rowNum++)]);
 						//console.log('pushed', order[4], 'at', rowNum-1);
 						orderStates.push(order[4])
 					})
@@ -126,6 +136,30 @@ export default class Signin extends React.Component {
 				}
 			});
 	};
+	showData = (details,note) =>{
+		this.setState({
+			details:details,note:note,modalVisible:true
+		})
+	}
+	SeeMore = (details,note) =>(
+		<TouchableOpacity style={{
+			backgroundColor:'gray',
+			borderRadius:30,
+			justifyContent:'center',
+			alignItems:'center'
+		}}
+		onPress={()=>{
+		this.showData(details,note)
+		}}
+		>
+		<Text style={{
+			textAlign:'center',
+			justifyContent:'center'
+		}}
+		>المزيد ...</Text>
+		</TouchableOpacity>
+
+	);
 
 	loginOwner = () => {
 		if (this.state.password.length == 0) {
@@ -295,7 +329,11 @@ export default class Signin extends React.Component {
  	};
 	render() {
 
-
+		const tableHead = ['النوع','الوصف'];
+		const tableData = [
+			['' + this.state.note, 'الملاحظات'],
+			['' + this.state.details, 'التفاصيل']
+		];
 		if (this.state.owner_login == '0') {
 			return (
 				<View
@@ -427,6 +465,43 @@ export default class Signin extends React.Component {
 							title="تسجيل خروج من المتجر"
 						/>
 					</View>
+					<Modal
+						visible={this.state.modalVisible}
+						animationType={'slide'}
+						onRequestClose={() => this.closeModal()}
+
+					>
+
+						<View style={styles.modalContainer}>
+							<View style={styles.innerContainer}>
+							<View style={{ paddingRight: 10, paddingLeft: 10 }}>
+							<Table
+								borderStyle={{
+									borderWidth: 0.5,
+									borderColor: Colors.fadedMainColor,
+									width:'100%'
+								}}
+							>
+								<Row
+									data={tableHead}
+									style={styles.head}
+									textStyle={styles.text}
+								/>
+								<Rows
+									data={tableData}
+									style={styles.row}
+									textStyle={styles.text2}
+								/>
+							</Table>
+							<TouchableOpacity onPress={()=>{
+								this.closeModal()
+							}} style={{width:350,backgroundColor:Colors.mainColor,color:'white',padding:10,margin:10}} >
+							<Text style={{textAlign:'center',color:'white'}}>اغلاق</Text>
+							</TouchableOpacity>
+							</View>
+							</View>
+						</View>
+					</Modal>
 
 					<Table
 						style={styles.table}
@@ -498,5 +573,29 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		width: '92%'
-	}
+	},
+
+
+
+	text2: {
+		fontFamily: 'myfont',
+		fontSize: 13,
+		color: Colors.mainColor,
+		textAlign: 'center'
+	},
+
+	container: {
+		flex: 1,
+		justifyContent: 'center'
+	},
+		modalContainer: {
+			flex: 1,
+			justifyContent: 'center',
+			backgroundColor: 'grey'
+		},
+		innerContainer: {
+			alignItems: 'center',
+			justifyContent: 'center',
+			flex:1
+		},
 });

@@ -176,6 +176,7 @@ export default class RestaurantBox extends Component {
 						source={{ uri: this.props.image }}
 						style={{ width: 100, height: 100, marginTop: 10, marginBottom: 11,
 							marginRight: 4, borderRadius: 10 }}
+							resizeMode="contain"
 					/>
 				</View>
 			</View>

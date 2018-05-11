@@ -12,14 +12,18 @@ import {
 	Dimensions,
 	Image,
 	AsyncStorage,
-	I18nManager
+	I18nManager,
+	Platform,
+	TextInput,
+	KeyboardAvoidingView
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
 import TicketBox from '../components/TicketBox';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
+import { TextField } from 'react-native-material-textfield';
 import {
 	Table,
 	TableWrapper,
@@ -141,7 +145,9 @@ export default class Meals extends React.Component {
 									location +
 									'&address_hint=' +
 									hint +
-									'&info=a'
+									'&info=a'+
+									'&note='+
+									this.state.note
 									, {headers: {'Cache-Control': 'no-cache'}})
 								.then(res => res.json())
 								.then(meals => {
@@ -218,6 +224,8 @@ clear_cart = ()=>{
 		this.setState({ modalVisible: false });
 	}
 
+
+
 	constructor(props) {
 		super(props);
 
@@ -227,10 +235,15 @@ clear_cart = ()=>{
 			before_cost: 0,
 			after_cost: 0,
 			store_id: 0,
-			modalVisible: false
+			modalVisible: false,
+			note:'',
 		};
 	}
-
+store_note = (note) =>{
+	this.setState({
+		note:note
+	})
+}
 	render() {
 		const tableHead = ['السعر', 'التصنيف'];
 		const tableData = [
@@ -309,8 +322,9 @@ clear_cart = ()=>{
 								source={require('../assets/images/splash.jpg')}
 							/>
 						)}
-						ListFooterComponent={() => (
+						ListFooterComponent={
 							<View style={{ paddingRight: 10, paddingLeft: 10 }}>
+
 								<Table
 									borderStyle={{
 										borderWidth: 0.5,
@@ -328,10 +342,27 @@ clear_cart = ()=>{
 										textStyle={styles.text2}
 									/>
 								</Table>
+
+
+								<View style={styles.singleInputContainer}>
+
+
+
+										<TextInput
+												underlineColorAndroid='transparent'
+												placeholder='ملاحظات للطلب (المزيد من الصوص)'
+												placeholderTextColor='#CCCCCC'
+												style={styles.textInput}
+												value={this.state.note}
+												onChangeText={(text)=>{this.store_note(text)}}
+												/>
+
+								</View>
 								<View style={{flexDirection:'row'}}>
 								<TouchableOpacity
 									onPress={() => {
-										this.openModal();
+										 this.openModal();
+										// alert(this.state.notee)
 									}}
 									style={{
 										flex: 1,
@@ -391,7 +422,7 @@ clear_cart = ()=>{
 								</View>
 							</View>
 
-						)}
+						}
 						renderItem={({ item }) => (
 
 								<TicketBox
@@ -403,6 +434,7 @@ clear_cart = ()=>{
 								/>
 						)}
 					/>
+
 				</View>
 			);
 		}
@@ -428,6 +460,29 @@ const styles = StyleSheet.create({
 		fontFamily: 'myfont',
 		fontSize: 18,
 		color: 'white'
+	},
+	textInput: {
+			flex: 1,
+			color: Colors.mainColor,
+			textAlign: 'right',
+			fontFamily: 'myfont',
+			padding: 9,
+			marginVertical:20,
+			borderRadius: 4,
+			backgroundColor: 'transparent',
+			borderBottomColor: Colors.fadedMainColor,
+			borderBottomWidth: 0.7
+	},
+	inputIcon: {
+			backgroundColor: 'transparent',
+			marginLeft: 9
+	},
+	inputsContainer: {
+			flex: 0.8,
+			flexDirection: 'column',
+			justifyContent: 'center',
+			alignItems: 'center',
+			width: '90%',
 	},
 	text2: {
 		fontFamily: 'myfont',

@@ -18,6 +18,7 @@ export default class MealBox extends Component {
 				<Image
 					style={{ flex: 1, height: 130, borderRadius: 10 }}
 					source={{ uri: this.props.image }}
+					resizeMode="contain"
 				/>
 				<Text
 					style={{

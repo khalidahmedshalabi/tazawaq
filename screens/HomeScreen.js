@@ -13,7 +13,7 @@ import RestaurantBox from '../components/RestaurantBox';
 import Colors from '../constants/Colors';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import { TabNavigator, NavigationActions } from 'react-navigation';
 
@@ -223,6 +223,39 @@ export default class HomeScreen extends React.Component {
 						<View style={{ height: 5, backgroundColor: Colors.smoothGray }} />
 					)}
 					data={this.state.Restaurants}
+					ListHeaderComponent={
+						<TouchableOpacity onPress={() => navigate('AddTicketScreen')}>
+							<View
+								style={{
+									flex: 1,
+									justifyContent: 'center',
+									alignSelf: 'center',
+									padding: 10,
+									width:'100%',
+									flexDirection: 'row',
+									borderWidth: 5,
+									borderColor: '#e9e9ef'
+								}}
+							>
+						
+								<Text
+									style={{
+										fontFamily: 'myfont',
+										fontSize:18,
+										fontWeight:'bold'
+									}}
+								>
+									طلب من متجر اخر
+								</Text>
+								<MaterialCommunityIcons
+									name="envelope"
+									size={30}
+									color={Colors.secondaryColor}
+									style={{ paddingLeft: 5 }}
+								/>
+							</View>
+						</TouchableOpacity>
+					}
 					renderItem={({ item }) => (
 						<TouchableOpacity
 
