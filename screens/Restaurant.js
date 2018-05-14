@@ -56,7 +56,7 @@ export default class Restaurants extends React.Component {
     }
   }
   static navigationOptions = ({ navigation }) => ({
-     title:'الوجبات',
+     title:'الأقسام',
      headerTintColor: Colors.smoothGray,
      fontFamily:'myfont',
    headerStyle: {
@@ -68,7 +68,8 @@ export default class Restaurants extends React.Component {
      fontWeight: '300',
      color: '#ffffff',
      fontFamily: 'myfont',
-     fontSize: 16
+     fontSize: 16,
+     headerTintColor: Colors.smoothGray,
    },
    });
 

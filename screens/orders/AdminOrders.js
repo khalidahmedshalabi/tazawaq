@@ -43,6 +43,7 @@ export default class Signin extends React.Component {
 			orders: [],
 			note:'...',
 			details:'...',
+			clientName:'...',
 			orderStates: [],
 			 modalVisible: false,
 			pickerData:[
@@ -127,7 +128,7 @@ export default class Signin extends React.Component {
 					var rowNum = 0;
 					var orderStates = [];
 					resJson.orders.map((order)=>{
-						data.push([order[0],this.location(order[1]),order[2],this.SeeMore(order[3],order[6]),this.order_status_changer(order[4],order[5], rowNum++)]);
+						data.push([order[0],this.location(order[1]),order[2],this.SeeMore(order[3],order[6],order[7]),this.order_status_changer(order[4],order[5], rowNum++)]);
 						//console.log('pushed', order[4], 'at', rowNum-1);
 						orderStates.push(order[4])
 					})
@@ -136,12 +137,12 @@ export default class Signin extends React.Component {
 				}
 			});
 	};
-	showData = (details,note) =>{
+	showData = (details,note,name) =>{
 		this.setState({
-			details:details,note:note,modalVisible:true
+			details:details,note:note,clientName:name,modalVisible:true
 		})
 	}
-	SeeMore = (details,note) =>(
+	SeeMore = (details,note,name) =>(
 		<TouchableOpacity style={{
 			backgroundColor:'gray',
 			borderRadius:30,
@@ -149,14 +150,14 @@ export default class Signin extends React.Component {
 			alignItems:'center'
 		}}
 		onPress={()=>{
-		this.showData(details,note)
+		this.showData(details,note,name)
 		}}
 		>
 		<Text style={{
 			textAlign:'center',
 			justifyContent:'center'
 		}}
-		>المزيد ...</Text>
+		>المزيد </Text>
 		</TouchableOpacity>
 
 	);
@@ -332,7 +333,8 @@ export default class Signin extends React.Component {
 		const tableHead = ['النوع','الوصف'];
 		const tableData = [
 			['' + this.state.note, 'الملاحظات'],
-			['' + this.state.details, 'التفاصيل']
+			['' + this.state.details, 'التفاصيل'],
+			['' + this.state.clientName, 'اسم العميل']
 		];
 		if (this.state.owner_login == '0') {
 			return (
@@ -511,13 +513,13 @@ export default class Signin extends React.Component {
 							data={['بيانات الزبون', 'الموقع', 'السعر', 'التفاصيل', 'الحالة']}
 							style={styles.head}
 							textStyle={styles.headText}
-							flexArr={[2, 2, 1, 2, 2.8]}
+							flexArr={[2, 2, 1, 2, 2]}
 						/>
 						<Rows
 							data={this.state.orders}
 							style={styles.row}
 							textStyle={styles.text}
-							flexArr={[2, 2, 1, 2, 2.8]}
+							flexArr={[2, 2, 1, 1, 2]}
 						/>
 					</Table>
 

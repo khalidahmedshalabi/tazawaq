@@ -68,7 +68,7 @@ export default class SingleMeal extends React.Component {
 	};
 
 	static navigationOptions = ({ navigation }) => ({
-		title: 'الوجبه',
+		title: 'المنتج',
 		headerTintColor: Colors.smoothGray,
 		fontFamily: 'myfont',
 		headerStyle: {

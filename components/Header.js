@@ -8,9 +8,10 @@ import {
 	AsyncStorage,
 	TouchableOpacity
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons,MaterialCommunityIcons,SimpleLineIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { Font } from 'expo';
+import Server from '../constants/server';
 
 const fontCol = 'white';
 const iconCol = 'rgba(255,255,255,0.8)';
@@ -18,6 +19,13 @@ const bgCol = Colors.mainColor;
 
 export default class Header extends React.Component {
 	componentDidMount() {
+		fetch(
+			Server.dest +
+				'/api/special_orders_status'
+		)	.then(res => res.json())
+			.then(status => {
+				this.setState({SpecialOrderStatus:status.status})
+			})
 		this.setState({ fontLoaded: '1' });
 
 		AsyncStorage.getItem('location').then(value => {
@@ -34,7 +42,8 @@ export default class Header extends React.Component {
 			displaySearch: 0,
 			searchText: '',
 			fontLoaded: '0',
-			location: ' '
+			location: ' ',
+			SpecialOrderStatus:0
 		};
 	}
 
@@ -48,7 +57,14 @@ export default class Header extends React.Component {
 	trimName = str => {
 		return str.length > 35 ? str.substring(0, 32) + '...' : str;
 	};
-
+	SpecialOrderNavigate = () =>{
+		if(this.state.SpecialOrderStatus == 0){
+			alert('الخدمه متوقفه الان')
+		}
+		else {
+			this.props.navigation.navigate('SpecialOrderScreen')
+		}
+	}
 	renderHeaderButton = () => {
 		if (this.state.displaySearch) {
 			return (
@@ -130,14 +146,31 @@ export default class Header extends React.Component {
 					<View
 						style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}
 					>
-						{this.state.fontLoaded == '1' ? (
+					<TouchableOpacity style={{
+						flex: 1,
+						justifyContent: 'flex-end',
+						padding: 10,
+						flexDirection: 'row',
+					}} onPress={() => this.SpecialOrderNavigate()}>
+
 							<Text
-								style={{ color: fontCol, fontSize: 16, fontFamily: 'myfont' }}
+								style={{
+									fontFamily: 'myfont',
+									fontSize:18,
+									fontWeight:'bold',
+									textAlign:'right',
+									color:'white'
+								}}
 							>
-								{' '}
-								{this.trimName(this.state.location)}
+							مندوب طلباتك
 							</Text>
-						) : null}
+							<SimpleLineIcons
+								name="envelope-letter"
+								size={30}
+								color='white'
+								style={{ paddingLeft: 5 }}
+							/>
+					</TouchableOpacity>
 					</View>
 				</View>
 

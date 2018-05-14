@@ -67,8 +67,9 @@ export default class HomeScreen extends React.Component {
 
 	});
 	componentDidMount() {
-		AsyncStorage.getItem('userid').then(id => {
-			this._shouldRenderOffer(id);
+
+				AsyncStorage.getItem('userid').then(id => {
+			// this._shouldRenderOffer(id);
 			if (id == null) {
 				var id = -1;
 			}
@@ -84,16 +85,12 @@ export default class HomeScreen extends React.Component {
 						if (sortby == null) {
 							sortby = 3;
 						}
-
 						fetch(
 							Server.dest +
-								'/api/stores?user_id=9' +
-
-								'&maxcost=500' +
-
-								'&maxtime=500' +
-
-								'&sortby=3'
+								'/api/stores?user_id=8' +
+								'&maxcost=300' +
+								'&maxtime=300' +
+								'&sortby=2'
 						)
 							.then(res => res.json())
 							.then(restaurants => {
@@ -108,77 +105,77 @@ export default class HomeScreen extends React.Component {
 		});
 	}
 
-	_shouldRenderOffer = id => {
-		fetch(`${Server.dest}/api/offers-for-me?user_id=${id}`)
-			.then(res => res.json())
-			.then(res => {
-				if (res.response != 0)
-					this.setState({ offerVisible: 1, userid: id, offer: res.response });
-				else this.setState({ offerVisible: 0 });
-			});
-	};
+	// _shouldRenderOffer = id => {
+	// 	fetch(`${Server.dest}/api/offers-for-me?user_id=${id}`)
+	// 		.then(res => res.json())
+	// 		.then(res => {
+	// 			if (res.response != 0)
+	// 				this.setState({ offerVisible: 1, userid: id, offer: res.response });
+	// 			else this.setState({ offerVisible: 0 });
+	// 		});
+	// };
 
-	_RenderOffer = () => {
-		if (this.state.offerVisible == 1) {
-			return (
-				<View
-					style={{
-						position: 'absolute',
-						zIndex: 1,
-						backgroundColor: 'white',
-						borderRadius: 12,
-						overflow: 'hidden',
-						width: '90%',
-						left: '5%',
-						top: '10%',
-						height: '80%',
-						elevation: 1
-					}}
-				>
-					<Ionicons
-						onPress={() => this.setState({ offerVisible: 0 })}
-						name="ios-close"
-						size={50}
-						color="white"
-						style={{
-							position: 'absolute',
-							zIndex: 2,
-							right: 20,
-							marginVertical: 8
-						}}
-					/>
-
-					<TouchableOpacity
-						style={{ flex: 1 }}
-						onPress={() =>
-							this.props.navigation.navigate('SingleOffer', {
-								offer_id: this.state.offer.id
-							})
-						}
-					>
-						<Image style={{ flex: 1 }} source={{ uri: this.state.offer.img }} />
-					</TouchableOpacity>
-
-					<Button
-						onPress={() =>
-							this.props.navigation.navigate('SingleOffer', {
-								offer_id: this.state.offer.id
-							})
-						}
-						color={Colors.mainColor}
-						backgroundColor={Colors.mainColor}
-						containerViewStyle={{ borderRadius: 15 }}
-						borderRadius={15}
-						buttonStyle={{ padding: 10 }}
-						textStyle={{ fontFamily: 'myfont' }}
-						title="مشاهدة العرض"
-					/>
-				</View>
-			);
-		} else {
-			return;
-		}
-	};
+	// _RenderOffer = () => {
+	// 	if (this.state.offerVisible == 1) {
+	// 		return (
+	// 			<View
+	// 				style={{
+	// 					position: 'absolute',
+	// 					zIndex: 1,
+	// 					backgroundColor: 'white',
+	// 					borderRadius: 12,
+	// 					overflow: 'hidden',
+	// 					width: '90%',
+	// 					left: '5%',
+	// 					top: '10%',
+	// 					height: '80%',
+	// 					elevation: 1
+	// 				}}
+	// 			>
+	// 				<Ionicons
+	// 					onPress={() => this.setState({ offerVisible: 0 })}
+	// 					name="ios-close"
+	// 					size={50}
+	// 					color="white"
+	// 					style={{
+	// 						position: 'absolute',
+	// 						zIndex: 2,
+	// 						right: 20,
+	// 						marginVertical: 8
+	// 					}}
+	// 				/>
+	//
+	// 				<TouchableOpacity
+	// 					style={{ flex: 1 }}
+	// 					onPress={() =>
+	// 						this.props.navigation.navigate('SingleOffer', {
+	// 							offer_id: this.state.offer.id
+	// 						})
+	// 					}
+	// 				>
+	// 					<Image style={{ flex: 1 }} source={{ uri: this.state.offer.img }} />
+	// 				</TouchableOpacity>
+	//
+	// 				<Button
+	// 					onPress={() =>
+	// 						this.props.navigation.navigate('SingleOffer', {
+	// 							offer_id: this.state.offer.id
+	// 						})
+	// 					}
+	// 					color={Colors.mainColor}
+	// 					backgroundColor={Colors.mainColor}
+	// 					containerViewStyle={{ borderRadius: 15 }}
+	// 					borderRadius={15}
+	// 					buttonStyle={{ padding: 10 }}
+	// 					textStyle={{ fontFamily: 'myfont' }}
+	// 					title="مشاهدة العرض"
+	// 				/>
+	// 			</View>
+	// 		);
+	// 	} else {
+	// 		return;
+	// 	}
+	// };
 
 	constructor(props) {
 
@@ -187,7 +184,8 @@ export default class HomeScreen extends React.Component {
 			doneFetches: 0,
 			Restaurants: [],
 			userid: null,
-			offer: {}
+			offer: {},
+			SpecialOrderStatus:0
 		};
 		AsyncStorage.getItem('hot_request').then((value)=>{
 			if(value == '1'){
@@ -197,6 +195,14 @@ export default class HomeScreen extends React.Component {
 			}
 		})
 
+	}
+	SpecialOrderNavigate = () =>{
+		if(this.state.SpecialOrderStatus == 0){
+			alert('الخدمه متوقفه الان')
+		}
+		else {
+			this.props.navigation.navigate('SpecialOrderScreen')
+		}
 	}
 	navigate_home = (key,status)=>{
 		if(status == 1){
@@ -214,7 +220,7 @@ export default class HomeScreen extends React.Component {
 
 		return (
 			<View>
-				{this._RenderOffer()}
+
 				<FlatList
 					automaticallyAdjustContentInsets={false}
 					style={{ backgroundColor: 'white' }}
@@ -223,39 +229,7 @@ export default class HomeScreen extends React.Component {
 						<View style={{ height: 5, backgroundColor: Colors.smoothGray }} />
 					)}
 					data={this.state.Restaurants}
-					ListHeaderComponent={
-						<TouchableOpacity onPress={() => navigate('AddTicketScreen')}>
-							<View
-								style={{
-									flex: 1,
-									justifyContent: 'center',
-									alignSelf: 'center',
-									padding: 10,
-									width:'100%',
-									flexDirection: 'row',
-									borderWidth: 5,
-									borderColor: '#e9e9ef'
-								}}
-							>
-						
-								<Text
-									style={{
-										fontFamily: 'myfont',
-										fontSize:18,
-										fontWeight:'bold'
-									}}
-								>
-									طلب من متجر اخر
-								</Text>
-								<MaterialCommunityIcons
-									name="envelope"
-									size={30}
-									color={Colors.secondaryColor}
-									style={{ paddingLeft: 5 }}
-								/>
-							</View>
-						</TouchableOpacity>
-					}
+
 					renderItem={({ item }) => (
 						<TouchableOpacity
 

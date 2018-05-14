@@ -80,6 +80,16 @@ export default class Signup extends React.Component {
             this.setState({ errorMsg: 'كلمة المرور قصيرة. اقل طول مسموح هو ستة' });
             return;
         }
+        if(this.state.phone.length < 8)
+        {
+            this.setState({ errorMsg: 'كلمة المرور قصيرة. اقل طول مسموح هو ستة' });
+            return;
+        }
+        if(this.state.phone.charAt(0) != 5)
+        {
+            this.setState({ errorMsg: 'يجب ان يبدا رقم الهاتف ب 5' });
+            return;
+        }
         if(this.state.password != this.state.cpassword)
         {
             this.setState({ errorMsg: 'كلمة المرور لا تطابق كلمة المرور التأكيدية' });
@@ -207,7 +217,7 @@ export default class Signup extends React.Component {
                             <View style={styles.singleInputContainer}>
                                 <TextInput
                                     underlineColorAndroid='transparent'
-                                    placeholder='رقم الجوال بدون كود الدولة'
+                                    placeholder='رقم الجوال بدون كود الدولة مثل 50321299'
                                     placeholderTextColor='#CCCCCC'
                                     autoGrow={false}
                                     multiline={false}
