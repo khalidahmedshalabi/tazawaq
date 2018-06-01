@@ -170,7 +170,7 @@ export default class LocationSetting extends React.Component {
 
 									.then(res => res.json())
 									.then(resJson => {
-
+										console.log(resJson)
 										var target = resJson.results[0].address_components;
 										console.log('resJSON '+JSON.stringify (resJson));
 										this.setState({
@@ -246,7 +246,7 @@ export default class LocationSetting extends React.Component {
 								} else alert(JSON.stringify(error));
 							},
 							{
-								enableHighAccuracy: true,
+								enableHighAccuracy: false,
 								timeout: 20000,
 								maximumAge: 60000
 							}

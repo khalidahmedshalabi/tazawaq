@@ -14,7 +14,8 @@ import {
 	ScrollView,
 	TouchableOpacity,
 	Share,
-	Alert
+	Alert,
+	FlatList
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -22,6 +23,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 import Colors from '../../constants/Colors';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import OrderDetailBox from '../../components/OrderDetailBox';
 import Server from '../../constants/server';
 import {Select, Option} from "react-native-chooser";
 
@@ -35,6 +37,7 @@ export default class Signin extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			detailed_order:[],
 			owner_login: '0',
 			storeOrdersFetched: false,
 			passname: '',
@@ -128,7 +131,7 @@ export default class Signin extends React.Component {
 					var rowNum = 0;
 					var orderStates = [];
 					resJson.orders.map((order)=>{
-						data.push([order[0],this.location(order[1]),order[2],this.SeeMore(order[3],order[6],order[7]),this.order_status_changer(order[4],order[5], rowNum++)]);
+						data.push([order[0],this.location(order[1]),order[2],this.SeeMore(order[3],order[6],order[7],order[8],order[5],order[2],order[9]),this.order_status_changer(order[4],order[5], rowNum++)]);
 						//console.log('pushed', order[4], 'at', rowNum-1);
 						orderStates.push(order[4])
 					})
@@ -137,12 +140,17 @@ export default class Signin extends React.Component {
 				}
 			});
 	};
-	showData = (details,note,name) =>{
+	showData = (details,note,name,discounted,id,price,delivery_cost) =>{
 		this.setState({
-			details:details,note:note,clientName:name,modalVisible:true
+			details:details,note:note,clientName:name,discounted,price,delivery_cost,orderId:id,modalVisible:true
 		})
+		fetch(Server.dest + '/api/order-data?id=' + id)
+			.then(res => res.json())
+			.then(data => {
+				this.setState({detailed_order:data.meals})
+			});
 	}
-	SeeMore = (details,note,name) =>(
+	SeeMore = (details,note,name,discounted,id,price,delivery_cost) =>(
 		<TouchableOpacity style={{
 			backgroundColor:'gray',
 			borderRadius:30,
@@ -150,7 +158,7 @@ export default class Signin extends React.Component {
 			alignItems:'center'
 		}}
 		onPress={()=>{
-		this.showData(details,note,name)
+		this.showData(details,note,name,discounted,id,price,delivery_cost)
 		}}
 		>
 		<Text style={{
@@ -190,6 +198,7 @@ export default class Signin extends React.Component {
 		)
 			.then(res => res.json())
 			.then(resJson => {
+
 				if (resJson.response == 0)
 					this.setState({
 						errorMsg: 'هذا المحل التجاري غير مُسجل عندنا او كلمة مرور غير صحيحة'
@@ -334,7 +343,11 @@ export default class Signin extends React.Component {
 		const tableData = [
 			['' + this.state.note, 'الملاحظات'],
 			['' + this.state.details, 'التفاصيل'],
-			['' + this.state.clientName, 'اسم العميل']
+			['' + this.state.clientName, 'اسم العميل'],
+			['' + this.state.price, ' المبلغ الاجمالى'],
+			['' + this.state.discounted, 'المبلغ المخصوم'],
+			['' + this.state.price-this.state.discounted, ' السعر بعد الخصم'],
+
 		];
 		if (this.state.owner_login == '0') {
 			return (
@@ -476,12 +489,20 @@ export default class Signin extends React.Component {
 
 						<View style={styles.modalContainer}>
 							<View style={styles.innerContainer}>
+							<ScrollView>
 							<View style={{ paddingRight: 10, paddingLeft: 10 }}>
+
+							<TouchableOpacity onPress={()=>{
+								this.closeModal()
+							}} style={{width:350,backgroundColor:Colors.mainColor,justifyContent:'center',alignItems:'center',color:'white',padding:10,marginRight:20,marginBottom:20,marginTop:20}} >
+							<Text style={{textAlign:'center',justifyContent:'center',alignItems:'center',color:'white'}}>اغلاق</Text>
+							</TouchableOpacity>
 							<Table
 								borderStyle={{
 									borderWidth: 0.5,
 									borderColor: Colors.fadedMainColor,
-									width:'100%'
+									width:'100%',
+									paddingTop:10
 								}}
 							>
 								<Row
@@ -495,12 +516,35 @@ export default class Signin extends React.Component {
 									textStyle={styles.text2}
 								/>
 							</Table>
-							<TouchableOpacity onPress={()=>{
-								this.closeModal()
-							}} style={{width:350,backgroundColor:Colors.mainColor,color:'white',padding:10,margin:10}} >
-							<Text style={{textAlign:'center',color:'white'}}>اغلاق</Text>
-							</TouchableOpacity>
+							<FlatList
+								automaticallyAdjustContentInsets={false}
+								style={{ backgroundColor: 'white' }}
+								removeClippedSubviews={false}
+								ItemSeparatorComponent={() => (
+									<View style={{ height: 5, backgroundColor: Colors.smoothGray }} />
+								)}
+								data={this.state.detailed_order}
+
+								renderItem={({ item }) => (
+									<TouchableOpacity
+
+									>
+										<OrderDetailBox
+											style={styles.restaurant}
+											name={item.name}
+
+											desc={item.desc}
+											image={item.img}
+											price={item.cost}
+											count={item.count}
+										/>
+									</TouchableOpacity>
+								)}
+							/>
 							</View>
+
+							</ScrollView>
+
 							</View>
 						</View>
 					</Modal>
@@ -577,12 +621,16 @@ const styles = StyleSheet.create({
 		width: '92%'
 	},
 
-
+	restaurant: {
+		backgroundColor: 'white',
+		flex: 1,
+		padding: 100
+	},
 
 	text2: {
 		fontFamily: 'myfont',
 		fontSize: 13,
-		color: Colors.mainColor,
+		color: Colors.secondaryColor,
 		textAlign: 'center'
 	},
 
@@ -596,8 +644,7 @@ const styles = StyleSheet.create({
 			backgroundColor: 'grey'
 		},
 		innerContainer: {
-			alignItems: 'center',
-			justifyContent: 'center',
+			marginTop:20,
 			flex:1
 		},
 });

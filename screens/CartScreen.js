@@ -20,6 +20,7 @@ import {
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
 import TicketBox from '../components/TicketBox';
+import OrderDetailBox from '../components/OrderDetailBox';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
 import { MaterialCommunityIcons,Ionicons } from '@expo/vector-icons';
@@ -148,6 +149,8 @@ export default class Meals extends React.Component {
 									'&info=a'+
 									'&note='+
 									this.state.note
+									+'&discounted='+
+									this.state.discounted
 									, {headers: {'Cache-Control': 'no-cache'}})
 								.then(res => res.json())
 								.then(meals => {
@@ -170,6 +173,7 @@ export default class Meals extends React.Component {
 
 	componentDidMount() {
 		this.doTheFetching();
+
 	}
 	doTheFetching = () => {
 		AsyncStorage.getItem('cart')
@@ -234,21 +238,49 @@ clear_cart = ()=>{
 			meals: [],
 			before_cost: 0,
 			after_cost: 0,
+			discounted:0,
+			after_discout:0,
 			store_id: 0,
 			modalVisible: false,
 			note:'',
+			coupon:'',
 		};
+
 	}
 store_note = (note) =>{
 	this.setState({
 		note:note
 	})
 }
+coupon(){
+	AsyncStorage.getItem('CartResturantId').then((store_id)=>{
+
+		fetch(Server.dest + '/api/check-coupon?code=' + this.state.coupon+'&store_id='+store_id)
+			.then(res => res.json())
+			.then(data => {
+				if(data.response == 1){
+
+					var discounted = (this.state.after_cost-this.state.before_cost)*(data.percent/100);
+					var after_discout = this.state.after_cost-discounted;
+					this.setState({
+						after_discout,
+						discounted
+					})
+				}
+				else {
+					alert('الكود غير متاح حاليا')
+				}
+			})
+	})
+}
 	render() {
 		const tableHead = ['السعر', 'التصنيف'];
 		const tableData = [
 			['' + this.state.before_cost, 'سعر التوصيل'],
-			['' + this.state.after_cost, 'اجمالى السعر مع الضريبه']
+			['' + this.state.after_cost, 'اجمالى السعر مع الضريبه'],
+			['' + this.state.discounted, 'الخصم'],
+			['' + this.state.after_cost-this.state.discounted, 'السعر بعد الخصم']
+
 		];
 		const { params } = this.props.navigation.state;
 		const { navigate } = this.props.navigation;
@@ -257,38 +289,13 @@ store_note = (note) =>{
 
 		if (this.state.ids != null) {
 			return (
+				<KeyboardAvoidingView
+				behavior='padding'
+				keyboardVerticalOffset={60}
+				style={{ flex:1 }}>
+
 				<View>
-					<Modal
-						visible={this.state.modalVisible}
-						animationType={'slide'}
-						onRequestClose={() => this.closeModal()}
-					>
 
-						<View style={styles.modalContainer}>
-							<View style={styles.innerContainer}>
-								<Text style={{ fontFamily: 'myfont', fontSize: 25 }}>
-								تأكيد عملية الشراء
-								</Text>
-								<View style={styles.buttons}>
-
-									<TouchableOpacity style={styles.button}
-									            onPress={() => this.closeModal()}>
-										<Text style={{fontSize: 18,
-										color: 'white'}} >رجوع</Text>
-									</TouchableOpacity>
-									<TouchableOpacity style={styles.button}
-															onPress={() => this.navigate_location()}>
-										<Text style={{fontSize: 18,
-										color: 'white'}} >تغير عنوان التوصيل</Text>
-									</TouchableOpacity>
-									<TouchableOpacity style={styles.button} onPress={() => this.CheckIfBannedThenOrder()}>
-										<Text style={{fontSize: 18,
-										color: 'white'}}>شراء الان</Text>
-									</TouchableOpacity>
-								</View>
-							</View>
-						</View>
-					</Modal>
 
 					<View
 						style={{
@@ -323,6 +330,8 @@ store_note = (note) =>{
 							/>
 						)}
 						ListFooterComponent={
+
+							<ScrollView>
 							<View style={{ paddingRight: 10, paddingLeft: 10 }}>
 
 								<Table
@@ -356,6 +365,62 @@ store_note = (note) =>{
 												value={this.state.note}
 												onChangeText={(text)=>{this.store_note(text)}}
 												/>
+												<View style={{flexDirection:'row'}}>
+												<TouchableOpacity
+													onPress={() => {
+														 this.coupon();
+														// alert(this.state.notee)
+													}}
+													style={{
+														flex: .2,
+														justifyContent: 'center',
+														alignSelf: 'center',
+														padding: 3,
+														marginTop: 10,
+														flexDirection: 'row',
+														borderWidth: 5,
+														backgroundColor:Colors.mainColor,
+
+														borderColor: Colors.mainColor,
+
+													}}
+												>
+													<Text
+														style={{
+															fontFamily: 'myfont',
+															textAlign:'center',
+															color:Colors.secondaryColor
+														}}
+													>
+														تطبيق
+													</Text>
+
+												</TouchableOpacity>
+
+												<TextInput
+														underlineColorAndroid='transparent'
+														placeholder='كود خصم'
+														placeholderTextColor='#CCCCCC'
+														style={{
+															flex: .8,
+															color: Colors.mainColor,
+															justifyContent: 'flex-start',
+															alignSelf: 'flex-start',
+															textAlign: 'right',
+															fontFamily: 'myfont',
+															padding: 9,
+															marginVertical:20,
+															borderRadius: 4,
+															backgroundColor: 'transparent',
+															borderBottomColor: Colors.fadedMainColor,
+															borderBottomWidth: 0.7,
+
+														}}
+														value={this.state.coupon}
+														onChangeText={(text)=>{this.setState({coupon:text})}}
+														/>
+
+														</View>
 
 								</View>
 								<View style={{flexDirection:'row'}}>
@@ -421,7 +486,7 @@ store_note = (note) =>{
 								</TouchableOpacity>
 								</View>
 							</View>
-
+							</ScrollView>
 						}
 						renderItem={({ item }) => (
 
@@ -436,6 +501,8 @@ store_note = (note) =>{
 					/>
 
 				</View>
+				</KeyboardAvoidingView>
+
 			);
 		}
 
@@ -459,7 +526,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontFamily: 'myfont',
 		fontSize: 18,
-		color: 'white'
+		color: Colors.secondaryColor
 	},
 	textInput: {
 			flex: 1,
@@ -487,7 +554,7 @@ const styles = StyleSheet.create({
 	text2: {
 		fontFamily: 'myfont',
 		fontSize: 13,
-		color: Colors.mainColor,
+		color: Colors.secondaryColor,
 		textAlign: 'center'
 	},
 	row: { height: 30 },

@@ -159,7 +159,9 @@ export default class Header extends React.Component {
 									fontSize:18,
 									fontWeight:'bold',
 									textAlign:'right',
-									color:'white'
+									color:'white',
+									justifyContent:'center',
+									marginTop:5
 								}}
 							>
 							مندوب طلباتك
