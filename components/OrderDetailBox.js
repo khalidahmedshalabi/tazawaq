@@ -41,7 +41,7 @@ export default class OrderDetailBox extends Component {
 								alignItems: 'center'
 							}}>
 							<MaterialCommunityIcons
-								name="clock"
+								name="counter"
 								size={20}
 								color={Colors.secondaryColor}
 							/>

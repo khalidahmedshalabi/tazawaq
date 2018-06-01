@@ -289,10 +289,7 @@ coupon(){
 
 		if (this.state.ids != null) {
 			return (
-				<KeyboardAvoidingView
-				behavior='padding'
-				keyboardVerticalOffset={60}
-				style={{ flex:1 }}>
+
 
 				<View>
 
@@ -352,7 +349,7 @@ coupon(){
 									/>
 								</Table>
 
-
+								
 								<View style={styles.singleInputContainer}>
 
 
@@ -422,6 +419,7 @@ coupon(){
 
 														</View>
 
+
 								</View>
 								<View style={{flexDirection:'row'}}>
 								<TouchableOpacity
@@ -487,6 +485,7 @@ coupon(){
 								</View>
 							</View>
 							</ScrollView>
+
 						}
 						renderItem={({ item }) => (
 
@@ -501,7 +500,6 @@ coupon(){
 					/>
 
 				</View>
-				</KeyboardAvoidingView>
 
 			);
 		}
