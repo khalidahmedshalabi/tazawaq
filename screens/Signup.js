@@ -80,7 +80,7 @@ export default class Signup extends React.Component {
             this.setState({ errorMsg: 'كلمة المرور قصيرة. اقل طول مسموح هو ستة' });
             return;
         }
-        if(this.state.phone.length < 8)
+        if(this.state.phone.length < 6)
         {
             this.setState({ errorMsg: 'كلمة المرور قصيرة. اقل طول مسموح هو ستة' });
             return;
