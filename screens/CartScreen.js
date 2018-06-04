@@ -292,7 +292,37 @@ coupon(){
 
 
 				<View>
+				<Modal
+										visible={this.state.modalVisible}
+										animationType={'slide'}
+										onRequestClose={() => this.closeModal()}
+									>
 
+										<View style={styles.modalContainer}>
+											<View style={styles.innerContainer}>
+												<Text style={{ fontFamily: 'myfont', fontSize: 25 }}>
+												تأكيد عملية الشراء
+												</Text>
+												<View style={styles.buttons}>
+
+													<TouchableOpacity style={styles.button}
+													            onPress={() => this.closeModal()}>
+														<Text style={{fontSize: 18,
+														color: 'white'}} >رجوع</Text>
+													</TouchableOpacity>
+													<TouchableOpacity style={styles.button}
+																			onPress={() => this.navigate_location()}>
+														<Text style={{fontSize: 18,
+														color: 'white'}} >تغير عنوان التوصيل</Text>
+													</TouchableOpacity>
+													<TouchableOpacity style={styles.button} onPress={() => this.CheckIfBannedThenOrder()}>
+														<Text style={{fontSize: 18,
+														color: 'white'}}>شراء الان</Text>
+													</TouchableOpacity>
+												</View>
+											</View>
+										</View>
+									</Modal>
 
 					<View
 						style={{
@@ -349,7 +379,7 @@ coupon(){
 									/>
 								</Table>
 
-								
+
 								<View style={styles.singleInputContainer}>
 
 

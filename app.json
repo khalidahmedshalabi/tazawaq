@@ -6,7 +6,7 @@
 		"privacy": "public",
 		"sdkVersion": "24.0.0",
 		"platforms": ["ios", "android"],
-		"version": "6.3.0",
+		"version": "6.4.0",
 		"orientation": "portrait",
 		"icon": "./assets/images/icon.png",
 		"splash": {
@@ -24,7 +24,7 @@
 		"android": {
       "package": "com.Talbatk.GarashSoftwareHouse",
       "permissions": [ "MANAGE_DOCUMENTS", "READ_EXTERNAL_STORAGE", "READ_INTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "ACCESS_FINE_LOCATION" ],
-      "versionCode": 9,
+      "versionCode": 10,
 			"config": {
 				"googleMaps": {
 					"apiKey": "AIzaSyBlHeAYsIYUgLiM1iMJAPyDQjXy2YUkgAg"
