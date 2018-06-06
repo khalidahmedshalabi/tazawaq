@@ -46,6 +46,7 @@ export default class Signin extends React.Component {
 			orders: [],
 			note:'...',
 			details:'...',
+			delivery_cost:0,
 			clientName:'...',
 			orderStates: [],
 			 modalVisible: false,
@@ -346,7 +347,8 @@ export default class Signin extends React.Component {
 			['' + this.state.clientName, 'اسم العميل'],
 			['' + this.state.price, ' المبلغ الاجمالى'],
 			['' + this.state.discounted, 'المبلغ المخصوم'],
-			['' + this.state.price-this.state.discounted, ' السعر بعد الخصم'],
+			['' + this.state.delivery_cost, 'سعر التوصيل'],
+			['' + this.state.price-this.state.discounted, ' السعر الاجمالى بعد الخصم'],
 
 		];
 		if (this.state.owner_login == '0') {

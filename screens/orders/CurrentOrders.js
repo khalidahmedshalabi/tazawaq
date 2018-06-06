@@ -5,7 +5,7 @@ import OrderBox from '../../components/OrderBox';
 import Colors from '../../constants/Colors';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import OrderDetailBox from '../../components/OrderDetailBox';
-
+import { Table, Row, Rows } from 'react-native-table-component';
 import Server from '../../constants/server';
 
 const Center = ({ children }) => (
@@ -65,6 +65,9 @@ export default class OrdersScreen extends React.Component {
           current_id:0,
           modalVisible:false,
           detailed_order:[],
+          cost_dicounted:0,
+          price:0,
+          delivery_cost:0,
           orders:[
           ]
         }
@@ -109,7 +112,7 @@ export default class OrdersScreen extends React.Component {
       fetch(Server.dest + '/api/order-data?id=' + id)
   			.then(res => res.json())
   			.then(data => {
-  				this.setState({detailed_order:data.meals})
+  				this.setState({detailed_order:data.meals,price:data.order.cost,cost_dicounted:data.order.cost_dicounted,delivery_cost:data.order.delivery_cost})
   			});
     }
     getStatusAsStr = (status) => {
@@ -126,6 +129,14 @@ export default class OrdersScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const tableHead = ['الوصف','النوع']
+		const tableData = [
+
+			['' + this.state.price, ' المبلغ الاجمالى'],
+			['' + this.state.cost_dicounted, 'المبلغ المخصوم'],
+      ['' + this.state.delivery_cost, 'سعر التوصيل'],
+			['' + this.state.price-this.state.cost_dicounted, ' السعر الاجمالى بعد الخصم'],
+    ];
     if (this.state.doneFetches == 0)
 			return <LoadingIndicator size="large" color="#B6E3C6" />;
 
@@ -146,7 +157,25 @@ export default class OrdersScreen extends React.Component {
             <ScrollView>
             <View style={{ paddingRight: 10, paddingLeft: 10 }}>
 
-
+            <Table
+              borderStyle={{
+                borderWidth: 0.5,
+                borderColor: Colors.fadedMainColor,
+                width:'100%',
+                paddingTop:10
+              }}
+            >
+              <Row
+                data={tableHead}
+                style={styles.head}
+                textStyle={styles.text}
+              />
+              <Rows
+                data={tableData}
+                style={styles.row}
+                textStyle={styles.text2}
+              />
+            </Table>
 
             <FlatList
               automaticallyAdjustContentInsets={false}

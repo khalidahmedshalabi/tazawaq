@@ -383,7 +383,6 @@ coupon(){
 								<View style={styles.singleInputContainer}>
 
 
-
 										<TextInput
 												underlineColorAndroid='transparent'
 												placeholder='ملاحظات للطلب (المزيد من الصوص)'
@@ -392,7 +391,9 @@ coupon(){
 												value={this.state.note}
 												onChangeText={(text)=>{this.store_note(text)}}
 												/>
-												<View style={{flexDirection:'row'}}>
+												<View style={{flexDirection:'row',paddingBottom:150}}>
+
+
 												<TouchableOpacity
 													onPress={() => {
 														 this.coupon();
@@ -451,6 +452,7 @@ coupon(){
 
 
 								</View>
+
 								<View style={{flexDirection:'row'}}>
 								<TouchableOpacity
 									onPress={() => {
