@@ -301,6 +301,7 @@ export default class LocationSetting extends React.Component {
 						placeholder="اكتب عنوانك"
 						minLength={2}
 						autoFocus={false}
+						editable={false}
 						listViewDisplayed="auto"
 						fetchDetails={false}
 						value={this.state.region}

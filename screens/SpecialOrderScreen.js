@@ -47,7 +47,8 @@ export default class Contact extends React.Component {
     AsyncStorage.getItem('userid').then((userid)=>{
     AsyncStorage.getItem('location').then(location => {
       AsyncStorage.getItem('hint').then(hint => {
-        var url = Server.dest +'/api/make-special-order?cost=' +this.state.email +'&note=' +this.state.note +'&restaurant=' +this.state.name +'&info=' +this.state.message +'&address=' +location +'&user_id='+userid;
+
+        var url = Server.dest +'/api/make-special-order?cost=' +this.state.email +'&note=' +location +'&restaurant=' +this.state.name +'&info=' +this.state.message +'&address=' +location +'&user_id='+userid;
         fetch(url
             , {headers: {'Cache-Control': 'no-cache'}})
           .then(res => res.json())
@@ -56,6 +57,7 @@ export default class Contact extends React.Component {
                 this.props.navigation.navigate('Main');
               })
           })
+
       })
     })
   })
@@ -95,7 +97,7 @@ export default class Contact extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={{ flex: 1,paddingTop:20,backgroundColor:"white" }} onLayout={this._onLayoutDidChange}>
+      <View style={{ flex: 1,paddingTop:100,backgroundColor:"white" }} onLayout={this._onLayoutDidChange}>
            <View style={{ marginHorizontal: 10 }}>
              <TextInput style={{ borderColor: Colors.mainColor, borderWidth: 2, marginVertical: 7,borderRadius:20,  width: '100%', textAlign: 'center',color:Colors.secondaryColor, height: 50, fontWeight: 'bold', color: '#11284b'}}
                onChangeText={(name) => this.setState({ name })}
@@ -106,11 +108,8 @@ export default class Contact extends React.Component {
                onChangeText={(email) => this.setState({ email })}
                underlineColorAndroid="transparent"
                placeholder="السعر المتوقع ( إجباري )" />
-               <TextInput style={{ borderColor: Colors.mainColor, borderWidth: 2, marginVertical: 7, borderRadius:20, width: '100%', textAlign: 'center',color:Colors.secondaryColor, height: 50, fontWeight: 'bold', color: '#11284b' }}
-                 onChangeText={(note) => this.setState({ note })}
-                 underlineColorAndroid="transparent"
-                 placeholder="عنوان الطلب (اجباري)" />
-             <TextInput style={{ borderColor: Colors.mainColor, borderWidth: 2, marginVertical: 7, borderRadius:20, width: '100%', textAlign: 'center',color:Colors.secondaryColor,padding:10, height: 100, fontWeight: 'bold', color: '#11284b' }}
+
+             <TextInput style={{ borderColor: Colors.mainColor, borderWidth: 2, marginVertical: 7, borderRadius:20, width: '100%', textAlign: 'center',color:Colors.secondaryColor,padding:10, height: 150, fontWeight: 'bold', color: '#11284b' }}
                onChangeText={(message) => this.setState({ message })}
                placeholder="تفاصيل الطلب ( إجباري)"
                multiline={true}

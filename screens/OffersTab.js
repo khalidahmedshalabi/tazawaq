@@ -7,7 +7,7 @@ import {
 	TouchableOpacity,
 	AsyncStorage
 } from 'react-native';
-import MealBox from '../components/MealBox';
+import OfferBox from '../components/OfferBox';
 import Colors from '../constants/Colors';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -97,7 +97,7 @@ export default class OffersTab extends React.Component {
 						<TouchableOpacity
 
 						>
-							<MealBox
+							<OfferBox
 								style={styles.restaurant}
 								name={item.name}
 								desc={item.info}

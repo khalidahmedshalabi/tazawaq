@@ -75,7 +75,7 @@ export default class Signup extends React.Component {
     };
 
     registerUser = () => {
-        if(this.state.password.length < 8)
+        if(this.state.password.length < 6)
         {
             this.setState({ errorMsg: 'كلمة المرور قصيرة. اقل طول مسموح هو ستة' });
             return;

@@ -202,21 +202,7 @@ export default class SettingsScreen extends React.Component {
 						</View>
 					</View>
 					<View style={{ flex: 1, padding: 12 }}>
-						<TextInput
-							underlineColorAndroid="transparent"
-							placeholder="تلميح, مثال: خلف المسجد"
-							placeholderTextColor="#CCCCCC"
-							autoGrow={false}
-							multiline={false}
-							autoFocus={false}
-							secureTextEntry={false}
-							defaultValue={this.state.hint}
-							style={styles.textInput}
-							onEndEditing={e => {
-								AsyncStorage.setItem('hint', e.nativeEvent.text);
-							}}
-							onChangeText={text => this.setState({ hint: text })}
-						/>
+
 
 						<View style={styles.inputsContainer}>
 							<TouchableOpacity

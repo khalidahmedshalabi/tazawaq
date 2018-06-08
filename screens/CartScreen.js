@@ -217,12 +217,15 @@ clear_cart = ()=>{
 		this.setState({ modalVisible: true });
 	}
 	navigate_location(){
+
+		AsyncStorage.removeItem('location')
+		AsyncStorage.setItem('LocationToCart','1')
 		this.closeModal();
-		AsyncStorage.removeItem('location').then(()=>{
-			AsyncStorage.setItem('LocationToCart','1').then(()=>{
-				this.props.navigation.navigate('LocationSetting');
-			});
-		});
+		let that = this;
+			setTimeout(function(){
+				that.props.navigation.navigate('LocationSetting');
+			},1000)
+
 	}
 	closeModal() {
 		this.setState({ modalVisible: false });
@@ -317,7 +320,7 @@ coupon(){
 													</TouchableOpacity>
 													<TouchableOpacity style={styles.button} onPress={() => this.CheckIfBannedThenOrder()}>
 														<Text style={{fontSize: 18,
-														color: 'white'}}>شراء الان</Text>
+														color: 'white'}}>شراء الان </Text>
 													</TouchableOpacity>
 												</View>
 											</View>
