@@ -132,10 +132,10 @@ export default class OrdersScreen extends React.Component {
     const tableHead = ['الوصف','النوع']
 		const tableData = [
 
-			['' + this.state.price, ' المبلغ الاجمالى'],
-			['' + this.state.cost_dicounted, 'المبلغ المخصوم'],
-      ['' + this.state.delivery_cost, 'سعر التوصيل'],
-			['' + this.state.price-this.state.cost_dicounted, ' السعر الاجمالى بعد الخصم'],
+			['' + this.state.price, ' سعرالطلب'],
+			['' + this.state.cost_dicounted, ' الخصم'],
+      ['' + this.state.delivery_cost, 'رسوم التوصيل'],
+			['' + this.state.price-this.state.cost_dicounted, ' السعر الإجمالي مع الضريبة'],
     ];
     if (this.state.doneFetches == 0)
 			return <LoadingIndicator size="large" color="#B6E3C6" />;

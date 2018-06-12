@@ -8,7 +8,8 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
-  AsyncStorage
+  AsyncStorage,
+  KeyboardAvoidingView
  } from 'react-native';
  import { Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
  import Colors from '../constants/Colors';
@@ -97,7 +98,12 @@ export default class Contact extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={{ flex: 1,paddingTop:100,backgroundColor:"white" }} onLayout={this._onLayoutDidChange}>
+      <KeyboardAvoidingView
+          behavior='padding'
+          keyboardVerticalOffset={60}
+          style={{ flex:1 }}
+          contentContainerStyle= {{ flex: 1, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', width: Dimensions.get('window').width }}>
+      <View style={{ flex: 1,paddingTop:1,backgroundColor:"white" }} onLayout={this._onLayoutDidChange}>
            <View style={{ marginHorizontal: 10 }}>
              <TextInput style={{ borderColor: Colors.mainColor, borderWidth: 2, marginVertical: 7,borderRadius:20,  width: '100%', textAlign: 'center',color:Colors.secondaryColor, height: 50, fontWeight: 'bold', color: '#11284b'}}
                onChangeText={(name) => this.setState({ name })}
@@ -107,6 +113,7 @@ export default class Contact extends React.Component {
              <TextInput style={{ borderColor: Colors.mainColor, borderWidth: 2, marginVertical: 7, borderRadius:20, width: '100%', textAlign: 'center',color:Colors.secondaryColor, height: 50, fontWeight: 'bold', color: '#11284b' }}
                onChangeText={(email) => this.setState({ email })}
                underlineColorAndroid="transparent"
+               keyboardType='phone-pad'
                placeholder="السعر المتوقع ( إجباري )" />
 
              <TextInput style={{ borderColor: Colors.mainColor, borderWidth: 2, marginVertical: 7, borderRadius:20, width: '100%', textAlign: 'center',color:Colors.secondaryColor,padding:10, height: 150, fontWeight: 'bold', color: '#11284b' }}
@@ -128,6 +135,7 @@ export default class Contact extends React.Component {
              </View>
            </View>
       </View>
+      </KeyboardAvoidingView>
     );
   }
 }

@@ -48,6 +48,7 @@ export default class Signin extends React.Component {
 			details:'...',
 			delivery_cost:0,
 			clientName:'...',
+			phone:'',
 			orderStates: [],
 			 modalVisible: false,
 			pickerData:[
@@ -132,7 +133,7 @@ export default class Signin extends React.Component {
 					var rowNum = 0;
 					var orderStates = [];
 					resJson.orders.map((order)=>{
-						data.push([order[0],this.location(order[1]),order[2],this.SeeMore(order[3],order[6],order[7],order[8],order[5],order[2],order[9]),this.order_status_changer(order[4],order[5], rowNum++)]);
+						data.push([order[0],this.location(order[1]),order[2],this.SeeMore(order[3],order[6],order[7],order[8],order[5],order[2],order[9],order[10]),this.order_status_changer(order[4],order[5], rowNum++)]);
 						//console.log('pushed', order[4], 'at', rowNum-1);
 						orderStates.push(order[4])
 					})
@@ -141,9 +142,9 @@ export default class Signin extends React.Component {
 				}
 			});
 	};
-	showData = (details,note,name,discounted,id,price,delivery_cost) =>{
+	showData = (details,note,name,discounted,id,price,delivery_cost,phone) =>{
 		this.setState({
-			details:details,note:note,clientName:name,discounted,price,delivery_cost,orderId:id,modalVisible:true
+			details:details,note:note,clientName:name,phone,discounted,price,delivery_cost,orderId:id,modalVisible:true
 		})
 		fetch(Server.dest + '/api/order-data?id=' + id)
 			.then(res => res.json())
@@ -151,7 +152,7 @@ export default class Signin extends React.Component {
 				this.setState({detailed_order:data.meals})
 			});
 	}
-	SeeMore = (details,note,name,discounted,id,price,delivery_cost) =>(
+	SeeMore = (details,note,name,discounted,id,price,delivery_cost,phone) =>(
 		<TouchableOpacity style={{
 			backgroundColor:'gray',
 			borderRadius:30,
@@ -159,7 +160,7 @@ export default class Signin extends React.Component {
 			alignItems:'center'
 		}}
 		onPress={()=>{
-		this.showData(details,note,name,discounted,id,price,delivery_cost)
+		this.showData(details,note,name,discounted,id,price,delivery_cost,phone)
 		}}
 		>
 		<Text style={{
@@ -345,6 +346,7 @@ export default class Signin extends React.Component {
 			['' + this.state.note, 'الملاحظات'],
 			['' + this.state.details, 'التفاصيل'],
 			['' + this.state.clientName, 'اسم العميل'],
+			['' + this.state.phone, 'هاتف العميل'],
 			['' + this.state.price, ' المبلغ الاجمالى'],
 			['' + this.state.discounted, 'المبلغ المخصوم'],
 			['' + this.state.delivery_cost, 'سعر التوصيل'],

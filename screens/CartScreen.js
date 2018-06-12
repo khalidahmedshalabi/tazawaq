@@ -106,7 +106,6 @@ export default class Meals extends React.Component {
 					                this.make_order()
 								}
 								else{
-										this.closeModal();
 									alert('لا يمكن تنفيذ طلبك إلا بعد وصول طلبك للحد الأدنى للطلب');
 								}
 								})
@@ -360,8 +359,14 @@ coupon(){
 							/>
 						)}
 						ListFooterComponent={
+							<KeyboardAvoidingView
+									behavior='padding'
+									keyboardVerticalOffset={70}
+									style={{ flex:1 }}
+									contentContainerStyle= {{ flex: 1, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', width: Dimensions.get('window').width }}>
 
 							<ScrollView>
+							<View style={styles.singleInputContainer}>
 							<View style={{ paddingRight: 10, paddingLeft: 10 }}>
 
 								<Table
@@ -383,7 +388,6 @@ coupon(){
 								</Table>
 
 
-								<View style={styles.singleInputContainer}>
 
 
 										<TextInput
@@ -394,7 +398,7 @@ coupon(){
 												value={this.state.note}
 												onChangeText={(text)=>{this.store_note(text)}}
 												/>
-												<View style={{flexDirection:'row',paddingBottom:150}}>
+												<View style={{flexDirection:'row'}}>
 
 
 												<TouchableOpacity
@@ -455,8 +459,7 @@ coupon(){
 
 
 								</View>
-
-								<View style={{flexDirection:'row'}}>
+								<View style={{flexDirection:'row',paddingBottom:90}}>
 								<TouchableOpacity
 									onPress={() => {
 										 this.openModal();
@@ -519,7 +522,9 @@ coupon(){
 								</TouchableOpacity>
 								</View>
 							</View>
+
 							</ScrollView>
+							</KeyboardAvoidingView>
 
 						}
 						renderItem={({ item }) => (

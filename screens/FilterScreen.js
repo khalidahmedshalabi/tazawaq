@@ -106,7 +106,7 @@ export default class FilterScreen extends React.Component {
 	}
 	constructor(props) {
 		super(props);
-		AsyncStorage.setItem('userid', '1');
+
 		this.state = {
 			doneFetches: 0,
 			Tickets: []

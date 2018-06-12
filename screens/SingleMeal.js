@@ -266,7 +266,7 @@ export default class SingleMeal extends React.Component {
 								borderRadius={15}
 								buttonStyle={{ padding: 10 }}
 								textStyle={{ fontFamily: 'myfont',fontSize:15 }}
-								title={ "اضف الى السله " + this.state.num * this.state.Meal[0].price + " ريال سعودي" }
+								title={ "اضف الى السله " + Math.round((this.state.num * this.state.Meal[0].price)*100) / 100  + " ريال سعودي" }
 							/>
 						</View>
 					)}
