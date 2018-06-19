@@ -13,7 +13,7 @@ import RestaurantBox from '../components/RestaurantBox';
 import Colors from '../constants/Colors';
 import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
-import { Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons,MaterialCommunityIcons,MaterialIcons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import { TabNavigator, NavigationActions } from 'react-navigation';
 
@@ -229,7 +229,17 @@ export default class HomeScreen extends React.Component {
 						<View style={{ height: 5, backgroundColor: Colors.smoothGray }} />
 					)}
 					data={this.state.Restaurants}
+					ListHeaderComponent = {()=> (
+							<TouchableOpacity style={{justifyContent:'center',flexDirection:'row',alignItems:'center'}} onPress={()=>navigate('Main')}>
+							<Text style={{fontFamily:'myfont',padding:10}}>اعاده التحميل</Text>
+							<Ionicons
 
+								name="ios-refresh"
+								size={40}
+								color={Colors.secondaryColor}
+							/>
+							</TouchableOpacity>
+					)}
 					renderItem={({ item }) => (
 						<TouchableOpacity
 

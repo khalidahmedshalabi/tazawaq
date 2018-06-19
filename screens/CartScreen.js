@@ -103,7 +103,12 @@ export default class Meals extends React.Component {
 									})
 									fetch(Server.dest + '/api/store-info?store_id='+this.state.store_id).then((res)=>res.json()).then((restaurants)=>{
 									if(this.state.after_cost >= restaurants.response.min_delivery_cost){
-					                this.make_order()
+										if(restaurants.response.status == 1){
+											this.make_order();
+										}
+										else{
+											alert('هذا المحل مغلق الان')
+										}
 								}
 								else{
 									alert('لا يمكن تنفيذ طلبك إلا بعد وصول طلبك للحد الأدنى للطلب');
