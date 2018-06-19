@@ -45,6 +45,7 @@ export default class Signin extends React.Component {
 			errorMsg: '',
 			orders: [],
 			note:'...',
+			orderId:0,
 			details:'...',
 			delivery_cost:0,
 			clientName:'...',
@@ -242,6 +243,21 @@ export default class Signin extends React.Component {
 			);
 		}
 	};
+	share_order = () =>{
+		Share.share({
+			message: 'Order here http://talbatkapp.com/share-order-data?id='+this.state.orderId,
+
+			title: 'Order Share'
+		}, {
+			// Android only:
+			dialogTitle: 'Share Order',
+			// iOS only:
+			excludedActivityTypes: [
+				'com.apple.UIKit.activity.PostToTwitter'
+			]
+		})
+
+	}
 	 location = (value) => (
 
 		<TouchableOpacity onPress={() =>{
@@ -500,6 +516,11 @@ export default class Signin extends React.Component {
 								this.closeModal()
 							}} style={{width:350,backgroundColor:Colors.mainColor,justifyContent:'center',alignItems:'center',color:'white',padding:10,marginRight:20,marginBottom:20,marginTop:20}} >
 							<Text style={{textAlign:'center',justifyContent:'center',alignItems:'center',color:'white'}}>اغلاق</Text>
+							</TouchableOpacity>
+							<TouchableOpacity onPress={()=>{
+								this.share_order()
+							}} style={{width:350,backgroundColor:Colors.mainColor,justifyContent:'center',alignItems:'center',color:'white',padding:10,marginRight:20,marginBottom:20,marginTop:20}} >
+							<Text style={{textAlign:'center',justifyContent:'center',alignItems:'center',color:'white'}}>مشاركه الطلب</Text>
 							</TouchableOpacity>
 							<Table
 								borderStyle={{

@@ -82,6 +82,9 @@ export default class Meals extends React.Component {
 		});
 	}
 	CheckIfBannedThenOrder = () => {
+		this.setState({
+			ordering:true
+		})
 		AsyncStorage.getItem('login').then(logged => {
 			if (logged == 1) {
 				AsyncStorage.getItem('userid').then((userid)=>{
@@ -133,6 +136,7 @@ export default class Meals extends React.Component {
 }
 
 	make_order = () => {
+
 					AsyncStorage.getItem('userid').then((userid)=>{
 					AsyncStorage.getItem('location').then(location => {
 						AsyncStorage.getItem('hint').then(hint => {
@@ -251,6 +255,7 @@ clear_cart = ()=>{
 			modalVisible: false,
 			note:'',
 			coupon:'',
+			ordering:false,
 		};
 
 	}
@@ -258,6 +263,15 @@ store_note = (note) =>{
 	this.setState({
 		note:note
 	})
+}
+render_buynow(){
+	if(this.state.ordering == false){
+		return 	<Text style={{fontSize: 18,color: 'white'}}>شراء الان </Text>
+	}
+	else {
+	return	<LoadingIndicator size="large" color="#fff" />
+	}
+
 }
 coupon(){
 	AsyncStorage.getItem('CartResturantId').then((store_id)=>{
@@ -283,10 +297,10 @@ coupon(){
 	render() {
 		const tableHead = ['السعر', 'التصنيف'];
 		const tableData = [
-			['' + this.state.before_cost, 'سعر التوصيل'],
-			['' + this.state.after_cost, 'اجمالى السعر مع الضريبه'],
+			['' + Math.round((this.state.after_cost-this.state.before_cost)*100) / 100 , 'سعر الطلب'],
+			['' + this.state.before_cost, 'رسوم التوصيل'],
 			['' + this.state.discounted, 'الخصم'],
-			['' + this.state.after_cost-this.state.discounted, 'السعر بعد الخصم']
+			['' + Math.round((this.state.after_cost-this.state.discounted)*100) / 100, 'السعر الاجمالى مع الضريبه']
 
 		];
 		const { params } = this.props.navigation.state;
@@ -323,8 +337,7 @@ coupon(){
 														color: 'white'}} >تغير عنوان التوصيل</Text>
 													</TouchableOpacity>
 													<TouchableOpacity style={styles.button} onPress={() => this.CheckIfBannedThenOrder()}>
-														<Text style={{fontSize: 18,
-														color: 'white'}}>شراء الان </Text>
+														{this.render_buynow()}
 													</TouchableOpacity>
 												</View>
 											</View>
