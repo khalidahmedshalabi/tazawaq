@@ -33,29 +33,29 @@ export default class Intro extends React.Component {
 			doneFetches: 1,
 
 			tabs: [{
-				key: 5,
+				key: '1',
 				screenName: 'المحلات التجارية',
 				to: 'Home',
 				id: 1
 			},
 			{
-				key: 6,
+				key: '2',
 				screenName: 'مندوب طلباتك',
 				to: 'SpecialOrderScreen',
 				id: 1
 			}, {
-				key: 5,
+				key: '3',
 				screenName: 'خدمات طلباتك',
 				to: 'Home',
 				id: 2
 			},
 			{
-				key: 6,
+				key: '4',
 				screenName: 'المتاجر الشخصية',
 				to: 'Home',
 				id: 3
 			}, {
-				key: 5,
+				key: '5',
 				screenName: 'الأسر المنتجة',
 				to: 'Home',
 				id: 4
