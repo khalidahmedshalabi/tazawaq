@@ -62,7 +62,8 @@ export default class Intro extends React.Component {
 			},
 			],
 			SpecialOrderStatus: 0,
-			image: 'https://pbs.twimg.com/media/DkXAIiKWsAAMRVJ.jpg:large'
+			//image: 'https://pbs.twimg.com/media/DkXAIiKWsAAMRVJ.jpg:large'
+			image: 'http://'
 		}
 	}
 
