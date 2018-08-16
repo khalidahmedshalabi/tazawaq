@@ -68,6 +68,12 @@ export default class Intro extends React.Component {
 	}
 
 	componentDidMount() {
+		AsyncStorage.getItem('login').then(
+			(logged) => {
+				this.setState({ login_state: logged })
+			}
+		);
+
 		fetch(
 			Server.dest +
 			'/api/special_orders_status'
@@ -95,6 +101,46 @@ export default class Intro extends React.Component {
 
 		// Inneed      onPress={() => onPressHandler(page)
 
+	}
+
+	shouldRenderLoginButton = () => {
+		if (this.state.login_state === undefined) {
+			return null
+		}
+		else if (this.state.login_state === '1') {
+			return null
+		}
+		else {
+			return (
+				<TouchableOpacity onPress={() => {
+					AsyncStorage.setItem('SkippedLogin', '0');
+					AsyncStorage.setItem('login', '0');
+					this.props.navigation.navigate('Signin', {});
+				}}
+				>
+					<LinearGradient
+						colors={['#ebb70a', '#ebb70ae8', '#ebb70ad1']}
+						style={{
+							alignSelf: 'center',
+							height: 50,
+							marginTop: 15,
+							width: 150,
+							alignItems: 'center',
+							justifyContent: 'center',
+							borderRadius: 50
+						}}>
+
+						<Text style={{
+							textAlign: 'center',
+							backgroundColor: 'transparent',
+							color: 'white',
+							fontFamily: 'myfont',
+							fontSize: 16
+						}}>تسجيل الدخول</Text>
+					</LinearGradient>
+				</TouchableOpacity>
+			)
+		}
 	}
 
 	render() {
@@ -132,35 +178,7 @@ export default class Intro extends React.Component {
 						height: '58%',
 						marginTop: '35%'
 					}}
-					ListFooterComponent={
-						<TouchableOpacity onPress={() => {
-							AsyncStorage.setItem('SkippedLogin', '0');
-							AsyncStorage.setItem('login', '0');
-							this.props.navigation.navigate('Signin', {});
-						}}
-						>
-							<LinearGradient
-								colors={['#ebb70a', '#ebb70ae8', '#ebb70ad1']}
-								style={{
-									alignSelf: 'center',
-									height: 50,
-									marginTop: 15,
-									width: 150,
-									alignItems: 'center',
-									justifyContent: 'center',
-									borderRadius: 50
-								}}>
-
-								<Text style={{
-									textAlign: 'center',
-									backgroundColor: 'transparent',
-									color: 'white',
-									fontFamily: 'myfont',
-									fontSize: 16
-								}}>تسجيل الدخول</Text>
-							</LinearGradient>
-						</TouchableOpacity>
-					}
+					ListFooterComponent={this.shouldRenderLoginButton}
 					contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', marginTop: '15%' }}
 					removeClippedSubviews={false}
 					data={this.state.tabs}
