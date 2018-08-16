@@ -4,11 +4,13 @@ import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
 import MealBox from '../components/MealBox';
 import RestaurantBox from '../components/RestaurantBox';
+import LoadingIndicator from '../components/LoadingIndicator';
+import Server from '../constants/server';
 
 export default class Meals extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
-    title:'الوجبات',
+    title:'الاصناف',
     headerTintColor: Colors.smoothGray,
     fontFamily:'myfont',
   headerStyle: {
@@ -27,66 +29,37 @@ export default class Meals extends React.Component {
 		super(props);
 		this.state = {
       Restaurant: [
-        {
-          key: 1,
-          name: 'مطعم كنتاكي للدجاج',
-          image:
-            'https://d30v2pzvrfyzpo.cloudfront.net/images/chains/kfc-opengraph-1.jpg',
-          time: '30',
-          desc: 'تمتع بوجبه خفيفه',
-          stars: '5',
-          deliver_price: '40'
-        }
+
       ],
 			Meals: [
-        {
-          key:1,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:2,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:3,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:4,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:5,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-        {
-          key:6,
-          name: 'دجاج مشويه على الفحم',
-          desc: '3 قطع من الدجاج + رز',
-          price: 50,
-          image: 'https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
-        },
-      ]
-      }
+
+      ],
+      doneFetches:0
+    }
+    }
+    componentDidMount(){
+      fetch(Server.dest + '/api/store-products?category_id='+this.props.navigation.state.params.category_id+'&store_id='+this.props.navigation.state.params.restaurant_id).then((res)=>res.json()).then((meals)=>{
+        this.setState({
+          doneFetches:1,
+          Meals: meals.response
+          })
+
+        })
+        fetch(Server.dest + '/api/store-info?store_id='+this.props.navigation.state.params.restaurant_id).then((res)=>res.json()).then((restaurants)=>{
+          this.setState({
+            Restaurant: [restaurants.response],
+            doneFetches:1,
+
+          })
+
+        });
     }
   render() {
     const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
+    if (this.state.doneFetches == 0)
+      return <LoadingIndicator size="large" color="#B6E3C6" />;
+
     return (
       <View>
         <View>
@@ -97,9 +70,7 @@ export default class Meals extends React.Component {
             ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
             data={this.state.Restaurant}
             renderItem={({ item }) => (
-
               <RestaurantBox
-
                 stars={item.stars}
                 name={item.name}
                 time={item.time}
@@ -111,10 +82,9 @@ export default class Meals extends React.Component {
             )}
           />
         </View>
-        <View>
           <FlatList
             automaticallyAdjustContentInsets={false}
-            style={{ backgroundColor: 'white' }}
+            style={{ backgroundColor: 'white',marginBottom:120 }}
             removeClippedSubviews={false}
             ItemSeparatorComponent={ () => <View style={{ height: 5, backgroundColor: Colors.smoothGray }} /> }
             data={this.state.Meals}
@@ -131,7 +101,6 @@ export default class Meals extends React.Component {
               </TouchableOpacity>
             )}
           />
-        </View>
       </View>
     );
   }

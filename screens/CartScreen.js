@@ -15,7 +15,8 @@ import {
 	I18nManager,
 	Platform,
 	TextInput,
-	KeyboardAvoidingView
+	KeyboardAvoidingView,
+	Alert
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import Colors from '../constants/Colors';
@@ -110,7 +111,7 @@ export default class Meals extends React.Component {
 											this.make_order();
 										}
 										else{
-											alert('هذا المحل مغلق الان')
+											this.clear_cart_no_alert();
 										}
 								}
 								else{
@@ -194,6 +195,7 @@ export default class Meals extends React.Component {
 				fetch(Server.dest + '/api/meals-by-ids?ids=' + this.state.ids)
 					.then(res => res.json())
 					.then(meals => {
+
 						this.setState({
 							meals: meals.meals
 						});
@@ -218,6 +220,38 @@ clear_cart = ()=>{
 		AsyncStorage.setItem('CartResturantId','').then(()=>{
 			alert(' تم إفراع سلة الشراء و بانتظار طلباتك القادمة من المحلات الأخرى')
 			this.props.navigation.navigate('Main');
+		})
+	})
+}
+
+deleteProduct = (value) =>{
+	AsyncStorage.getItem('cart').then((cart)=>{
+		if(cart.replace(new RegExp(','+value,'g' ), '')){
+			if(cart.replace(new RegExp(','+value,'g' ), '') == 'null'){
+				AsyncStorage.setItem('cart','').then(()=>{
+					AsyncStorage.setItem('CartResturantId','').then(()=>{
+						this.props.navigation.navigate('Main');
+						// alert(cart.replace(new RegExp(','+value,'g' ), ''))
+					});
+				});
+
+			}
+			else {
+				AsyncStorage.setItem('cart',''+cart.replace(new RegExp(','+value,'g' ), '')).then(()=>{
+					this.props.navigation.navigate('السله');
+					DeviceEventEmitter.emit('ReloadMyLibraryBooks', { empty: 0 });
+
+				});
+			}
+		}
+	})
+}
+clear_cart_no_alert = ()=>{
+	AsyncStorage.setItem('cart','').then(()=>{
+		AsyncStorage.setItem('CartResturantId','').then(()=>{
+
+			alert('هذا المحل مغلق الان')
+			this.props.navigation.navigate('Main')
 		})
 	})
 }
@@ -294,13 +328,26 @@ coupon(){
 			})
 	})
 }
+ costicon = () => (
+        <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}} >
+				<Ionicons
+					name="ios-information-circle-outline"
+					size={25}
+					color={Colors.mainColor}
+					onPress={()=>{
+						alert('عملينا العزيز : السعر الإجمالي هو سعر تقريبي ، قد يكون هناك زيادة  في السعر و  سيعتمد على سعر الفاتورة من المحل التجاري')
+					}}
+				/>
+          <Text style={{textAlign:'center',padding:40,marginRight:15}}>{Math.round((this.state.after_cost-this.state.discounted)*100) / 100}</Text>
+        </View>
+    );
 	render() {
 		const tableHead = ['السعر', 'التصنيف'];
 		const tableData = [
 			['' + Math.round((this.state.after_cost-this.state.before_cost)*100) / 100 , 'سعر الطلب'],
 			['' + this.state.before_cost, 'رسوم التوصيل'],
 			['' + this.state.discounted, 'الخصم'],
-			['' + Math.round((this.state.after_cost-this.state.discounted)*100) / 100, 'السعر الاجمالى مع الضريبه']
+			[this.costicon(), 'السعر الاجمالى مع الضريبه']
 
 		];
 		const { params } = this.props.navigation.state;
@@ -546,14 +593,27 @@ coupon(){
 
 						}
 						renderItem={({ item }) => (
+							<TouchableOpacity onPress={()=>{
+								Alert.alert(
+			        'تنبيه',
+			        'هل تريد حذف هذا المنتج',
+			        [
+			          {text: 'موافق', onPress: () => this.deleteProduct(item.key)},
+								{text: 'الغاء', onPress: () => console.log('canceled')},
 
+			        ],
+			        { cancelable: false }
+			        )
+						}}>
 								<TicketBox
 									name={item.name}
 									status="-1"
+									keyy={item.key}
 									desc={item.desc}
 									price={item.price}
 									count={item.count}
 								/>
+								</TouchableOpacity>
 						)}
 					/>
 

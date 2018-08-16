@@ -20,11 +20,24 @@ import Server from '../constants/server';
 import LoadingIndicator from '../components/LoadingIndicator';
 // import { NavigationActions } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+import RadioGroup from 'react-native-radio-group'
+import RadioButton from 'radio-button-react-native';
 
 export default class SingleMeal extends React.Component {
 	addcart = () => {
-		var meal = this.state.Meal[0];
+		if(this.state.currentId == 0){
+			var meal = this.state.Meal[0];
+		}
+		else {
+			var meal = this.state.childs.find(obj => {
+  		return obj.key == this.state.currentId
+		})
+
+		}
 		var num = this.state.num || 1;
+		AsyncStorage.getItem('userid').then((userid)=>{
+      if(userid != 'null' && userid != null ){
+				if(this.state.Restaurant[0].status ==  1){
 	AsyncStorage.getItem('CartResturantId').then((CartResturantId)=>{
 		if(CartResturantId || CartResturantId == ''){ // if resturant id saved
 			if(CartResturantId == this.props.navigation.state.params.restaurant_id){ //if resturant in cart is the same one here
@@ -63,6 +76,18 @@ export default class SingleMeal extends React.Component {
 		}
 
 	})
+	}
+	else {
+		alert('عملينا الكريم : لا يمكنك الطلب حاليا لأن المحل التجاري مغلق')
+		console.log(this.state.Restaurant);
+
+	}
+}
+
+else {
+	alert('الزائر الكريم : يجب عليك التسجيل قبل إضافة أي طلب بالسلة و ذلك لإتمام عملية الشراء')
+}
+});
 
 
 	};
@@ -91,13 +116,28 @@ export default class SingleMeal extends React.Component {
 			Restaurant: [],
 			Meal: [],
 			num: 1,
-			modalVisible:false
+			modalVisible:false,
+			childs:[],
+			check:[],
+			currentId:0,
+			price:0
 		};
 	}
 	cart = ()=>{
 		this.props.navigation.navigate('السله');
 		this.setState({ modalVisible: false });
 	}
+	handleOnPress(value){
+
+			var meal = this.state.childs.find(obj => {
+  		return obj.key == value
+			})
+
+
+    this.setState({currentId:value,price:meal.price})
+
+	}
+
 	componentDidMount() {
 		fetch(
 			Server.dest +
@@ -106,21 +146,33 @@ export default class SingleMeal extends React.Component {
 		)
 			.then(res => res.json())
 			.then(restaurants => {
-				fetch(
-					Server.dest +
-						'/api/product-info?product_id=' +
-						this.props.navigation.state.params.meal_id
-				)
-					.then(res => res.json())
-					.then(meals => {
-						this.setState({
-							doneFetches: 1,
-							Restaurant: [restaurants.response],
-							Meal: [meals.response]
-						});
-						console.log(this.state.Restaurant);
-					});
+				this.setState({
+					Restaurant: [restaurants.response],
+					// check:meals.check
+				});
 			});
+			fetch(
+				Server.dest +
+					'/api/product-info?product_id=' +
+					this.props.navigation.state.params.meal_id
+			)
+				.then(res => res.json())
+				.then(meals => {
+					this.setState({
+						doneFetches: 1,
+						Meal: [meals.response],
+						childs: meals.childs,
+						// check:meals.check
+					});
+				});
+	}
+	handlePrice = ()=>{
+		if(this.state.price != 0){
+			return Math.round((this.state.num * this.state.price)*100) / 100
+
+		}else {
+			return Math.round((this.state.num * this.state.Meal[0].price)*100) / 100
+		}
 	}
 	render() {
 		const { params } = this.props.navigation.state;
@@ -164,6 +216,8 @@ export default class SingleMeal extends React.Component {
 					</View>
 				</View>
 			</Modal>
+			<ScrollView>
+
 				<FlatList
 					automaticallyAdjustContentInsets={false}
 					style={{
@@ -187,12 +241,37 @@ export default class SingleMeal extends React.Component {
 						/>
 					)}
 				/>
+
 				<FlatList
 					automaticallyAdjustContentInsets={false}
 					style={{ backgroundColor: 'white' }}
 					removeClippedSubviews={false}
 					ListFooterComponent={() => (
 						<View>
+						<View>
+						{
+							this.state.childs.map((child)=>{
+								return (
+									<RadioButton
+								outerCircleColor={Colors.mainColor}
+								style={{justifyContent:'center',padding:20}}
+outerCircleSize={35}
+outerCircleWidth={2}
+innerCircleColor={Colors.mainColor}
+innerCircleSize={20}
+currentValue={this.state.currentId} value={child.key} onPress={this.handleOnPress.bind(this)}>
+<Text style={{color:Colors.mainColor,textAlign:'left',flex:.8,paddingHorizontal:15,fontFamily:'myfont',fontSize:17,marginBottom:20}}>{child.price} رس</Text>
+
+                <Text style={{color:Colors.mainColor,textAlign:'right',flex:.2,paddingHorizontal:15,fontFamily:'myfont',fontSize:17,marginBottom:20}}>{child.name}</Text>
+                 </RadioButton>)
+							})
+						}
+
+
+
+
+</View>
+
 							<View
 								style={{
 									flex: 1,
@@ -204,6 +283,8 @@ export default class SingleMeal extends React.Component {
 									padding: 10
 								}}
 							>
+
+
 								<View
 									style={{
 										flex: 1.5,
@@ -211,6 +292,7 @@ export default class SingleMeal extends React.Component {
 										justifyContent: 'center'
 									}}
 								>
+
 									<Ionicons
 										onPress={() => {
 											if (this.state.num != 1) {
@@ -266,7 +348,7 @@ export default class SingleMeal extends React.Component {
 								borderRadius={15}
 								buttonStyle={{ padding: 10 }}
 								textStyle={{ fontFamily: 'myfont',fontSize:15 }}
-								title={ "اضف الى السله " + Math.round((this.state.num * this.state.Meal[0].price)*100) / 100  + " ريال سعودي" }
+								title={ "اضف الى السله " +this.handlePrice() + " ريال سعودي" }
 							/>
 						</View>
 					)}
@@ -286,6 +368,7 @@ export default class SingleMeal extends React.Component {
 
 					)}
 				/>
+				</ScrollView>
 			</View>
 		);
 	}

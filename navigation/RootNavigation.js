@@ -19,6 +19,9 @@ import SingleTicketScreen from '../screens/SingleTicketScreen';
 import FilterScreen from '../screens/FilterScreen';
 import AddTicketScreen from '../screens/AddTicketScreen';
 import AboutUs from '../screens/AboutUs';
+import CategoriesScreen from '../screens/CategoriesScreen';
+import IntroScreen from '../screens/IntroScreen';
+
 import SpecialOrderScreen from '../screens/SpecialOrderScreen';
 const RootStackNavigator = StackNavigator(
 	{
@@ -27,7 +30,7 @@ const RootStackNavigator = StackNavigator(
 		Signup: { screen: Signup },
 		CodeVerification: { screen: CodeVerification },
 		ResetPassword: { screen: ResetPassword },
-		Main: { screen: MainTabNavigator },
+		Home: { screen: MainTabNavigator },
 		Restaurant: { screen: Restaurant },
 		MealsScreen: { screen: MealsScreen },
 		SingleMeal: { screen: SingleMeal },
@@ -38,7 +41,9 @@ const RootStackNavigator = StackNavigator(
 		FilterScreen: { screen: FilterScreen },
 		AddTicketScreen: { screen: AddTicketScreen },
 		AboutUs: { screen: AboutUs },
-		SpecialOrderScreen: { screen: SpecialOrderScreen }
+		SpecialOrderScreen: { screen: SpecialOrderScreen },
+		CategoriesScreen: { screen: CategoriesScreen },
+		Main:{screen : IntroScreen},
 
 	},
 	{

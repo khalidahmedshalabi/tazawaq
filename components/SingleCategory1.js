@@ -22,12 +22,9 @@ export default class SingleCategory extends Component {
         fontSize:16
       },
       box:{
-        width:'90%',
         alignSelf:'center',
-        height:40,
+        height:30,
         marginTop:15,
-        borderRadius:4,
-        borderWidth:1,
         alignItems:'center',
         justifyContent:'center',
 
@@ -35,12 +32,26 @@ export default class SingleCategory extends Component {
 
     });
     return (
-      <LinearGradient
-              colors={['#ebb70a', '#ebb70ae8', '#ebb70ad1']}
-            style={[styles.box,this.props.style]}>
+      <View style={{flexDirection:'row',justifyContent:'center'}}>
+        <LinearGradient
+          colors={['#ebb70a', '#ebb70ae8', '#ebb70ad1']}
+        style={{width:'5%',marginTop:15,marginHorizontal:5
+        }}>
+        </LinearGradient>
 
-      <Text style={styles.text}>{this.props.name}</Text>
-  </LinearGradient>
+        <LinearGradient
+                colors={['#ebb70a', '#ebb70ae8', '#ebb70ad1']}
+              style={[styles.box,this.props.style]}>
+
+              <Text style={styles.text}>{this.props.name}</Text>
+        </LinearGradient>
+          <LinearGradient
+            colors={['#ebb70a', '#ebb70ae8', '#ebb70ad1']}
+          style={{width:'5%',marginTop:15,marginHorizontal:5
+          }}>
+          </LinearGradient>
+        </View>
+
 
 );
 

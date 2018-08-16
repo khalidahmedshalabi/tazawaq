@@ -44,23 +44,38 @@ export default class Contact extends React.Component {
     )
   }
   _sendEmail = () => {
-    this.setState({sending: true})
     AsyncStorage.getItem('userid').then((userid)=>{
-    AsyncStorage.getItem('location').then(location => {
-      AsyncStorage.getItem('hint').then(hint => {
+      if(userid == null || userid == '' || !userid || userid == 'null'){
 
-        var url = Server.dest +'/api/make-special-order?cost=' +this.state.email +'&note=' +location +'&restaurant=' +this.state.name +'&info=' +this.state.message +'&address=' +location +'&user_id='+userid;
-        fetch(url
-            , {headers: {'Cache-Control': 'no-cache'}})
-          .then(res => res.json())
-          .then(meals => {
-              AsyncStorage.setItem('hot_request','1').then(()=>{
-                this.props.navigation.navigate('Main');
+
+      Alert.alert(
+    'تنبيه',
+    'يجب تسجيل الدخول اولا',
+    [
+      {text: 'موافق', onPress: () => this.props.navigation.navigate('Main')},
+    ],
+    { cancelable: false }
+  )
+        }
+        else {
+
+
+          AsyncStorage.getItem('location').then(location => {
+            AsyncStorage.getItem('hint').then(hint => {
+              var url = Server.dest +'/api/make-special-order?cost=' +this.state.email +'&note=' +location +'&restaurant=' +this.state.name +'&info=' +this.state.message +'&address=' +location +'&user_id='+userid;
+              fetch(url
+                  , {headers: {'Cache-Control': 'no-cache'}})
+                .then(res => res.json())
+                .then(meals => {
+                    AsyncStorage.setItem('hot_request','1').then(()=>{
+                      this.props.navigation.navigate('Main');
+                    })
+                })
               })
-          })
+            })
 
-      })
-    })
+
+        }
   })
 
 

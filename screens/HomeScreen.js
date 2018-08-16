@@ -90,7 +90,8 @@ export default class HomeScreen extends React.Component {
 								'/api/stores?user_id=8' +
 								'&maxcost=300' +
 								'&maxtime=300' +
-								'&sortby=2'
+								'&sortby=2'+
+								'&id='+this.props.navigation.state.params.id
 						)
 							.then(res => res.json())
 							.then(restaurants => {
@@ -205,12 +206,9 @@ export default class HomeScreen extends React.Component {
 		}
 	}
 	navigate_home = (key,status)=>{
-		if(status == 1){
-			this.props.navigation.navigate('Restaurant', { key: key })
-		}
-		else {
-			alert('هذا المحل مغلق الان لا يمكن الطلب')
-		}
+
+			this.props.navigation.navigate('CategoriesScreen', { key: key })
+
 	}
 
 	render() {
@@ -229,17 +227,7 @@ export default class HomeScreen extends React.Component {
 						<View style={{ height: 5, backgroundColor: Colors.smoothGray }} />
 					)}
 					data={this.state.Restaurants}
-					ListHeaderComponent = {()=> (
-							<TouchableOpacity style={{justifyContent:'center',flexDirection:'row',alignItems:'center'}} onPress={()=>navigate('Main')}>
-							<Text style={{fontFamily:'myfont',padding:10}}>اعاده التحميل</Text>
-							<Ionicons
 
-								name="ios-refresh"
-								size={40}
-								color={Colors.secondaryColor}
-							/>
-							</TouchableOpacity>
-					)}
 					renderItem={({ item }) => (
 						<TouchableOpacity
 

@@ -145,20 +145,7 @@ export default class CodeVerification extends React.Component {
 					/>
 				</KeyboardAvoidingView>
 
-				<View style={{ flex: 1, justifyContent: 'flex-end' }}>
-					<Button
-						onPress={() => {
-							this.verifyCode();
-						}}
-						color="white"
-						backgroundColor={Colors.mainColor}
-						containerViewStyle={{ marginBottom: 35, borderRadius: 15 }}
-						borderRadius={15}
-						buttonStyle={{ padding: 10 }}
-						textStyle={{ fontFamily: 'myfont' }}
-						title="تأكيد"
-					/>
-				</View>
+			
 			</View>
 		);
 	}

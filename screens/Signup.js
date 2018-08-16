@@ -29,6 +29,7 @@ export default class Signup extends React.Component {
             username: '',
             email: '',
             errorMsg: '',
+            signing:false
         }
 
         AsyncStorage.getItem('login').then(
@@ -44,6 +45,7 @@ export default class Signup extends React.Component {
     }
 
     sendDataToServer = () => {
+
         this.setState({ login: '1' });
 
         var locationData = "";
@@ -53,7 +55,7 @@ export default class Signup extends React.Component {
                 locationData += "&" + store[i][0] + "=" + store[i][1];
             });
         }).then(() => {
-            fetch(Server.dest + '/api/signup?phone='+this.state.phone+
+            fetch(Server.dest + '/api/signup?phone='+this.state.phone.substr(1)+
                 '&password='+this.state.password +
                 '&email='+this.state.email +
                 '&username='+this.state.username +
@@ -68,66 +70,80 @@ export default class Signup extends React.Component {
                 {
                     // Navigate to confirm screen
                     this.props.navigation.navigate("CodeVerification", { process: 0 /* means SIGN-UP*/,
-                        device: this.state.phone });
+                        device: this.state.phone.substr(1) });
                 }
             })
         });
     };
+    render_signup(){
+      if(this.state.signing == false){
+        return <Button    onPress={() => {   this.registerUser()  }}  color='white'backgroundColor={Colors.mainColor} containerViewStyle={{borderRadius:15}} borderRadius={15} buttonStyle={{ padding: 10 }} textStyle={{ fontFamily: 'myfont' }} title="انشاء الحساب" />
+      }
+      else {
+      return	<LoadingIndicator size="large" color="#fff" />
+      }
 
+    }
     registerUser = () => {
+      this.setState({ sending:true });
+
         if(this.state.password.length < 6)
         {
             this.setState({ errorMsg: 'كلمة المرور قصيرة. اقل طول مسموح هو ستة' });
+            this.setState({ sending:false });
             return;
         }
         if(this.state.phone.length < 6)
         {
-            this.setState({ errorMsg: 'كلمة المرور قصيرة. اقل طول مسموح هو ستة' });
+            this.setState({ errorMsg: 'رقم الهاتف خاطئ'});
+            this.setState({ sending:false });
+
             return;
         }
-        if(this.state.phone.charAt(0) != 5)
+        if(this.state.phone.charAt(0) != 0)
         {
-            this.setState({ errorMsg: 'يجب ان يبدا رقم الهاتف ب 5' });
+            this.setState({ errorMsg: 'يجب ان يبدا رقم الهاتف بصفر' });
+            this.setState({ sending:false });
             return;
         }
         if(this.state.password != this.state.cpassword)
         {
             this.setState({ errorMsg: 'كلمة المرور لا تطابق كلمة المرور التأكيدية' });
+            this.setState({ sending:false });
+
             return;
         }
 
         if(this.state.username.length < 3)
         {
             this.setState({ errorMsg: 'اسم المستخدم قصير جدا'});
+            this.setState({ sending:false });
+
             return;
         }
 
-        if(/\s/g.test(this.state.username) || /\s/g.test(this.state.phone) || /\s/g.test(this.state.email))
-        {
-            this.setState({ errorMsg: 'غير مسوح بالمسافات' });
-            return;
-        }
 
-        if(this.state.phone.length != 9)
+
+        if(this.state.phone.length != 10)
         {
             this.setState({ errorMsg: 'رقم الجوال غير صالح'});
+            this.setState({ sending:false });
+
             return;
         }
 
         if(this.state.email.length == 0)
         {
             this.setState({ errorMsg: 'يجب ادخال البريد الالكتروني' });
+            this.setState({ sending:false });
+
             return;
         }
 
         var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var isValidEmail = emailRegex.test(this.state.email);
 
-        if(!isValidEmail)
-        {
-            this.setState({ errorMsg: 'بريد الكتروني غير صالح'});
-            return;
-        }
+
 
         this.setState({ errorMsg: '' });
         this.sendDataToServer();
@@ -217,12 +233,12 @@ export default class Signup extends React.Component {
                             <View style={styles.singleInputContainer}>
                                 <TextInput
                                     underlineColorAndroid='transparent'
-                                    placeholder='رقم الجوال بدون كود الدولة مثل 50321299'
+                                    placeholder='رقم الجوال بدون كود الدولة مثل 0503455555'
                                     placeholderTextColor='#CCCCCC'
                                     autoGrow={false}
                                     multiline={false}
                                     autoFocus={false}
-                                    maxLength={9}
+                                    maxLength={10}
                                     style={styles.textInput}
                                     keyboardType='phone-pad'
                                     defaultValue={this.state.phone}
@@ -297,22 +313,10 @@ export default class Signup extends React.Component {
                             </View>
                         </View>
                     </KeyboardAvoidingView>
-
                     <View style={{ flex:0.8, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{flex: 1, flexDirection:'column', justifyContent: 'center' }}>
-                            <Button
-                                onPress={() => {
-                                    this.registerUser()
-                                }}
-                                color='white'
-                                backgroundColor={Colors.mainColor}
-                                containerViewStyle={{borderRadius:15}}
-                                borderRadius={15}
-                                buttonStyle={{ padding: 10 }}
-                                textStyle={{ fontFamily: 'myfont' }}
-                                title="انشاء الحساب" />
-                        </View>
-
+                     <View style={{flex: 1, flexDirection:'column', justifyContent: 'center' }}>
+                    {this.render_signup()}
+                    </View>
                         <TouchableOpacity style={{ flex:0.8, marginTop:1, width: '80%' }}
                             onPress={() => Linking.openURL('http://138.197.98.186:3000/terms-and-policy')}>
                             <Text style={{ fontSize: 13, textAlign:'center', fontFamily: 'myfont', color: Colors.mainColor }}>

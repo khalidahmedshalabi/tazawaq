@@ -245,7 +245,7 @@ export default class Signin extends React.Component {
 	};
 	share_order = () =>{
 		Share.share({
-			message: 'Order here http://talbatkapp.com/share-order-data?id='+this.state.orderId,
+			message: 'Order here http://talbatk.net:90/share-order-data?id='+this.state.orderId,
 
 			title: 'Order Share'
 		}, {
@@ -289,7 +289,7 @@ export default class Signin extends React.Component {
 		}
 		else {
 			AsyncStorage.getItem('storeid').then((store_id) => {
-			fetch(`${Server.dest}/api/delivered-order?id=${id}&store_id=${store_id}`, {
+			fetch(`${Server.dest}/api/delivered-order?id=${id}&store_id=${store_id}&user_id=${store_id}`, {
 				headers: { 'Cache-Control': 'no-cache' }
 			})
 				.then(res => res.json())

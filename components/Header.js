@@ -58,12 +58,9 @@ export default class Header extends React.Component {
 		return str.length > 35 ? str.substring(0, 32) + '...' : str;
 	};
 	SpecialOrderNavigate = () =>{
-		if(this.state.SpecialOrderStatus == 0){
-			alert('الخدمه متوقفه الان')
-		}
-		else {
-			this.props.navigation.navigate('SpecialOrderScreen')
-		}
+
+			this.props.navigation.navigate('Main')
+
 	}
 	renderHeaderButton = () => {
 		if (this.state.displaySearch) {
@@ -164,10 +161,10 @@ export default class Header extends React.Component {
 									marginTop:5
 								}}
 							>
-							مندوب طلباتك
+							الرئيسية
 							</Text>
 							<SimpleLineIcons
-								name="envelope-letter"
+								name="home"
 								size={30}
 								color='white'
 								style={{ paddingLeft: 5 }}

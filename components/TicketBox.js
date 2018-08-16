@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View, Text, Image } from 'react-native';
+import { ActivityIndicator,TouchableOpacity,AsyncStorage, View, Text, Image,Alert } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 
 export default class TicketBox extends Component {
 	statusIcon = (value) => {
@@ -28,6 +29,7 @@ export default class TicketBox extends Component {
 			return "تم اغلاق التذكره"
 		}
 	}
+
 	render() {
 		return (
 			<View
@@ -38,7 +40,14 @@ export default class TicketBox extends Component {
 					paddingHorizontal: 20,
 
 				}}>
+				{
+					//title and clear button
+				}
+				<View style={{flexDirection:'row',justifyContent:'flex-end'}}>
+				{(this.props.status == -1) ?
 
+				<MaterialCommunityIcons style={{flex:.1}}  name="delete" size={20}/>
+				: null }
 				<Text
 					style={{
 						fontFamily: 'myfont',
@@ -46,10 +55,13 @@ export default class TicketBox extends Component {
 						fontSize: 17,
 						padding: 5,
 						fontWeight: 'bold',
-						textAlign:'right'
+						textAlign:'right',
+						flex:.9
 					}}>
 					{this.props.name}
 				</Text>
+
+				</View>
 				<Text
 					style={{
 						fontFamily: 'myfont',

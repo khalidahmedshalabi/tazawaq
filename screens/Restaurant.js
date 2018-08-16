@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Text,
   TouchableHighlight,
-  View,Image,Dimensions,FlatList,TabBarTop,SafeAreaView
+  View,Image,Dimensions,FlatList,TabBarTop,SafeAreaView,TouchableOpacity
 } from 'react-native';
 import TimerMixin from 'react-timer-mixin';
 import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
@@ -13,6 +13,8 @@ import { TabNavigator } from 'react-navigation'; // 1.0.0-beta.27
 import Colors from '../constants/Colors';
 import RestaurantBox from '../components/RestaurantBox';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { Ionicons,MaterialCommunityIcons,MaterialIcons } from '@expo/vector-icons';
+
 const Child = createReactClass({
 
 
@@ -28,6 +30,7 @@ export default class Restaurants extends React.Component {
             {
                 return (
                     <View style={{flex:0.3,backgroundColor:'white'}}>
+                    
                     <RestaurantBox
                     stars={this.state.Restaurant.stars}
                     name={this.state.Restaurant.name}
